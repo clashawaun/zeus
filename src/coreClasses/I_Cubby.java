@@ -4,8 +4,8 @@ import java.util.List;
 public interface I_Cubby 
 {
 	public String getCubbyId();
-	public List<Object> getCubbyItems();
-	public float getCubbyHeight();
-	public float getCubbyWidth();
-	public float getCubbyDepth();
+	public List<Item> getCubbyItems();
+	public int getCubbyHeight();
+	public int getCubbyWidth();
+	public int getCubbyDepth();
 }
