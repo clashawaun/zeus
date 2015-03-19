@@ -4,6 +4,6 @@ public class CubbyLarge extends Cubby
 {
 	public CubbyLarge(String id)
 	{
-		super(id, 300, 300, 30);
+		super(id, 300, 300, 30, 3);
 	}
 }
