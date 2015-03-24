@@ -2,12 +2,13 @@ package coreClasses;
 
 import java.util.List;
 
-public class CubbyMedium extends CubbyDecorator
-{
+public class CubbyDecorator implements I_Cubby{
 
-	public CubbyMedium(I_Cubby newCubby) {
-		super(newCubby);
-		// TODO Auto-generated constructor stub
+	protected I_Cubby cubby;
+	
+	public CubbyDecorator( I_Cubby newCubby)
+	{
+		this.cubby = newCubby;
 	}
 	
 	@Override
@@ -38,5 +39,4 @@ public class CubbyMedium extends CubbyDecorator
 		return cubby.getCubbyDepth();
 	}
 
-	
 }
