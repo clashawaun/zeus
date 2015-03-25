@@ -1,9 +1,9 @@
 package coreClasses;
-import java.util.List;
+import java.util.ArrayList;
 public abstract class Cubby implements I_Cubby
 {
 	private final String ID;
-	private List<Item> cubbyItems;
+	private ArrayList<Item> cubbyItems;
 	private final int HEIGHT;
 	private final int WIDTH;
 	private final int DEPTH;
@@ -31,7 +31,7 @@ public abstract class Cubby implements I_Cubby
 	{
 		return ID;
 	}
-	public List<Item> getCubbyItems()
+	public ArrayList<Item> getCubbyItems()
 	{
 		return cubbyItems;
 	}
@@ -48,6 +48,9 @@ public abstract class Cubby implements I_Cubby
 		return DEPTH;
 	}
 	
-	
+	public int getType()
+	{
+		return TYPE;
+	}
 	
 }
