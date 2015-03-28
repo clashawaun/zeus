@@ -1,7 +1,7 @@
 package coreClasses;
 
 import java.util.ArrayList;
-
+//Comment
 public class Stocker extends User {
 
 	ArrayList<Item> stackQueue = new ArrayList<Item>();
