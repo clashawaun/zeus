@@ -1,10 +1,10 @@
 package coreClasses;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Order 
 {
 	private final String ID;
-	private List<String> productIds;
+	private ArrayList<String> productIds;
 	private String shippingAddress;
 	
 	public Order(String id)
@@ -12,11 +12,11 @@ public class Order
 		this.ID = id;
 	}
 
-	public List<String> getProductIds() {
+	public ArrayList<String> getProductIds() {
 		return productIds;
 	}
 
-	public void setProductIds(List<String> productIds) {
+	public void setProductIds(ArrayList<String> productIds) {
 		this.productIds = productIds;
 	}
 

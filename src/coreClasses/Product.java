@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Product 
 {
+	Currency money;
 	private final String ID;
 	private String name;
 	private String description;
