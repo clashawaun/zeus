@@ -37,6 +37,7 @@ public class Server implements I_Server
                 	ObjectOutputStream outToServer = new ObjectOutputStream(socket.getOutputStream());
                 	try
                 	{
+                		//Code to test communication between client and server.
                 		ServerMessage m = (ServerMessage) in.readObject();
                 		System.out.println("This was sent from client: Message=" + m.getMessage() + "," + "Data=" + m.getData());
                 		m.setMessage("hi");
