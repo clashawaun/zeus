@@ -7,7 +7,7 @@ public class Packer extends User {
 		super();
 	}
 	
-	public Packer(String firstName, String surname, String userID, String email, String phone, String password)
+	public Packer(String firstName, String surname, int userID, String email, String phone, String password)
 	{
 		super(firstName, surname, userID, email, phone, password);
 	}

@@ -1,13 +1,14 @@
 package coreClasses;
 
-import java.util.Date;
+import java.util.Calendar;
+
 
 public class Item {
 
-	private final String PRODUCT_ID;
-	private final String ID;
-	private final Date DATE_OF_MANUFACTURE;
-	private final Date DATE_OF_EXPRIRY;
+	private final int PRODUCT_ID;
+	private final int ID;
+	private final Calendar DATE_OF_MANUFACTURE;
+	private final Calendar DATE_OF_EXPRIRY;
 	
 	private String currentState;
 	private int assignedUserID;
@@ -15,7 +16,7 @@ public class Item {
 	private int xPlacementPoint;
 	
 	
-	Item(String productID, String id, Date manufactureDate, Date expriryDate)
+	public Item(int productID, int id, Calendar manufactureDate, Calendar expriryDate)
 	{
 		PRODUCT_ID = productID;
 		ID = id;
@@ -61,21 +62,19 @@ public class Item {
 		this.xPlacementPoint = xPlacementPoint;
 	}
 
-	public String getPRODUCT_ID() {
+	public int getPRODUCT_ID() {
 		return PRODUCT_ID;
 	}
 
-
-
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 
-	public Date getDATE_OF_MANUFACTURE() {
+	public Calendar getDATE_OF_MANUFACTURE() {
 		return DATE_OF_MANUFACTURE;
 	}
 
-	public Date getDATE_OF_EXPRIRY() {
+	public Calendar getDATE_OF_EXPRIRY() {
 		return DATE_OF_EXPRIRY;
 	}
 	

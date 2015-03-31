@@ -13,7 +13,7 @@ public class Picker extends User{
 		super();
 	}
 	
-	public Picker(String firstName, String surname, String userID,
+	public Picker(String firstName, String surname, int userID,
 			String email, String phone, String password) 
 	{
 		super(firstName, surname, userID, email, phone, password);

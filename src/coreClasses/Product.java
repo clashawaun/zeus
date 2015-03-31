@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Product 
 {
-	Currency money;
-	private final String ID;
+
+	private final int ID;
 	private String name;
 	private String description;
 	//Talk to cunt------
@@ -17,10 +17,27 @@ public class Product
 	private float depth;
 	private float weight;
 	private I_Priority priority;
+	private float basePriority;
 	
-	public Product(String id)
+	public Product(int id,String name, String description, double price, float height, float width, float depth, float weight, float basePriority)
 	{
 		this.ID = id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.heigth = height;
+		this.depth = depth;
+		this.width = width;
+		this.weight = weight;
+		this.basePriority = basePriority;
+	}
+
+	public float getBasePriority() {
+		return basePriority;
+	}
+
+	public void setBasePriority(float basePriority) {
+		this.basePriority = basePriority;
 	}
 
 	public String getName() {
@@ -95,7 +112,7 @@ public class Product
 		this.priority = priority;
 	}
 
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 }

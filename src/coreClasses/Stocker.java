@@ -11,7 +11,7 @@ public class Stocker extends User {
 		super();
 	}
 	
-	public Stocker(String firstName, String surname, String userID, String email, String phone, String password)
+	public Stocker(String firstName, String surname, int userID, String email, String phone, String password)
 	{
 		super(firstName, surname, userID, email, phone, password);
 	}

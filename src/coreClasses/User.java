@@ -2,7 +2,7 @@ package coreClasses;
 
 public class User {
 	
-	private final String ID;
+	private final int ID;
 	
 	private String firstname; 
 	private String surname; 
@@ -12,9 +12,9 @@ public class User {
 	
 	public User()
 	{
-		ID = null;
+		ID = 0;
 	}
-	public User(String firstName, String surname, String userID, String email, String phone, String password)
+	public User(String firstName, String surname, int userID, String email, String phone, String password)
 	{
 		
 		ID = userID;
@@ -66,7 +66,7 @@ public class User {
 		this.password = password;
 	}
 
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 }

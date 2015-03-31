@@ -3,20 +3,25 @@ import java.util.ArrayList;
 
 public class Order 
 {
-	private final String ID;
-	private ArrayList<String> productIds;
+	private final int ID;
+	private ArrayList<Integer> productIds;
 	private String shippingAddress;
-	
-	public Order(String id)
+	private String status;
+
+
+	public Order(int id, ArrayList<Integer> productIDs, String shippingAddress)
 	{
 		this.ID = id;
+		this.productIds = productIDs;
+		this.shippingAddress = shippingAddress;
+		this.status = "OPEN";
 	}
 
-	public ArrayList<String> getProductIds() {
+	public ArrayList<Integer> getProductIds() {
 		return productIds;
 	}
 
-	public void setProductIds(ArrayList<String> productIds) {
+	public void setProductIds(ArrayList<Integer> productIds) {
 		this.productIds = productIds;
 	}
 
@@ -28,9 +33,15 @@ public class Order
 		this.shippingAddress = shippingAddress;
 	}
 
-	public String getID() {
+	public int getID() {
 		return ID;
 	}
 	
-	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
