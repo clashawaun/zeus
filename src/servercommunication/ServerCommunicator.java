@@ -17,23 +17,26 @@ public class ServerCommunicator
 	
 	public ServerCommunicator()
 	{
-		//Hardcode in server address for the moment.
+	
+	}
+	public ServerCommunicator(String endpoint)
+	{
+		this.endpoint = endpoint;
+	}
+	
+	private boolean openServerConnection()
+	{
 		try
 		{
-			serverSocket = new Socket("104.236.24.208", 9090);
+			serverSocket = new Socket(endpoint, 9090);
+			return true;
 		}
 		catch (Exception e) 
 		{
 			//DELETE ME For final version and add error handling
 			System.out.println("Error - Failed to connect to the server. Is it online ?");
+			return false;
 		}
-	}
-	
-	public boolean openServerConnection()
-	{
-		//!!this will open the socket, need endpoint before adding code;
-		//serverSocket.connect(endpoint, timeout);
-		return false;
 	}
 	
 	public String getEndpoint()
@@ -51,12 +54,20 @@ public class ServerCommunicator
 		ServerMessage response = null;
 		try
 		{
-			ObjectOutputStream out = new ObjectOutputStream(serverSocket.getOutputStream());
-			ObjectInputStream in = new ObjectInputStream(serverSocket.getInputStream());
-			out.writeObject(serverMessage);
-			response = (ServerMessage) in.readObject();
-			//Debug message
-			System.out.println("This was returned from server: Message=" + response.getMessage() + "," + "Data=" + response.getData());
+			if(openServerConnection())
+			{
+				ObjectOutputStream out = new ObjectOutputStream(serverSocket.getOutputStream());
+				ObjectInputStream in = new ObjectInputStream(serverSocket.getInputStream());
+				out.writeObject(serverMessage);
+				response = (ServerMessage) in.readObject();
+				//Debug message
+				System.out.println("This was returned from server: Message=" + response.getMessage() + "," + "Data=" + response.getData());
+				
+			}
+			else
+			{
+				throw new Exception("Failed to open Connection to server");
+			}
 		}
 		catch(Exception e)
 		{
