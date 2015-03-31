@@ -1,6 +1,8 @@
 package servercommunication;
 
-public class ServerMessage 
+import java.io.Serializable;
+
+public class ServerMessage implements Serializable 
 {
 	//The message to send to the server
 	private String message;

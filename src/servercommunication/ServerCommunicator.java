@@ -1,8 +1,11 @@
 package servercommunication;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.UnknownHostException;
 
 public class ServerCommunicator 
 {
@@ -10,13 +13,20 @@ public class ServerCommunicator
 	//Will be used to transmit server messages;
 	
 	private Socket serverSocket;
-	private ObjectOutputStream out;
 	private String endpoint;
 	
 	public ServerCommunicator()
 	{
-		serverSocket = new Socket();
-		//Shane - need to add logic that will connect to server when its online.
+		//Hardcode in server address for the moment.
+		try
+		{
+			serverSocket = new Socket("104.236.24.208", 9090);
+		}
+		catch (Exception e) 
+		{
+			//DELETE ME For final version and add error handling
+			System.out.println("Error - Failed to connect to the server. Is it online ?");
+		}
 	}
 	
 	public boolean openServerConnection()
@@ -38,11 +48,22 @@ public class ServerCommunicator
 	
 	public ServerMessage sendServerMessage(ServerMessage serverMessage)
 	{
-		//This code will send the server message object in the stream. Need to have 
-		ServerMessage delete_me = new ServerMessage();
-		//out.writeObject(delete_me);
-		return delete_me;
-
+		ServerMessage response = null;
+		try
+		{
+			ObjectOutputStream out = new ObjectOutputStream(serverSocket.getOutputStream());
+			ObjectInputStream in = new ObjectInputStream(serverSocket.getInputStream());
+			out.writeObject(serverMessage);
+			response = (ServerMessage) in.readObject();
+			//Debug message
+			System.out.println("This was returned from server: Message=" + response.getMessage() + "," + "Data=" + response.getData());
+		}
+		catch(Exception e)
+		{
+			System.out.println("Something went wrong :( , " + e.toString());
+		}
+		return response;
 	}
-	
 }
+	
+
