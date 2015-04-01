@@ -17,7 +17,7 @@ import java.util.Date;
 public class Server implements I_Server
 {
 	//Needs more atts, will come up with whats needed during implementation!
-	
+	private ServerTools serverTools;
 	public Server()
 	{
 
@@ -66,4 +66,9 @@ public class Server implements I_Server
             listener.close();
         }
 	}
+	
+	/*public ServerMessage processServerMessage(ServerMessage msg)
+	{
+		
+	}*/
 }
