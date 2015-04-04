@@ -9,15 +9,12 @@ public class ServerMessage implements Serializable
 	private String message;
 	//The data/content to accompany the message. Should be in JSON format
 	private String data;
-	//Not sure what is the best way to handle this, however user details are needed at each
-	//request to maintain state information on the server.
 	private String userData;
 	
 	public ServerMessage()
 	{
 		message = "None";
 		data = "None";
-		userData = "None";
 	}
 	
 	public ServerMessage(String message, String data)

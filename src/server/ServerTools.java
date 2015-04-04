@@ -1,5 +1,4 @@
 package server;
-
 import java.util.ArrayList;
 
 public class ServerTools 
@@ -31,6 +30,7 @@ public class ServerTools
 	{
 		sectorTools.add(sectorTool);
 	}
+	
 	
 	
 }

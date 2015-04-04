@@ -115,4 +115,9 @@ public class Product
 	public int getID() {
 		return ID;
 	}
+	
+	public String toString()
+	{
+		return "I am a product with an ID: " + this.ID + " and a name " + this.name;
+	}
 }
