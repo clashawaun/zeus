@@ -11,5 +11,6 @@ public class InvalidCubbyExpection extends Exception {
 	public String getMessage()
 	{
 		return "   Invalid Cubby Type   ";
+		
 	}
 }

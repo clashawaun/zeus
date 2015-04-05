@@ -11,9 +11,6 @@ import coreClasses.Order;
 import coreClasses.Product;
 import coreClasses.User;
 import customExpection.InvalidCubbyExpection;
-import customExpection.InvalidItemIDExpection;
-import customExpection.UnableToAssignItemToOrderException;
-import customExpection.UnableToAssignItemToUserException;
 
 public interface I_DataBase {
 
@@ -36,10 +33,10 @@ public interface I_DataBase {
 	public Product getProduct(int productID);
 	
 	public String getOrderAddress(int orderID);
-	public int itemBelonngsTo(int itemID) throws InvalidItemIDExpection;
+	public int itemBelonngsTo(int itemID);
 	
-	public void assignItemToOrder(int itemID, int productID, int orderID) throws UnableToAssignItemToOrderException;
-	public void assignItemToUser(int itemID, int userID) throws UnableToAssignItemToUserException;
+	public void assignItemToOrder(int itemID, int productID, int orderID);
+	public void assignItemToUser(int itemID, int userID);
 	
 	public void updateOrderStatus(int orderID, String status);
 	public void updateItemStutas(int itemID, String state);
