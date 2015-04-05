@@ -5,14 +5,11 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import com.google.gson.Gson;
 
-import coreClasses.Cubby;
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
@@ -20,13 +17,9 @@ import coreClasses.I_Shelve;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
-import coreClasses.Sector;
-import coreClasses.Shelve;
+
 import coreClasses.User;
-import customExpection.InvalidCubbyExpection;
-import customExpection.InvalidItemIDExpection;
-import customExpection.UnableToAssignItemToOrderException;
-import customExpection.UnableToAssignItemToUserException;
+
 
 public class DataBase implements I_DataBase {
 
@@ -71,33 +64,33 @@ public class DataBase implements I_DataBase {
 		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
 		Date date = (Date) format.parse("2014-12-01");
-		items.add(new Item(0, 0, date, null));
+		items.add(new Item(0, 50000, date, null));
 		
 		date = (Date) format.parse("2015-04-12");
-		items.add(new Item(2, 1, null, date));
+		items.add(new Item(2, 50001, null, date));
 		
 		date = (Date) format.parse("2013-12-06");
-		items.add(new Item(1, 2, date, null));
+		items.add(new Item(1, 50002, date, null));
 		
 		date = (Date) format.parse("2014-12-05");
-		items.add(new Item(1, 3, date, null));
+		items.add(new Item(1, 50003, date, null));
 		
 		date = (Date) format.parse("2015-01-12");
-		items.add(new Item(0, 4, date, null));
+		items.add(new Item(0, 50004, date, null));
 		
 		date = (Date) format.parse("2015-04-03");
-		items.add(new Item(2, 5, null, date));
+		items.add(new Item(2, 50005, null, date));
 		
 		date = (Date) format.parse("2014-08-07");
-		items.add(new Item(1, 6, date, null));
+		items.add(new Item(1, 50006, date, null));
 		
 		date = (Date) format.parse("2012-12-05");
-		items.add(new Item(0, 7, date, null));
+		items.add(new Item(0, 50007, date, null));
 		
 		date = (Date) format.parse("2014-12-05");
-		items.add(new Item(2, 8, null, date));
+		items.add(new Item(2, 50008, null, date));
 		
-		itemIndexer = 9;
+		itemIndexer = 50009;
 		
 		orders = new ArrayList<Order>();
 		ArrayList<Integer> tempOrderList = new ArrayList<Integer>();
@@ -286,28 +279,22 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public int itemBelonngsTo(int itemID) throws InvalidItemIDExpection
+	public int itemBelonngsTo(int itemID)
 	{
-
-		int orderID = 0;
 		for(Order order : orders)
 		{
 			if(order.hasItem(itemID))
 			{
-				return orderID;
+				return order.getID();
 			}
 		}
 		
-		if(orderID == 0)
-		{
-			throw new InvalidItemIDExpection();
-		}
 
 		return 0;
 	}
 	
 	@Override
-	public void assignItemToOrder( int itemID, int productID,int orderID) throws UnableToAssignItemToOrderException 
+	public void assignItemToOrder( int itemID, int productID,int orderID) 
 	{
 
 		boolean assignedItem = false;
@@ -320,14 +307,10 @@ public class DataBase implements I_DataBase {
 			}
 		}
 		
-		if(!assignedItem)
-		{
-			throw new UnableToAssignItemToOrderException();
-		}
 	}
 	
 	@Override
-	public void assignItemToUser(int itemID, int userID) throws UnableToAssignItemToUserException 
+	public void assignItemToUser(int itemID, int userID) 
 	{
 		
 		boolean assignedItem = false;
@@ -348,10 +331,7 @@ public class DataBase implements I_DataBase {
 				
 			}
 		}
-		
-		if(!assignedItem){
-			throw new UnableToAssignItemToUserException();
-		} 
+	
 	}
 	
 	
@@ -367,16 +347,11 @@ public class DataBase implements I_DataBase {
 				order.setStatus(status);
 			}
 		}
-		
-		if(!updatedOrder)
-		{
-			//throw exception
-		}
-		
+
 	}
 	
 	@Override
-	public void updateItemStutas(int itemID, String state) 
+	public void updateItemStutas(int itemID, String state)
 	{
 		
 		boolean updatedItem = false;
@@ -389,15 +364,10 @@ public class DataBase implements I_DataBase {
 				updatedItem = true;
 			}
 		}
-		
-		if(!updatedItem)
-		{
-			//throw exception
-		}
 	}
 	
 	@Override
-	public void updateProductStutas(int productID, String state) 
+	public void updateProductStutas(int productID, String state)
 	{
 		
 		boolean updatedProduct = false;
@@ -411,10 +381,6 @@ public class DataBase implements I_DataBase {
 			}
 		}
 		
-		if(!updatedProduct)
-		{
-			//throw exception
-		}
 	}
 	
 	@Override
@@ -432,10 +398,6 @@ public class DataBase implements I_DataBase {
 			}
 		}
 		
-		if(!updatedItem)
-		{
-			//throw exception
-		}
 	}
 	
 	@Override
@@ -481,7 +443,7 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public I_Cubby createCubby(int type) throws InvalidCubbyExpection 
+	public I_Cubby createCubby(int type) 
 	{
 		
 		cubbies.add(cubbyFactory.makeCubby(type));
@@ -496,6 +458,7 @@ public class DataBase implements I_DataBase {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
 	public I_Sector createSector()
 	{

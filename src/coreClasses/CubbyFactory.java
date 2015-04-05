@@ -1,6 +1,5 @@
 package coreClasses;
 
-import customExpection.InvalidCubbyExpection;
 
 public class CubbyFactory 
 {
@@ -16,7 +15,7 @@ public class CubbyFactory
 	 * 2 = large cubby
 	 * Never Returns Null. Can throw Exception 
 	 */
-	public I_Cubby makeCubby(int type) throws InvalidCubbyExpection
+	public I_Cubby makeCubby(int type) 
 	{
 		//set cubby to default of null
 		Cubby cubby = null;
@@ -44,7 +43,7 @@ public class CubbyFactory
 		
 		default:
 			//if invalid type throw invalid Cubby Exception
-			throw new InvalidCubbyExpection();
+			cubby = null;
 		}
 		
 		//return the cubby. this will never return null.
