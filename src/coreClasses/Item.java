@@ -1,33 +1,45 @@
 package coreClasses;
 
-import java.util.Calendar;
+import java.sql.Date;
+
 
 
 public class Item {
 
 	private final int PRODUCT_ID;
 	private final int ID;
-	private final Calendar DATE_OF_MANUFACTURE;
-	private final Calendar DATE_OF_EXPRIRY;
+	private Date date_of_manufacture;
+	private Date date_of_expriry;
 	
 	private String currentState;
 	private int assignedUserID;
 	private String cubbyID;
 	private int xPlacementPoint;
+	private float priority;
 	
-	
-	public Item(int productID, int id, Calendar manufactureDate, Calendar expriryDate)
+
+
+	public Item(int productID, int id, Date manufactureDate, Date expriryDate)
 	{
-		PRODUCT_ID = productID;
-		ID = id;
-		DATE_OF_MANUFACTURE = manufactureDate;
-		DATE_OF_EXPRIRY = expriryDate;
+		this.PRODUCT_ID = productID;
+		this.ID = id;
+		this.date_of_manufacture = manufactureDate;
+		this.date_of_expriry = expriryDate;
 		
-		currentState = "";
-		cubbyID = "";
-		xPlacementPoint = 0;
+		this.currentState = "";
+		this.cubbyID = "";
+		this.xPlacementPoint = 0;
+		this.priority = 0;
 		
 		
+	}
+	
+	public float getPriority() {
+		return priority;
+	}
+
+	public void setPriority(float priority) {
+		this.priority = priority;
 	}
 
 	public String getCurrentState() {
@@ -70,12 +82,12 @@ public class Item {
 		return ID;
 	}
 
-	public Calendar getDATE_OF_MANUFACTURE() {
-		return DATE_OF_MANUFACTURE;
+	public Date getDATE_OF_MANUFACTURE() {
+		return date_of_manufacture;
 	}
 
-	public Calendar getDATE_OF_EXPRIRY() {
-		return DATE_OF_EXPRIRY;
+	public Date getDATE_OF_EXPRIRY() {
+		return date_of_expriry;
 	}
 	
 	

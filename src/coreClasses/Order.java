@@ -7,6 +7,7 @@ public class Order
 	private ArrayList<Integer> productIds;
 	private String shippingAddress;
 	private String status;
+	private float priority;
 
 
 	public Order(int id, ArrayList<Integer> productIDs, String shippingAddress)
@@ -15,8 +16,21 @@ public class Order
 		this.productIds = productIDs;
 		this.shippingAddress = shippingAddress;
 		this.status = "OPEN";
+		this.priority = 0;
 	}
 
+	public float getPriority() {
+		return priority;
+	}
+
+	public void setPriority(float priority) {
+		this.priority = priority;
+	}
+
+	public boolean hasItem(int itemID){
+		
+		return true;
+	}
 	public ArrayList<Integer> getProductIds() {
 		return productIds;
 	}
@@ -44,4 +58,22 @@ public class Order
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public boolean addItemId(int itemID, int productID) {
+		
+		boolean replaced = false;
+		
+		for(int index = 0; index < productIds.size(); index++)
+		{
+			if(productIds.get(index)== productID);
+			{
+				productIds.set(index, itemID);
+				replaced = true;
+			}
+		}
+		
+		return replaced;
+	}
+	
+
 }

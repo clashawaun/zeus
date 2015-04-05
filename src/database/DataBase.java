@@ -1,18 +1,28 @@
 package database;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import com.google.gson.Gson;
 
 import coreClasses.Cubby;
+import coreClasses.CubbyFactory;
+import coreClasses.I_Cubby;
+import coreClasses.I_Sector;
+import coreClasses.I_Shelve;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
 import coreClasses.Sector;
 import coreClasses.Shelve;
 import coreClasses.User;
+import customExpection.InvalidCubbyExpection;
 
 public class DataBase implements I_DataBase {
 
@@ -28,13 +38,15 @@ public class DataBase implements I_DataBase {
 	private ArrayList<Order> orders;
 	private int orderIndexer;
 	
-	private ArrayList<Cubby> cubbies;
-	private ArrayList<Shelve> shelves; 
-	private ArrayList<Sector> sectors;
+	private ArrayList<I_Cubby> cubbies;
+	private ArrayList<I_Shelve> shelves; 
+	private ArrayList<I_Sector> sectors;
+	
+	private CubbyFactory cubbyFactory;
 	
 	Gson gson;
 	
-	public DataBase()
+	public DataBase() throws ParseException, Exception
 	{
 	
 		users = new ArrayList<User>();
@@ -52,15 +64,35 @@ public class DataBase implements I_DataBase {
 		
 		
 		items = new ArrayList<Item>();
-		items.add(new Item(0, 0, new GregorianCalendar(2014,12,1), null));
-		items.add(new Item(2, 1, null, new GregorianCalendar(2015,4,12)));
-		items.add(new Item(1, 2, new GregorianCalendar(2013,12,6), null));
-		items.add(new Item(1, 3, new GregorianCalendar(2014,12,5), null));
-		items.add(new Item(0, 4, new GregorianCalendar(2015,1,12), null));
-		items.add(new Item(2, 5, null, new GregorianCalendar(2015,4,3)));
-		items.add(new Item(1, 6, new GregorianCalendar(2014,12,7), null));
-		items.add(new Item(0, 7, new GregorianCalendar(2015,4,12), null));
-		items.add(new Item(2, 8, null, new GregorianCalendar(2015,4,25)));
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+		Date date = (Date) format.parse("2014-12-01");
+		items.add(new Item(0, 0, date, null));
+		
+		date = (Date) format.parse("2015-04-12");
+		items.add(new Item(2, 1, null, date));
+		
+		date = (Date) format.parse("2013-12-06");
+		items.add(new Item(1, 2, date, null));
+		
+		date = (Date) format.parse("2014-12-05");
+		items.add(new Item(1, 3, date, null));
+		
+		date = (Date) format.parse("2015-01-12");
+		items.add(new Item(0, 4, date, null));
+		
+		date = (Date) format.parse("2015-04-03");
+		items.add(new Item(2, 5, null, date));
+		
+		date = (Date) format.parse("2014-08-07");
+		items.add(new Item(1, 6, date, null));
+		
+		date = (Date) format.parse("2012-12-05");
+		items.add(new Item(0, 7, date, null));
+		
+		date = (Date) format.parse("2014-12-05");
+		items.add(new Item(2, 8, null, date));
+		
 		itemIndexer = 9;
 		
 		orders = new ArrayList<Order>();
@@ -85,20 +117,23 @@ public class DataBase implements I_DataBase {
 		
 		orderIndexer = 3;
 		
+		this.cubbyFactory = new CubbyFactory();
+		
 		gson = new Gson();
 		
 	}
 	@Override
-	public String createUser(String firstName, String secondName, String password, int type, String email, String phone) 
+	public User createUser(String firstName, String secondName, String password, int type, String email, String phone) 
 	{
 		User user = new User(firstName, secondName, userIndexer, email, phone, password);
 		userIndexer++;
 		
-		return gson.toJson(user);
+		return user;
 	}
 
 	@Override
-	public String isValidLoggin(String username, String password) {
+	public boolean isValidLoggin(String username, String password) 
+	{
 
 		boolean isValid = false;
 		for(User user: users)
@@ -109,54 +144,64 @@ public class DataBase implements I_DataBase {
 			}
 		}
 		
-		return gson.toJson(isValid);
+		return isValid;
 	}
 
 	@Override
-	public String registerOrder(ArrayList<Integer> productIDs, String shippingAddress) {
+	public Order registerOrder(ArrayList<Integer> productIDs, String shippingAddress) 
+	{
 
 		Order order = new Order(orderIndexer, productIDs, shippingAddress);
 		orders.add(order);
 		orderIndexer++;
 		
-		return gson.toJson(order);
+		return order;
 	}
 
 	@Override
-	public String getOrder(int ID) {
-
+	public Order getOrder(int ID) 
+	{
 		for(Order order : orders)
 		{
 			if(order.getID() == ID)
-				return gson.toJson(order);
+			{
+				return order;
+			}
 		}
 		
-		return gson.toJson(null);
+		return null;
 	}
 
 	@Override
-	public String addItem(int productID, Calendar manufactureDate, Calendar expriryDate)
+	public Item addItem(int productID, String manufactureDate, String expriryDate) throws ParseException,Exception
 	{
-		Item item = new Item(productID, itemIndexer, manufactureDate, expriryDate);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		
+		Date manDate = (Date) format.parse(manufactureDate);
+		Date expDate = (Date) format.parse(manufactureDate);
+		
+		Item item= new Item(productID, itemIndexer, manDate, expDate);
 		items.add(item);
 		itemIndexer++;
 		
-		return gson.toJson(item);
+		return item;
 	}
 
 	@Override
-	public String createProduct(String name, String description, double price, 
-			float height, float width, float depth,float weight, float basePriority) {
+	public Product createProduct(String name, String description, double price, 
+			float height, float width, float depth,float weight, float basePriority) 
+	{
 		
 		Product product = new Product(productIndexer, name, description, price, height, width, depth, weight, basePriority);
 		products.add(product);
 		productIndexer++;
 		
-		return gson.toJson(product);
+		return product;
 	}
 
 	@Override
-	public String getOpenOrders() {
+	public ArrayList<Order> getOpenOrders()
+	{
 		
 		ArrayList<Order> tempOrders = new ArrayList<Order>();
 		
@@ -166,11 +211,12 @@ public class DataBase implements I_DataBase {
 			tempOrders.add(order);
 		}
 		
-		return gson.toJson(tempOrders);
+		return tempOrders;
 	}
 
 	@Override
-	public String getItems(int productID) {
+	public ArrayList<Item> getItems(int productID) 
+	{
 		
 		ArrayList<Item> tempItems = new ArrayList<Item>();
 		
@@ -182,161 +228,385 @@ public class DataBase implements I_DataBase {
 			}
 		}
 		
-		return gson.toJson(tempItems);
+		return tempItems;
 	}
 
 	@Override
-	public String getProducts() {
+	public ArrayList<Product> getProducts() 
+	{
 		
-		return gson.toJson(products);
+		return products;
 	}
 	
 	@Override
-	public String getProduct(int productID) {
+	public Product getProduct(int productID) 
+	{
 		
 		for(Product product : products)
 		{
 			if(product.getID() == productID)
 			{
-				return gson.toJson(product);
+				return product;
 			}
 		}
 		
-		return gson.toJson(null);
+		return null;
 	}
 	
 	@Override
-	public String getItem(int itemID) {
+	public Item getItem(int itemID) 
+	{
 		
 		for(Item item : items)
 		{
 			if(item.getID() == itemID)
 			{
-				return gson.toJson(item);
+				return item;
 			}
 		}
-		return gson.toJson(null);
+		return null;
 	}
 	
 	@Override
-	public String getOrderAddress(int orderID) {
+	public String getOrderAddress(int orderID) 
+	{
 
 		for(Order order : orders)
 		{
 			if(order.getID() == orderID)
 			{
-				return gson.toJson(order.getShippingAddress());
+				return order.getShippingAddress();
 			}
 		}
-		return gson.toJson(null);
+		return null;
 	}
 	
 	@Override
-	public String itemBelonngsTo(int itemID) {
-		// TODO Auto-generated method stub
+	public int itemBelonngsTo(int itemID)
+	{
 
-		return gson.toJson(null);
+		int orderID = 0;
+		for(Order order : orders)
+		{
+			if(order.hasItem(itemID))
+			{
+				return orderID;
+			}
+		}
+		
+		if(orderID == 0)
+		{
+			//throw exception 
+		}
+
+		return 0;
 	}
 	
 	@Override
-	public void assignItemToOrder(int itemID, int orderID) {
-		// TODO Auto-generated method stub
+	public void assignItemToOrder( int itemID, int productID,int orderID) 
+	{
+
+		boolean assignedItem = false;
 		
+		for(Order order : orders)
+		{
+			if(order.getID() == orderID)
+			{
+				assignedItem = order.addItemId(itemID, productID);
+			}
+		}
+		
+		if(!assignedItem)
+		{
+			//throw exception
+		}
+	}
+	
+	@Override
+	public void assignItemToUser(int itemID, int userID) 
+	{
+		
+		boolean assignedItem = false;
+		for(User user : users)
+		{
+			if(user.getID() == userID)
+			{
+				for(Item item : items)
+				{
+					if(item.getID() == itemID)
+					{
+						item.setAssignedUserID(userID);
+						user.addItemToUser(itemID);
+						assignedItem = true;
+					}
+				}
+				
+			}
+		}
+		
+		if(!assignedItem){
+			//throw exception
+		} 
 	}
 	@Override
-	public void assignItemToUser(int itemID, int userID) {
-		// TODO Auto-generated method stub
+	public void updateOrderStatus(int orderID, String status)
+	{
+		
+		boolean updatedOrder = false;
+		for(Order order : orders)
+		{
+			if(order.getID() == orderID)
+			{
+				order.setStatus(status);
+			}
+		}
+		
+		if(!updatedOrder)
+		{
+			//throw exception
+		}
 		
 	}
+	
 	@Override
-	public void updateOrderStatus(String status) {
-		// TODO Auto-generated method stub
+	public void updateItemStutas(int itemID, String state) 
+	{
+		
+		boolean updatedItem = false;
+		
+		for(Item item : items)
+		{
+			if(item.getID() == itemID)
+			{
+				item.setCurrentState(state);
+				updatedItem = true;
+			}
+		}
+		
+		if(!updatedItem)
+		{
+			//throw exception
+		}
+	}
+	
+	@Override
+	public void updateProductStutas(int productID, String state) 
+	{
+		
+		boolean updatedProduct = false;
+		
+		for(Product product: products)
+		{
+			if(product.getID() == productID)
+			{
+				product.setState(state);
+				updatedProduct = true;
+			}
+		}
+		
+		if(!updatedProduct)
+		{
+			//throw exception
+		}
+	}
+	
+	@Override
+	public void updateItemPriority(int itemID, float priority)
+	{
+
+		boolean updatedItem = false;
+		
+		for(Item item : items)
+		{
+			if(item.getID() == itemID)
+			{
+				item.setPriority(priority);;
+				updatedItem = true;
+			}
+		}
+		
+		if(!updatedItem)
+		{
+			//throw exception
+		}
+	}
+	
+	@Override
+	public void updateProductPriority(int productID, float priority) 
+	{
+
+		boolean updatedProduct = false;
+		
+		for(Product product: products)
+		{
+			if(product.getID() == productID)
+			{
+				product.setBasePriority(priority);
+				updatedProduct = true;
+			}
+		}
+		
+		if(!updatedProduct)
+		{
+			//throw exception
+		}
 		
 	}
+	
 	@Override
-	public void updateItemStutas(String itemID, String status) {
-		// TODO Auto-generated method stub
+	public void updateOrderPriority(int orderID, float priority) 
+	{
+		
+		boolean updatedOrder = false;
+		
+		for(Order order : orders)
+		{
+			if(order.getID() == orderID)
+			{
+				order.setPriority(priority);;
+			}
+		}
+		
+		if(!updatedOrder)
+		{
+			//throw exception
+		}
+	}
+	
+	@Override
+	public I_Cubby createCubby(int type) throws InvalidCubbyExpection 
+	{
+		
+		cubbies.add(cubbyFactory.makeCubby(type));
+		
+		return cubbies.get(cubbies.size()-1);
 		
 	}
+	
 	@Override
-	public void updateProductStutas(String productID, String status) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void updateItemPriority(int itemID, float Priority) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void updateProductPriority(int productID, float Priority) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void updateOrderPriority(int orderID, float Priority) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public Cubby createCubby() {
+	public I_Shelve createShelve() 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Shelve createShelve() {
+	public I_Sector createSector()
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	@Override
-	public Sector createSector() {
+	public void assignCubbyToShelve(int cubbyID, int shelveID) 
+	{
 		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void removeCubbyFromShelve(int cubbyID, int shelveID) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void addItemFromCuby(int itemID, int cubbyID) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeItemFromCuby(int itemID, int cubbyID) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void deleteItem(int itemID)
+	{
+		boolean removedItem = false;
+		for(int index = 0; index < items.size(); index++)
+		{
+			if(items.get(index).getID() == itemID)
+			{
+				items.remove(index);
+				removedItem = true;
+			}
+		}
+		
+		if(!removedItem)
+		{
+			// throw Exception
+		}
+	}
+	
+	@Override
+	public void deletePrdoct(int productID)
+	{
+		boolean removedProduct = false;
+		for(int index = 0; index <products.size(); index++)
+		{
+			if(products.get(index).getID() == productID)
+			{
+				products.remove(index);
+				removedProduct = true;
+			}
+		}
+		
+		if(!removedProduct)
+		{
+			// throw Exception
+		}
+		
+	}
+	
+	@Override
+	public void deleteOrder(int orderID) 
+	{
+		boolean removedOrder = false;
+		
+		for(int index = 0; index <orders.size(); index++)
+		{
+			if(orders.get(index).getID() == orderID)
+			{
+				orders.remove(index);
+				removedOrder = true;
+			}
+		}
+		
+		if(!removedOrder)
+		{
+			// throw Exception
+		}
+		
+	}
+	
+	@Override
+	public ArrayList<Integer> get_All_Items_For_User(int userID) {
+		
+		for(User user : users)
+		{
+			if(user.getID() == userID)
+			{
+				return user.getItems();
+			}
+		}
 		return null;
 	}
+	
 	@Override
-	public void assignCubbyToShelve(int cubbyID, int shelveID) {
-		// TODO Auto-generated method stub
+	public ArrayList<Integer> get_All_Items_For_All_Users() {
 		
-	}
-	@Override
-	public void removeCubbyFromShelve(int cubbyID, int shelveID) {
-		// TODO Auto-generated method stub
+		ArrayList<Integer> tempList = new ArrayList<Integer>();
 		
-	}
-	@Override
-	public void addItemFromCuby(int itemID, int cubbyID) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void removeItemFromCuby(int itemID, int cubbyID) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void deleteItem(int itemID) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void deletePrdoct(int productID) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void deleteOrder(int Order) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String get_All_Items_For_User(int userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public String get_All_Items_For_All_Users() {
-		// TODO Auto-generated method stub
-		return null;
+		for(User user : users)
+		{
+			tempList.addAll(user.getItems());
+		}
+		return tempList;
 	}
 
 

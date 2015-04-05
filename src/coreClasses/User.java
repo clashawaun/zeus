@@ -1,5 +1,7 @@
 package coreClasses;
 
+import java.util.ArrayList;
+
 public class User {
 	
 	private final int ID;
@@ -9,7 +11,7 @@ public class User {
 	private String email;
 	private String phone;
 	private String password;
-	
+	private ArrayList<Integer> items;
 	public User()
 	{
 		ID = 0;
@@ -24,6 +26,7 @@ public class User {
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		this.items = new ArrayList<Integer>();
 	}
 
 	public String getFirstname() {
@@ -69,4 +72,18 @@ public class User {
 	public int getID() {
 		return ID;
 	}
+	
+	public ArrayList<Integer> getItems() {
+		return items;
+	}
+	
+	public void setItems(ArrayList<Integer> items) {
+		this.items = items;
+	}
+
+	public void addItemToUser(int itemID)
+	{
+		items.add(itemID);
+	}
+	
 }

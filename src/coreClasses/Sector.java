@@ -3,7 +3,7 @@ package coreClasses;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Sector 
+public class Sector implements I_Sector
 {
 	private Queue<Item> itemQueue;
 	public Sector()
@@ -11,7 +11,7 @@ public class Sector
 		itemQueue = new LinkedList<Item>();
 	}
 	
-	public Queue getItemQueue()
+	public Queue<Item> getItemQueue()
 	{
 		return itemQueue;
 	}

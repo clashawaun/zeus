@@ -18,6 +18,7 @@ public class Product
 	private float weight;
 	private I_Priority priority;
 	private float basePriority;
+	private String state;
 	
 	public Product(int id,String name, String description, double price, float height, float width, float depth, float weight, float basePriority)
 	{
@@ -30,6 +31,15 @@ public class Product
 		this.width = width;
 		this.weight = weight;
 		this.basePriority = basePriority;
+		this.state = "AVAILABLE";
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public float getBasePriority() {
