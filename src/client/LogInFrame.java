@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LogInFrame extends JFrame {
 
@@ -55,6 +57,10 @@ public class LogInFrame extends JFrame {
 		contentPane.add(passwordField);
 		
 		JButton logInButton = new JButton("Log In");
+		logInButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		logInButton.setBounds(171, 157, 89, 23);
 		contentPane.add(logInButton);
 	}

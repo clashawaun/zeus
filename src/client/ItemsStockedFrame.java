@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ItemsStockedFrame extends JFrame {
 
@@ -44,6 +46,10 @@ public class ItemsStockedFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -54,6 +60,10 @@ public class ItemsStockedFrame extends JFrame {
 		itemIDToBeStockedField.setColumns(10);
 		
 		JButton itemStockedButton = new JButton("Item Stocked");
+		itemStockedButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		itemStockedButton.setBounds(194, 63, 112, 33);
 		contentPane.add(itemStockedButton);
 		

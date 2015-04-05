@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class DispatchOrderFrame extends JFrame {
 
@@ -50,10 +52,18 @@ public class DispatchOrderFrame extends JFrame {
 		itemIDToBeDispatched.setColumns(10);
 		
 		JButton searchForOrderButton = new JButton("Search For Order");
+		searchForOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		searchForOrderButton.setBounds(193, 74, 122, 23);
 		contentPane.add(searchForOrderButton);
 		
 		JButton disptachOrderButton = new JButton("Dispatch Order");
+		disptachOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		disptachOrderButton.setBounds(193, 105, 122, 23);
 		contentPane.add(disptachOrderButton);
 		
@@ -63,6 +73,10 @@ public class DispatchOrderFrame extends JFrame {
 		contentPane.add(orderShipped);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 	}

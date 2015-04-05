@@ -47,6 +47,10 @@ public class GenerateItemIDFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -77,6 +81,10 @@ public class GenerateItemIDFrame extends JFrame {
 		contentPane.add(generateItemIDButton);
 		
 		JButton stockItemsFrameButton = new JButton("Stock Items");
+		stockItemsFrameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		stockItemsFrameButton.setBounds(10, 11, 129, 23);
 		contentPane.add(stockItemsFrameButton);
 	}

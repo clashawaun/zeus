@@ -43,6 +43,10 @@ public class GenerateReportPartTwoFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -55,8 +59,11 @@ public class GenerateReportPartTwoFrame extends JFrame {
 		contentPane.add(generateReportFrameButton);
 		
 		JButton registerNewProductFrameButton = new JButton("Register New Product");
+		registerNewProductFrameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		registerNewProductFrameButton.setBounds(161, 11, 144, 23);
 		contentPane.add(registerNewProductFrameButton);
 	}
-
 }

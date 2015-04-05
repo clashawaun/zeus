@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class SearchForOrderFrame extends JFrame {
 
@@ -44,6 +46,10 @@ public class SearchForOrderFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -54,10 +60,18 @@ public class SearchForOrderFrame extends JFrame {
 		itemIDToSearch.setColumns(10);
 		
 		JButton searchForOrderButton = new JButton("Search For Order");
+		searchForOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		searchForOrderButton.setBounds(211, 62, 133, 23);
 		contentPane.add(searchForOrderButton);
 		
 		JButton printAddressButton = new JButton("Print Address");
+		printAddressButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		printAddressButton.setBounds(211, 153, 133, 23);
 		contentPane.add(printAddressButton);
 		
@@ -66,6 +80,10 @@ public class SearchForOrderFrame extends JFrame {
 		contentPane.add(orderIDDetails);
 		
 		JButton dispatchOrderButton = new JButton("Dispatch Order");
+		dispatchOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		dispatchOrderButton.setBounds(211, 91, 133, 23);
 		contentPane.add(dispatchOrderButton);
 	}
