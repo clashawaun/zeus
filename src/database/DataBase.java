@@ -1,11 +1,12 @@
 package database;
 
-import java.sql.Date;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -23,6 +24,9 @@ import coreClasses.Sector;
 import coreClasses.Shelve;
 import coreClasses.User;
 import customExpection.InvalidCubbyExpection;
+import customExpection.InvalidItemIDExpection;
+import customExpection.UnableToAssignItemToOrderException;
+import customExpection.UnableToAssignItemToUserException;
 
 public class DataBase implements I_DataBase {
 
@@ -64,7 +68,7 @@ public class DataBase implements I_DataBase {
 		
 		
 		items = new ArrayList<Item>();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
 		Date date = (Date) format.parse("2014-12-01");
 		items.add(new Item(0, 0, date, null));
@@ -282,7 +286,7 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public int itemBelonngsTo(int itemID)
+	public int itemBelonngsTo(int itemID) throws InvalidItemIDExpection
 	{
 
 		int orderID = 0;
@@ -296,14 +300,14 @@ public class DataBase implements I_DataBase {
 		
 		if(orderID == 0)
 		{
-			//throw exception 
+			throw new InvalidItemIDExpection();
 		}
 
 		return 0;
 	}
 	
 	@Override
-	public void assignItemToOrder( int itemID, int productID,int orderID) 
+	public void assignItemToOrder( int itemID, int productID,int orderID) throws UnableToAssignItemToOrderException 
 	{
 
 		boolean assignedItem = false;
@@ -318,12 +322,12 @@ public class DataBase implements I_DataBase {
 		
 		if(!assignedItem)
 		{
-			//throw exception
+			throw new UnableToAssignItemToOrderException();
 		}
 	}
 	
 	@Override
-	public void assignItemToUser(int itemID, int userID) 
+	public void assignItemToUser(int itemID, int userID) throws UnableToAssignItemToUserException 
 	{
 		
 		boolean assignedItem = false;
@@ -338,6 +342,7 @@ public class DataBase implements I_DataBase {
 						item.setAssignedUserID(userID);
 						user.addItemToUser(itemID);
 						assignedItem = true;
+						System.out.println("Called");
 					}
 				}
 				
@@ -345,9 +350,11 @@ public class DataBase implements I_DataBase {
 		}
 		
 		if(!assignedItem){
-			//throw exception
+			throw new UnableToAssignItemToUserException();
 		} 
 	}
+	
+	
 	@Override
 	public void updateOrderStatus(int orderID, String status)
 	{
