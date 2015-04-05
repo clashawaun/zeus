@@ -1,0 +1,53 @@
+package client;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTextArea;
+import javax.swing.JButton;
+
+public class LogOutFrame extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LogOutFrame frame = new LogOutFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public LogOutFrame() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JTextArea logOutOutputMessage = new JTextArea();
+		logOutOutputMessage.setText("Session ended. You have been logged out.");
+		logOutOutputMessage.setEditable(false);
+		logOutOutputMessage.setBounds(48, 116, 324, 30);
+		contentPane.add(logOutOutputMessage);
+		
+		JButton backToLogIn = new JButton("Back To Log In");
+		backToLogIn.setBounds(141, 164, 153, 23);
+		contentPane.add(backToLogIn);
+	}
+}
