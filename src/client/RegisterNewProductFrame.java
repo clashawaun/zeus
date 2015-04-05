@@ -93,10 +93,18 @@ public class RegisterNewProductFrame extends JFrame {
 		productDescriptionField.setColumns(10);
 		
 		JButton generateReportFrameButton = new JButton("Generate Report");
+		generateReportFrameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		generateReportFrameButton.setBounds(10, 11, 113, 20);
 		contentPane.add(generateReportFrameButton);
 		
 		JButton registerNewProductButton = new JButton("Register New Product");
+		registerNewProductButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		registerNewProductButton.setBounds(287, 221, 137, 26);
 		contentPane.add(registerNewProductButton);
 		

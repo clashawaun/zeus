@@ -47,6 +47,10 @@ public class StockItemsFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -68,8 +72,12 @@ public class StockItemsFrame extends JFrame {
 		listOfItemsToStock.setBounds(82, 92, 242, 112);
 		contentPane.add(listOfItemsToStock);
 		
-		JButton readyButton = new JButton("Ready");
-		readyButton.setBounds(155, 215, 89, 23);
-		contentPane.add(readyButton);
+		JButton readyToStockButton = new JButton("Ready");
+		readyToStockButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		readyToStockButton.setBounds(155, 215, 89, 23);
+		contentPane.add(readyToStockButton);
 	}
 }

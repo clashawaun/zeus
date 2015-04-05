@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LogOutFrame extends JFrame {
 
@@ -47,6 +49,10 @@ public class LogOutFrame extends JFrame {
 		contentPane.add(logOutOutputMessage);
 		
 		JButton backToLogIn = new JButton("Back To Log In");
+		backToLogIn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		backToLogIn.setBounds(141, 164, 153, 23);
 		contentPane.add(backToLogIn);
 	}

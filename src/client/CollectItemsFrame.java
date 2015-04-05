@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CollectItemsFrame extends JFrame {
 
@@ -44,6 +46,10 @@ public class CollectItemsFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -51,9 +57,13 @@ public class CollectItemsFrame extends JFrame {
 		listOfItemsToCollect.setBounds(126, 100, 157, 108);
 		contentPane.add(listOfItemsToCollect);
 		
-		JButton readyButton = new JButton("Ready");
-		readyButton.setBounds(161, 219, 89, 23);
-		contentPane.add(readyButton);
+		JButton readyToCollectButton = new JButton("Ready");
+		readyToCollectButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		readyToCollectButton.setBounds(161, 219, 89, 23);
+		contentPane.add(readyToCollectButton);
 		
 		JTextArea itemsToBeCollectedMessage = new JTextArea();
 		itemsToBeCollectedMessage.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
