@@ -15,18 +15,11 @@ public class CubbyFactory
 	 * 2 = large cubby
 	 * Never Returns Null. Can throw Exception 
 	 */
-	public I_Cubby makeCubby(int type) 
+	public I_Cubby makeCubby(int type, int id) 
 	{
-		//set cubby to default of null
-		Cubby cubby = null;
+
+		Cubby cubby;
 		
-		//id is created in createCubbyID
-		String id  = createCubbyID();
-		
-		
-		
-		
-		//Switch statement to decide what type of cubby to create
 		switch (type)
 		{
 		case 0:
@@ -42,36 +35,14 @@ public class CubbyFactory
 			break;
 		
 		default:
-			//if invalid type throw invalid Cubby Exception
+			
 			cubby = null;
 		}
 		
-		//return the cubby. this will never return null.
+		
 		return cubby;
 	}
 	
 	
-	/*
-	 * Look at database of IDs. Keep creating IDs until
-	 * it isn't in the list of IDs in the database.
-	 * Could also store a list of IDs not in use and select out of that
-	 */
-	private String createCubbyID()
-	{
-		boolean isUnique = false;
-		String id ="";
-		
-		//while isnt Unique
-		while(!isUnique)
-		{
-			//create random ID
-			id = "AB201";
-		
-			//just for testing set isUnique = true
-			isUnique = true;
-		}
-		
-		//return id
-		return id;
-	}
+	
 }

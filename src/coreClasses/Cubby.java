@@ -2,7 +2,7 @@ package coreClasses;
 import java.util.ArrayList;
 public abstract class Cubby implements I_Cubby
 {
-	private final String ID;
+	private int ID;
 	private ArrayList<Item> cubbyItems;
 	private final int HEIGHT;
 	private final int WIDTH;
@@ -11,14 +11,14 @@ public abstract class Cubby implements I_Cubby
 	
 	public Cubby()
 	{
-		this.ID = null;
+		this.ID = 0;
 		this.HEIGHT = 0;
 		this.WIDTH = 0;
 		this.DEPTH = 0;
 		this.TYPE = 0;
 	}
 	
-	public Cubby(String id, int height, int width, int depth, int type)
+	public Cubby(int id, int height, int width, int depth, int type)
 	{
 		this.ID = id;
 		this.HEIGHT = height;
@@ -27,7 +27,7 @@ public abstract class Cubby implements I_Cubby
 		this.TYPE = type;
 	}
 	
-	public String getCubbyId()
+	public int getCubbyId()
 	{
 		return ID;
 	}

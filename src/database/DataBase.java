@@ -36,6 +36,7 @@ public class DataBase implements I_DataBase {
 	private int orderIndexer;
 	
 	private ArrayList<I_Cubby> cubbies;
+	private int cubbyIndexer;
 	private ArrayList<I_Shelve> shelves; 
 	private ArrayList<I_Sector> sectors;
 	
@@ -115,7 +116,7 @@ public class DataBase implements I_DataBase {
 		orderIndexer = 3;
 		
 		this.cubbyFactory = new CubbyFactory();
-		
+		this.cubbyIndexer = 0;
 		gson = new Gson();
 		
 	}
@@ -297,13 +298,11 @@ public class DataBase implements I_DataBase {
 	public void assignItemToOrder( int itemID, int productID,int orderID) 
 	{
 
-		boolean assignedItem = false;
-		
 		for(Order order : orders)
 		{
 			if(order.getID() == orderID)
 			{
-				assignedItem = order.addItemId(itemID, productID);
+				order.addItemId(itemID, productID);
 			}
 		}
 		
@@ -313,7 +312,6 @@ public class DataBase implements I_DataBase {
 	public void assignItemToUser(int itemID, int userID) 
 	{
 		
-		boolean assignedItem = false;
 		for(User user : users)
 		{
 			if(user.getID() == userID)
@@ -324,8 +322,6 @@ public class DataBase implements I_DataBase {
 					{
 						item.setAssignedUserID(userID);
 						user.addItemToUser(itemID);
-						assignedItem = true;
-						System.out.println("Called");
 					}
 				}
 				
@@ -339,7 +335,6 @@ public class DataBase implements I_DataBase {
 	public void updateOrderStatus(int orderID, String status)
 	{
 		
-		boolean updatedOrder = false;
 		for(Order order : orders)
 		{
 			if(order.getID() == orderID)
@@ -354,14 +349,11 @@ public class DataBase implements I_DataBase {
 	public void updateItemStutas(int itemID, String state)
 	{
 		
-		boolean updatedItem = false;
-		
 		for(Item item : items)
 		{
 			if(item.getID() == itemID)
 			{
 				item.setCurrentState(state);
-				updatedItem = true;
 			}
 		}
 	}
@@ -369,15 +361,11 @@ public class DataBase implements I_DataBase {
 	@Override
 	public void updateProductStutas(int productID, String state)
 	{
-		
-		boolean updatedProduct = false;
-		
 		for(Product product: products)
 		{
 			if(product.getID() == productID)
 			{
 				product.setState(state);
-				updatedProduct = true;
 			}
 		}
 		
@@ -386,15 +374,12 @@ public class DataBase implements I_DataBase {
 	@Override
 	public void updateItemPriority(int itemID, float priority)
 	{
-
-		boolean updatedItem = false;
 		
 		for(Item item : items)
 		{
 			if(item.getID() == itemID)
 			{
 				item.setPriority(priority);;
-				updatedItem = true;
 			}
 		}
 		
@@ -404,20 +389,13 @@ public class DataBase implements I_DataBase {
 	public void updateProductPriority(int productID, float priority) 
 	{
 
-		boolean updatedProduct = false;
 		
 		for(Product product: products)
 		{
 			if(product.getID() == productID)
 			{
 				product.setBasePriority(priority);
-				updatedProduct = true;
 			}
-		}
-		
-		if(!updatedProduct)
-		{
-			//throw exception
 		}
 		
 	}
@@ -425,9 +403,6 @@ public class DataBase implements I_DataBase {
 	@Override
 	public void updateOrderPriority(int orderID, float priority) 
 	{
-		
-		boolean updatedOrder = false;
-		
 		for(Order order : orders)
 		{
 			if(order.getID() == orderID)
@@ -435,18 +410,13 @@ public class DataBase implements I_DataBase {
 				order.setPriority(priority);;
 			}
 		}
-		
-		if(!updatedOrder)
-		{
-			//throw exception
-		}
 	}
 	
 	@Override
 	public I_Cubby createCubby(int type) 
 	{
 		
-		cubbies.add(cubbyFactory.makeCubby(type));
+		cubbies.add(cubbyFactory.makeCubby(type, cubbyIndexer ));
 		
 		return cubbies.get(cubbies.size()-1);
 		
@@ -497,38 +467,28 @@ public class DataBase implements I_DataBase {
 	@Override
 	public void deleteItem(int itemID)
 	{
-		boolean removedItem = false;
+
 		for(int index = 0; index < items.size(); index++)
 		{
 			if(items.get(index).getID() == itemID)
 			{
 				items.remove(index);
-				removedItem = true;
 			}
 		}
-		
-		if(!removedItem)
-		{
-			// throw Exception
-		}
+
 	}
 	
 	@Override
 	public void deletePrdoct(int productID)
 	{
-		boolean removedProduct = false;
+
 		for(int index = 0; index <products.size(); index++)
 		{
 			if(products.get(index).getID() == productID)
 			{
 				products.remove(index);
-				removedProduct = true;
+				
 			}
-		}
-		
-		if(!removedProduct)
-		{
-			// throw Exception
 		}
 		
 	}
@@ -536,20 +496,12 @@ public class DataBase implements I_DataBase {
 	@Override
 	public void deleteOrder(int orderID) 
 	{
-		boolean removedOrder = false;
-		
 		for(int index = 0; index <orders.size(); index++)
 		{
 			if(orders.get(index).getID() == orderID)
 			{
 				orders.remove(index);
-				removedOrder = true;
 			}
-		}
-		
-		if(!removedOrder)
-		{
-			// throw Exception
 		}
 		
 	}
