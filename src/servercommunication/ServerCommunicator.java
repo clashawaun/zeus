@@ -1,11 +1,9 @@
 package servercommunication;
 
-import java.io.IOException;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.UnknownHostException;
 
 public class ServerCommunicator 
 {
@@ -17,7 +15,7 @@ public class ServerCommunicator
 	
 	public ServerCommunicator()
 	{
-		this.endpoint = "127.0.0.1";
+		this.endpoint = "104.236.24.208";
 	}
 	public ServerCommunicator(String endpoint)
 	{
