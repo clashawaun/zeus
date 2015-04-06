@@ -8,9 +8,7 @@ public class Product
 	private final int ID;
 	private String name;
 	private String description;
-	//Talk to cunt------
 	private double price;
-	//------------------
 	private List<String> itemIds;
 	private float heigth;
 	private float width;

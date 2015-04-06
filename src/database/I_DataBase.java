@@ -47,8 +47,8 @@ public interface I_DataBase {
 	public void updateOrderPriority(int orderID, float Priority );
 	
 	public I_Cubby createCubby(int type);
-	public I_Shelve createShelve();
-	public I_Sector createSector();
+	public I_Shelve createShelve(int type);
+	public I_Sector createSector(int type);
 	
 	public void assignCubbyToShelve(int cubbyID, int shelveID);
 	public void removeCubbyFromShelve(int cubbyID, int shelveID);

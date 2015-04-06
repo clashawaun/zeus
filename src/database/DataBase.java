@@ -17,7 +17,8 @@ import coreClasses.I_Shelve;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
-
+import coreClasses.SectorFactory;
+import coreClasses.ShelveFactory;
 import coreClasses.User;
 
 
@@ -37,59 +38,64 @@ public class DataBase implements I_DataBase {
 	
 	private ArrayList<I_Cubby> cubbies;
 	private int cubbyIndexer;
+	
 	private ArrayList<I_Shelve> shelves; 
+	private int shelveIndexer;
+	
 	private ArrayList<I_Sector> sectors;
+	private int sectorIndexer;
 	
 	private CubbyFactory cubbyFactory;
-	
+	private ShelveFactory shelveFactory;
+	private SectorFactory sectorFactory;
 	Gson gson;
 	
 	public DataBase() throws ParseException, Exception
 	{
 	
 		users = new ArrayList<User>();
-		users.add(new User("Cookie", "Monster", 0, "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
-		users.add(new User("Kermit", "the Frog", 1, "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
-		users.add(new User("Big", "Bird", 2, "Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
+		users.add(new User("Cookie", "Monster", 1, "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
+		users.add(new User("Kermit", "the Frog", 2, "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
+		users.add(new User("Big", "Bird",3, "Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
 		
-		userIndexer = 3;
+		userIndexer = 4;
 		
 		products = new ArrayList<Product>();
-		products.add(new Product(0,"X-Box One","This is description one.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
-		products.add(new Product(1,"The Book of life","This is description two.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
-		products.add(new Product(2,"Pizza","This is description three.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
-		productIndexer = 3;
+		products.add(new Product(1,"X-Box One","This is description one.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
+		products.add(new Product(2,"The Book of life","This is description two.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
+		products.add(new Product(3,"Pizza","This is description three.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
+		productIndexer = 4;
 		
 		
 		items = new ArrayList<Item>();
 		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
 		Date date = (Date) format.parse("2014-12-01");
-		items.add(new Item(0, 50000, date, null));
+		items.add(new Item(1, 50000, date, null));
 		
 		date = (Date) format.parse("2015-04-12");
-		items.add(new Item(2, 50001, null, date));
+		items.add(new Item(3, 50001, null, date));
 		
 		date = (Date) format.parse("2013-12-06");
-		items.add(new Item(1, 50002, date, null));
+		items.add(new Item(2, 50002, date, null));
 		
 		date = (Date) format.parse("2014-12-05");
-		items.add(new Item(1, 50003, date, null));
+		items.add(new Item(2, 50003, date, null));
 		
 		date = (Date) format.parse("2015-01-12");
-		items.add(new Item(0, 50004, date, null));
+		items.add(new Item(1, 50004, date, null));
 		
 		date = (Date) format.parse("2015-04-03");
-		items.add(new Item(2, 50005, null, date));
+		items.add(new Item(3, 50005, null, date));
 		
 		date = (Date) format.parse("2014-08-07");
 		items.add(new Item(1, 50006, date, null));
 		
 		date = (Date) format.parse("2012-12-05");
-		items.add(new Item(0, 50007, date, null));
+		items.add(new Item(2, 50007, date, null));
 		
 		date = (Date) format.parse("2014-12-05");
-		items.add(new Item(2, 50008, null, date));
+		items.add(new Item(3, 50008, null, date));
 		
 		itemIndexer = 50009;
 		
@@ -98,25 +104,87 @@ public class DataBase implements I_DataBase {
 		tempOrderList.add(0);
 		tempOrderList.add(2);
 		tempOrderList.add(1);
-		orders.add(new Order(0,tempOrderList, "Address one \n Address two \n Town"));
+		orders.add(new Order(0,tempOrderList, "Order Address one \n Address two \n Town"));
 		tempOrderList.clear();
 		
 		tempOrderList.add(0);
 		tempOrderList.add(0);
 		tempOrderList.add(2);
-		orders.add(new Order(1,tempOrderList, "Address one \n Address two \n Town"));
+		orders.add(new Order(1,tempOrderList, "Order Address two \n Address two \n Town"));
 		tempOrderList.clear();
 		
 		tempOrderList.add(1);
 		tempOrderList.add(1);
 		tempOrderList.add(2);
-		orders.add(new Order(2,tempOrderList, "Address one \n Address two \n Town"));
+		orders.add(new Order(2,tempOrderList, "Order Address Three \n Address two \n Town"));
 		tempOrderList.clear();
 		
 		orderIndexer = 3;
 		
 		this.cubbyFactory = new CubbyFactory();
-		this.cubbyIndexer = 0;
+		this.cubbyIndexer = 1;
+		
+		this.shelveFactory = new ShelveFactory();
+		this.shelveIndexer = 1;
+		
+		for(int i = 0; i < 10; i++)
+		{
+			shelves.add(shelveFactory.makeShelve(1, shelveIndexer));
+			this.shelveIndexer++;
+		}
+		
+		
+		ArrayList<Integer> tempCubbies;
+		I_Cubby tempCub;
+		
+		for(I_Shelve shelve : shelves)
+		{
+			
+			tempCubbies = new ArrayList<Integer>();
+			
+			for(int i = 0; i < 8; i++)
+			{
+				tempCub = cubbyFactory.makeCubby(1, cubbyIndexer);
+				cubbies.add(tempCub);
+				tempCubbies.add(tempCub.getID());
+				cubbyIndexer++;
+			}
+			
+			for(int i = 0; i < 4; i++)
+			{
+				tempCub = cubbyFactory.makeCubby(2, cubbyIndexer);
+				cubbies.add(tempCub);
+				tempCubbies.add(tempCub.getID());
+				cubbyIndexer++;
+			}
+		
+			for(int i = 0; i < 2; i++)
+			{
+				tempCub = cubbyFactory.makeCubby(3, cubbyIndexer);
+				cubbies.add(tempCub);
+				tempCubbies.add(tempCub.getID());
+				cubbyIndexer++;
+			}
+			
+			shelve.setCubbies(tempCubbies);
+		}
+		
+		sectors = new ArrayList<I_Sector>();
+		sectorIndexer = 1;
+		sectorFactory = new SectorFactory();
+		
+		sectors.add(sectorFactory.makeSector(1, sectorIndexer));
+		sectorIndexer++;
+		
+		ArrayList<Integer> tempShelve = new ArrayList<Integer>();
+		
+		for(I_Shelve shelve : shelves)
+		{
+			tempShelve.add(shelve.getId());
+		}
+		
+		sectors.get(0).setShelves(tempShelve);
+		
 		gson = new Gson();
 		
 	}
@@ -423,24 +491,25 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public I_Shelve createShelve() 
+	public I_Shelve createShelve( int type) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		I_Shelve temp = shelveFactory.makeShelve(type, shelveIndexer);
+		shelveIndexer++;
+		return temp;
 	}
 	
 	@Override
-	public I_Sector createSector()
+	public I_Sector createSector(int type)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		I_Sector tempsector = sectorFactory.makeSector(type, sectorIndexer);
+		sectorIndexer++;
+		return tempsector;
 	}
 	
 	@Override
 	public void assignCubbyToShelve(int cubbyID, int shelveID) 
 	{
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
