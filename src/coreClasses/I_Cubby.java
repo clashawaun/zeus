@@ -3,9 +3,11 @@ import java.util.List;
 
 public interface I_Cubby 
 {
-	public int getCubbyId();
-	public List<Item> getCubbyItems();
-	public int getCubbyHeight();
-	public int getCubbyWidth();
-	public int getCubbyDepth();
+	public int getID();
+	public List<Item> getItems();
+	public int getHeight();
+	public int getWidth();
+	public int getDepth();
+	public int getType();
+
 }

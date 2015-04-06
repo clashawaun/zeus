@@ -27,23 +27,23 @@ public abstract class Cubby implements I_Cubby
 		this.TYPE = type;
 	}
 	
-	public int getCubbyId()
+	public int getID()
 	{
 		return ID;
 	}
-	public ArrayList<Item> getCubbyItems()
+	public ArrayList<Item> getItems()
 	{
 		return cubbyItems;
 	}
-	public int getCubbyHeight()
+	public int getHeight()
 	{
 		return HEIGHT; 
 	}
-	public int getCubbyWidth()
+	public int getWidth()
 	{
 		return WIDTH;
 	}
-	public int getCubbyDepth()
+	public int getDepth()
 	{
 		return DEPTH;
 	}

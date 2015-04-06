@@ -12,10 +12,16 @@ public class Shelve implements I_Shelve
 	private int currentNumberOfLargeCubbies;
 	private ArrayList<Integer> cubbies;
 	private int id;
+	private int height;
+	private int width;
+	private int depth;
 	
 	public Shelve()
 	{
 		this.id = 0;
+		this.height = 0;
+		this.width = 0;
+		this.depth =  0;
 		this.numberOfSmallCubbies = 0;
 		this.numberOfMediumCubbies = 0;
 		this.numberOfLargeCubbies = 0;
@@ -25,50 +31,47 @@ public class Shelve implements I_Shelve
 		cubbies = new ArrayList<Integer>();
 	}
 	
-	public Shelve(int id, int numberOfSmallCubbies, int numberOfMediumCubbies, int numberOfLargeCubbies )
+	public Shelve(int id, int height, int width, int depth, int numberOfSmallCubbies, int numberOfMediumCubbies, int numberOfLargeCubbies )
 	{
+		this.id = id;
+		
+		this.height = height;
+		this.width = width;
+		this.depth = depth;
+		
 		this.numberOfSmallCubbies = numberOfSmallCubbies;
 		this.numberOfMediumCubbies = numberOfMediumCubbies;
 		this.numberOfLargeCubbies = numberOfLargeCubbies;
 		this.currentNumberOfSmallCubbies  = 0;
 		this.currentNumberOfMediumCubbies = 0;
 		this.currentNumberOfLargeCubbies  = 0;
+		
 		cubbies = new ArrayList<Integer>();
 
 	}
-	
-	@Override
-	public int getNumberOfSmallCubbies() 
-	{
-		return numberOfSmallCubbies;
+
+	public int getHeight() {
+		return height;
 	}
 
-	@Override
-	public void setNumberOfSmallCubbies(int numberOfSmallCubbies) {
-		this.numberOfSmallCubbies = numberOfSmallCubbies;
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
-	@Override
-	public int getNumberOfMediumCubbies() {
-		return numberOfMediumCubbies;
+	public int getWidth() {
+		return width;
 	}
 
-	@Override
-	public void setNumberOfMediumCubbies(int numberOfMediumCubbies)
-	{
-		this.numberOfMediumCubbies = numberOfMediumCubbies;
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
-	@Override
-	public int getNumberOfLargeCubbies()
-	{
-		return numberOfLargeCubbies;
+	public int getDepth() {
+		return depth;
 	}
 
-	@Override
-	public void setNumberOfLargeCubbies(int numberOfLargeCubbies)
-	{
-		this.numberOfLargeCubbies = numberOfLargeCubbies;
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 
 	@Override
@@ -86,37 +89,7 @@ public class Shelve implements I_Shelve
 		this.cubbies = cubbies;
 	}
 
-	@Override
-	public void addSmallCubby(int cubbyID) {
 
-		if(currentNumberOfSmallCubbies < numberOfSmallCubbies)
-		{
-			cubbies.add(cubbyID);
-			currentNumberOfSmallCubbies++;
-		}
-		
-	}
-
-	@Override
-	public void addMediumCubby(int cubbyID) 
-	{
-		if(currentNumberOfMediumCubbies < numberOfMediumCubbies)
-		{
-			cubbies.add(cubbyID);
-			currentNumberOfMediumCubbies++;
-		}
-	}
-
-	@Override
-	public void addLargeCubby(int cubbyID) 
-	{
-		if(currentNumberOfLargeCubbies < numberOfLargeCubbies)
-		{
-			cubbies.add(cubbyID);
-			currentNumberOfLargeCubbies++;
-		}
-		
-	}
 
 	@Override
 	public boolean hasCubby(int cubbyID) 
@@ -132,24 +105,80 @@ public class Shelve implements I_Shelve
 	}
 
 	@Override
-	public void removeSmallCubby(int cubbyID)
-	{
-		cubbies.remove(cubbies.indexOf(cubbies));
-		currentNumberOfSmallCubbies--;
+	public boolean addCubby(I_Cubby cubby) {
+		int type  = cubby.getType();
+		
+		switch(type)
+		{
+		case 1:
+			if(currentNumberOfSmallCubbies < numberOfSmallCubbies)
+			{
+				cubbies.add(cubby.getID());
+				currentNumberOfSmallCubbies++;
+				return true;
+			}
+			break;
+		case 2:
+			if(currentNumberOfMediumCubbies < numberOfMediumCubbies)
+			{
+				cubbies.add(cubby.getID());
+				currentNumberOfMediumCubbies++;
+				return true;
+			}
+			break;
+		case 3:
+			if(currentNumberOfLargeCubbies < numberOfLargeCubbies)
+			{
+				cubbies.add(cubby.getID());
+				currentNumberOfLargeCubbies++;
+				return true;
+			}
+			break;
+		default:
+			break;
+		}
+		return false;
 	}
 
 	@Override
-	public void removeMediumCubby(int cubbyID) 
-	{
-		cubbies.remove(cubbies.indexOf(cubbies));
-		currentNumberOfMediumCubbies--;
-	}
-
-	@Override
-	public void removeLargeCubby(int cubbyID) 
-	{
-		cubbies.remove(cubbies.indexOf(cubbies));
-		currentNumberOfLargeCubbies--;
+	public boolean removeCubby(I_Cubby cubby) {
+		
+		int type  = cubby.getType();
+		
+		if (cubbies.contains(cubby.getID()))
+		{
+			int positon = cubbies.indexOf(cubby.getID());
+			switch(type)
+			{
+			case 1:
+				if(currentNumberOfSmallCubbies > 0)
+				{
+					cubbies.remove(positon);
+					currentNumberOfSmallCubbies--;
+					return true;
+				}
+				break;
+			case 2:
+				if(currentNumberOfMediumCubbies > 0)
+				{
+					cubbies.remove(positon);
+					currentNumberOfMediumCubbies--;
+					return true;
+				}
+				break;
+			case 3:
+				if(currentNumberOfLargeCubbies > 0)
+				{
+					cubbies.remove(positon);
+					currentNumberOfLargeCubbies--;
+					return true;
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		return false;
 	}
 
 }
