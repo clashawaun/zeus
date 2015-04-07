@@ -79,7 +79,7 @@ public class Server implements I_Server
 		/*Command Design Pattern
 		  Allows us to map functions to messages here so no change needs to be made to the incoming system.
 		  All the server needs to know is that using the command interface it passes the server message object
-		  it receieves from the client to the contained function and then it gets a server message object back to 
+		  it receives from the client to the contained function and then it gets a server message object back to 
 		  respond with. Allows for easy expansion of server side framework and adding of functions with no changes 
 		  to pre-existing architecture.
 		*/

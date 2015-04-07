@@ -5,7 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+<<<<<<< HEAD
 import com.google.gson.Gson;
+=======
+
+>>>>>>> 1ed63963bfe8c278800516aa9c46e82542873ee8
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
@@ -44,7 +48,7 @@ public class DataBase implements I_DataBase {
 	private CubbyFactory cubbyFactory;
 	private ShelveFactory shelveFactory;
 	private SectorFactory sectorFactory;
-	Gson gson;
+
 	
 	public DataBase() throws ParseException, Exception
 	{
@@ -181,8 +185,6 @@ public class DataBase implements I_DataBase {
 		
 		sectors.get(0).setShelves(tempShelve);
 		
-		gson = new Gson();
-		
 	}
 	@Override
 	public User createUser(String firstName, String secondName, String password, int type, String email, String phone) 
@@ -194,13 +196,13 @@ public class DataBase implements I_DataBase {
 	}
 
 	@Override
-	public boolean isValidLoggin(String username, String password) 
+	public boolean isValidLoggin(String email, String password) 
 	{
 
 		boolean isValid = false;
 		for(User user: users)
 		{
-			if(user.getFirstname() == username && user.getPassword() == password)
+			if(user.getEmail() == email && user.getPassword() == password)
 			{
 				isValid = true;
 			}
@@ -296,7 +298,6 @@ public class DataBase implements I_DataBase {
 	@Override
 	public ArrayList<Product> getProducts() 
 	{
-		
 		return products;
 	}
 	
