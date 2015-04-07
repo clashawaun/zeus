@@ -22,15 +22,15 @@ public class CubbyFactory
 		
 		switch (type)
 		{
-		case 0:
+		case 1:
 			cubby = new CubbySmall(id);
 			break;
 			
-		case 1:
+		case 2:
 			cubby = new CubbyMedium(id);
 			break;
 			
-		case 2:
+		case 3:
 			cubby =  new CubbyLarge(id);
 			break;
 		

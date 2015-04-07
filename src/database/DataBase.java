@@ -117,7 +117,7 @@ public class DataBase implements I_DataBase {
 		
 		orderIndexer = 3;
 		
-		/*
+		
 		this.cubbyFactory = new CubbyFactory();
 		this.cubbyIndexer = 1;
 		
@@ -185,7 +185,7 @@ public class DataBase implements I_DataBase {
 		}
 		
 		sectors.get(0).setShelves(tempShelve);
-		*/
+		
 	}
 	@Override
 	public User createUser(String firstName, String secondName, String password, int type, String email, String phone) 
@@ -271,7 +271,7 @@ public class DataBase implements I_DataBase {
 		
 		for(Order order : orders)
 		{
-			if(order.getStatus() == "OPEN")
+			if(order.getStatus().equalsIgnoreCase( "OPEN"));
 			tempOrders.add(order);
 		}
 		
