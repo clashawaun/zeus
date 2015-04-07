@@ -14,8 +14,10 @@ import database.DataBase;
 import database.I_DataBase;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -64,6 +66,7 @@ public class Server implements I_Server
                 	catch(Exception e)
                 	{
                 		System.out.println("oh oh :( " + e.toString());
+                		e.printStackTrace();
                 	}
                 	finally
                 	{
@@ -98,12 +101,12 @@ public class Server implements I_Server
 	
 	private ServerMessage login(ServerMessage message)
 	{
-		JsonObject test = new JsonObject();
-		test.addProperty("isValid", database.isValidLogin(gson.fromJson(message.getData(), JsonObject.class).get("email").toString()
-				         ,gson.fromJson(message.getData(), JsonObject.class).get("password").toString()));
-		System.out.println("hello there");
-		return new ServerMessage(message.getMessage()+"Result", gson.toJson(test));
-		
+		JsonObject loginCredentials = new JsonParser().parse(message.getData()).getAsJsonObject();
+		JsonObject results = new JsonObject();
+		results.addProperty("isValid", database.isValidLogin(loginCredentials.get("email").getAsString(), loginCredentials.get("password").getAsString()));
+		System.out.println("Email used: " + (loginCredentials.get("email").getAsString()));
+		System.out.println("Password used: " + (loginCredentials.get("password").getAsString()));
+		return new ServerMessage(message.getMessage()+"Result", results.toString());		
 	}
 	
 	private ServerMessage register(ServerMessage message)

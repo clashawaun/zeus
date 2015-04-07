@@ -12,8 +12,7 @@ public class Temp
 	{
 
 		ServerCommunicator t = new ServerCommunicator();
-		ServerMessage m = t.sendServerMessage(new ServerMessage("Login", "{\"email\": \"big.bird@gmail.com\", \"password\": \"yellow\"}"));
-		ServerMessage result = t.sendServerMessage(m);
-		System.out.println(result.toString());
+		ServerMessage result = t.sendServerMessage(new ServerMessage("Login", "{\"email\": \"Big.Bird@gmail.com\", \"password\": \"yellow\"}"));
+		System.out.println(result.getData());
 	}
 }

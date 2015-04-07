@@ -5,11 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-<<<<<<< HEAD
 import com.google.gson.Gson;
-=======
-
->>>>>>> 1ed63963bfe8c278800516aa9c46e82542873ee8
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
@@ -203,10 +199,10 @@ public class DataBase implements I_DataBase {
 	@Override
 	public boolean isValidLogin(String email, String password) 
 	{
-
 		for(User user: users)
 		{
-			if(user.getEmail() == email && user.getPassword() == password)
+			//Shane - I changed this since it was using == which is incorrect for strings
+			if(user.getEmail().equals(email) && user.getPassword().equals(password))
 			{
 				return true;
 			}
