@@ -7,18 +7,15 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-
 import coreClasses.*;
 import servercommunication.*;
 import database.DataBase;
 import database.I_DataBase;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,11 +98,8 @@ public class Server implements I_Server
 	
 	private ServerMessage login(ServerMessage message)
 	{
-		JsonObject loginCredentials = new JsonParser().parse(message.getData()).getAsJsonObject();
 		JsonObject results = new JsonObject();
-		results.addProperty("isValid", database.isValidLogin(loginCredentials.get("email").getAsString(), loginCredentials.get("password").getAsString()));
-		System.out.println("Email used: " + (loginCredentials.get("email").getAsString()));
-		System.out.println("Password used: " + (loginCredentials.get("password").getAsString()));
+		results.addProperty("isValid", authenticate(message.getData()));
 		return new ServerMessage(message.getMessage()+"Result", results.toString());		
 	}
 	
@@ -117,6 +111,14 @@ public class Server implements I_Server
 	private ServerMessage assignPickerItems(ServerMessage message)
 	{
 		return new ServerMessage("It", "Worked");
+	}
+	
+	private boolean authenticate(String userData)
+	{
+		//Convert the userData JSON string in a JsonObject 
+		JsonObject credentials = new JsonParser().parse(userData).getAsJsonObject();
+		//Return the result of isValidLogin where true denotes a valid set of credentials.
+		return database.isValidLogin(credentials.get("email").getAsString(), credentials.get("password").getAsString());
 	}
 	
 	/*public ServerMessage processServerMessage(ServerMessage msg)
