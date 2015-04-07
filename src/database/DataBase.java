@@ -121,14 +121,19 @@ public class DataBase implements I_DataBase {
 		
 		orderIndexer = 3;
 		
+		/*
 		this.cubbyFactory = new CubbyFactory();
 		this.cubbyIndexer = 1;
 		
 		this.shelveFactory = new ShelveFactory();
 		this.shelveIndexer = 1;
-		
+		shelves = new ArrayList<I_Shelve>();
 		for(int i = 0; i < 10; i++)
 		{
+			if(shelves == null)
+				System.out.println("Shelves is null");
+			if(shelveFactory == null)
+				System.out.println("factory is null");
 			shelves.add(shelveFactory.makeShelve(1, shelveIndexer));
 			this.shelveIndexer++;
 		}
@@ -136,7 +141,7 @@ public class DataBase implements I_DataBase {
 		
 		ArrayList<Integer> tempCubbies;
 		I_Cubby tempCub;
-		
+		cubbies = new ArrayList<I_Cubby>();
 		for(I_Shelve shelve : shelves)
 		{
 			
@@ -184,7 +189,7 @@ public class DataBase implements I_DataBase {
 		}
 		
 		sectors.get(0).setShelves(tempShelve);
-		
+		*/
 	}
 	@Override
 	public User createUser(String firstName, String secondName, String password, int type, String email, String phone) 
@@ -196,19 +201,18 @@ public class DataBase implements I_DataBase {
 	}
 
 	@Override
-	public boolean isValidLoggin(String email, String password) 
+	public boolean isValidLogin(String email, String password) 
 	{
 
-		boolean isValid = false;
 		for(User user: users)
 		{
 			if(user.getEmail() == email && user.getPassword() == password)
 			{
-				isValid = true;
+				return true;
 			}
 		}
 		
-		return isValid;
+		return false;
 	}
 
 	@Override

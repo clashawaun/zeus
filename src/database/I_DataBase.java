@@ -17,7 +17,7 @@ public interface I_DataBase {
 
 	
 	public User createUser(String firstName, String secondName, String password, int type, String email, String phone );
-	public boolean isValidLoggin(String username, String password);
+	public boolean isValidLogin(String username, String password);
 
 	public Order registerOrder(ArrayList<Integer> productIDs, String shippingAddress);
 	public Order getOrder(int ID);

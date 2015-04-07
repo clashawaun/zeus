@@ -10,8 +10,12 @@ import java.net.SocketAddress;
 
 import coreClasses.*;
 import servercommunication.*;
+import database.DataBase;
+import database.I_DataBase;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -24,10 +28,14 @@ public class Server implements I_Server
 	//Needs more atts, will come up with whats needed during implementation!
 	private ServerTools serverTools;
 	private Map<String, Command> messageFunctionMap;
-	public Server()
+	private I_DataBase database;
+	private Gson gson;
+	//Refactor exception handling.
+	public Server()throws Exception
 	{
 		messageFunctionMap = new HashMap<String, Command>();
 		buildMessageFunctionMap();
+		database = new DataBase();
 	}
 	
 	public void runServer() throws IOException
@@ -55,7 +63,7 @@ public class Server implements I_Server
                 	}
                 	catch(Exception e)
                 	{
-                		System.out.println("oh oh :(");
+                		System.out.println("oh oh :( " + e.toString());
                 	}
                 	finally
                 	{
@@ -90,8 +98,12 @@ public class Server implements I_Server
 	
 	private ServerMessage login(ServerMessage message)
 	{
-		//handles login events
-		return new ServerMessage("It", "Worked");
+		JsonObject test = new JsonObject();
+		test.addProperty("isValid", database.isValidLogin(gson.fromJson(message.getData(), JsonObject.class).get("email").toString()
+				         ,gson.fromJson(message.getData(), JsonObject.class).get("password").toString()));
+		System.out.println("hello there");
+		return new ServerMessage(message.getMessage()+"Result", gson.toJson(test));
+		
 	}
 	
 	private ServerMessage register(ServerMessage message)

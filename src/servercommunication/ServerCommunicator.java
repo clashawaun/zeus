@@ -15,7 +15,7 @@ public class ServerCommunicator
 	
 	public ServerCommunicator()
 	{
-		this.endpoint = "127.0.0.1"; //12
+		this.endpoint = "104.236.24.208"; //12
 	}
 	public ServerCommunicator(String endpoint)
 	{
