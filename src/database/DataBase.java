@@ -5,20 +5,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import com.google.gson.Gson;
+
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
-import coreClasses.I_Shelve;
+import coreClasses.I_Shelf;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
 import coreClasses.SectorFactory;
-import coreClasses.ShelveFactory;
+import coreClasses.ShelfFactory;
 import coreClasses.User;
 
 
-public class DataBase implements I_DataBase {
+public class Database implements I_Database {
 
 	private ArrayList<User> users;
 	private int userIndexer;
@@ -35,18 +35,18 @@ public class DataBase implements I_DataBase {
 	private ArrayList<I_Cubby> cubbies;
 	private int cubbyIndexer;
 	
-	private ArrayList<I_Shelve> shelves; 
+	private ArrayList<I_Shelf> shelves; 
 	private int shelveIndexer;
 	
 	private ArrayList<I_Sector> sectors;
 	private int sectorIndexer;
 	
 	private CubbyFactory cubbyFactory;
-	private ShelveFactory shelveFactory;
+	private ShelfFactory shelveFactory;
 	private SectorFactory sectorFactory;
 
 	
-	public DataBase() throws ParseException, Exception
+	public Database() throws ParseException, Exception
 	{
 	
 		users = new ArrayList<User>();
@@ -121,9 +121,9 @@ public class DataBase implements I_DataBase {
 		this.cubbyFactory = new CubbyFactory();
 		this.cubbyIndexer = 1;
 		
-		this.shelveFactory = new ShelveFactory();
+		this.shelveFactory = new ShelfFactory();
 		this.shelveIndexer = 1;
-		shelves = new ArrayList<I_Shelve>();
+		shelves = new ArrayList<I_Shelf>();
 		for(int i = 0; i < 10; i++)
 		{
 			if(shelves == null)
@@ -138,7 +138,7 @@ public class DataBase implements I_DataBase {
 		ArrayList<Integer> tempCubbies;
 		I_Cubby tempCub;
 		cubbies = new ArrayList<I_Cubby>();
-		for(I_Shelve shelve : shelves)
+		for(I_Shelf shelve : shelves)
 		{
 			
 			tempCubbies = new ArrayList<Integer>();
@@ -179,7 +179,7 @@ public class DataBase implements I_DataBase {
 		
 		ArrayList<Integer> tempShelve = new ArrayList<Integer>();
 		
-		for(I_Shelve shelve : shelves)
+		for(I_Shelf shelve : shelves)
 		{
 			tempShelve.add(shelve.getId());
 		}
@@ -488,9 +488,9 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public I_Shelve createShelve( int type) 
+	public I_Shelf createShelve( int type) 
 	{
-		I_Shelve temp = shelveFactory.makeShelve(type, shelveIndexer);
+		I_Shelf temp = shelveFactory.makeShelve(type, shelveIndexer);
 		shelveIndexer++;
 		return temp;
 	}
@@ -573,7 +573,8 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public ArrayList<Integer> get_All_Items_For_User(int userID) {
+	public ArrayList<Integer> getAllItemsForUser(int userID) 
+	{
 		
 		for(User user : users)
 		{
@@ -586,7 +587,8 @@ public class DataBase implements I_DataBase {
 	}
 	
 	@Override
-	public ArrayList<Integer> get_All_Items_For_All_Users() {
+	public ArrayList<Integer> getAllItemsForAllUsers() 
+	{
 		
 		ArrayList<Integer> tempList = new ArrayList<Integer>();
 		

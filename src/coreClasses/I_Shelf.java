@@ -2,7 +2,7 @@ package coreClasses;
 
 import java.util.ArrayList;
 
-public interface I_Shelve {
+public interface I_Shelf {
 
 	public boolean hasCubby(int cubbyID);
 	public boolean addCubby(I_Cubby cubby);

@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
-import coreClasses.I_Shelve;
+import coreClasses.I_Shelf;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
 import coreClasses.User;
 
 
-public interface I_DataBase {
+public interface I_Database {
 
 
 	
@@ -47,7 +47,7 @@ public interface I_DataBase {
 	public void updateOrderPriority(int orderID, float Priority );
 	
 	public I_Cubby createCubby(int type);
-	public I_Shelve createShelve(int type);
+	public I_Shelf createShelve(int type);
 	public I_Sector createSector(int type);
 	
 	public void assignCubbyToShelve(int cubbyID, int shelveID);
@@ -60,7 +60,7 @@ public interface I_DataBase {
 	public void deletePrdoct(int productID);
 	public void deleteOrder(int OrderID);
 	
-	public ArrayList<Integer> get_All_Items_For_User(int userID);
-	public ArrayList<Integer> get_All_Items_For_All_Users();
+	public ArrayList<Integer> getAllItemsForUser(int userID);
+	public ArrayList<Integer> getAllItemsForAllUsers();
 
 }

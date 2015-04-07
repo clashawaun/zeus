@@ -9,8 +9,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import coreClasses.*;
 import servercommunication.*;
-import database.DataBase;
-import database.I_DataBase;
+import database.Database;
+import database.I_Database;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -27,14 +27,14 @@ public class Server implements I_Server
 	//Needs more atts, will come up with whats needed during implementation!
 	private ServerTools serverTools;
 	private Map<String, Command> messageFunctionMap;
-	private I_DataBase database;
+	private I_Database database;
 	private Gson gson;
 	//Refactor exception handling.
 	public Server()throws Exception
 	{
 		messageFunctionMap = new HashMap<String, Command>();
 		buildMessageFunctionMap();
-		database = new DataBase();
+		database = new Database();
 	}
 	
 	public void runServer() throws IOException

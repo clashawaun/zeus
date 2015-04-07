@@ -2,7 +2,7 @@ package coreClasses;
 
 import java.util.ArrayList;
 
-public class Shelve implements I_Shelve 
+public class Shelf implements I_Shelf 
 {
 	private int numberOfSmallCubbies;
 	private int  numberOfMediumCubbies;
@@ -16,7 +16,7 @@ public class Shelve implements I_Shelve
 	private int width;
 	private int depth;
 	
-	public Shelve()
+	public Shelf()
 	{
 		this.id = 0;
 		this.height = 0;
@@ -31,7 +31,7 @@ public class Shelve implements I_Shelve
 		cubbies = new ArrayList<Integer>();
 	}
 	
-	public Shelve(int id, int height, int width, int depth, int numberOfSmallCubbies, int numberOfMediumCubbies, int numberOfLargeCubbies )
+	public Shelf(int id, int height, int width, int depth, int numberOfSmallCubbies, int numberOfMediumCubbies, int numberOfLargeCubbies )
 	{
 		this.id = id;
 		
