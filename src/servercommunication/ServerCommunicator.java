@@ -12,21 +12,29 @@ public class ServerCommunicator
 	
 	private Socket serverSocket;
 	private String endpoint;
+	private int port;
 	
 	public ServerCommunicator()
 	{
 		this.endpoint = "104.236.24.208"; //12
+		this.port = 9090;
 	}
 	public ServerCommunicator(String endpoint)
 	{
 		this.endpoint = endpoint;
+		this.port = 9090;
+	}
+	public ServerCommunicator(String endpoint, int port)
+	{
+		this.endpoint = endpoint;
+		this.port = port;
 	}
 	
 	private boolean openServerConnection()
 	{
 		try
 		{
-			serverSocket = new Socket(endpoint, 9090);
+			serverSocket = new Socket(endpoint, port);
 			return true;
 		}
 		catch (Exception e) 
@@ -47,6 +55,15 @@ public class ServerCommunicator
 		this.endpoint = endpoint;
 	}
 	
+	public void setPort(int port)
+	{
+		this.port = port;
+	}
+	
+	public int getPort()
+	{
+		return port;
+	}
 	public ServerMessage sendServerMessage(ServerMessage serverMessage)
 	{
 		ServerMessage response = null;
