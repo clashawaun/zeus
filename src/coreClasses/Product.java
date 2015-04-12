@@ -14,11 +14,10 @@ public class Product
 	private float width;
 	private float depth;
 	private float weight;
-	private I_Priority priority;
-	private float basePriority;
+	private int priorityID;
 	private String state;
 	
-	public Product(int id,String name, String description, double price, float height, float width, float depth, float weight, float basePriority)
+	public Product(int id,String name, String description, double price, float height, float width, float depth, float weight, int priorityID)
 	{
 		this.ID = id;
 		this.name = name;
@@ -28,7 +27,7 @@ public class Product
 		this.depth = depth;
 		this.width = width;
 		this.weight = weight;
-		this.basePriority = basePriority;
+		this.priorityID = priorityID;
 		this.state = "AVAILABLE";
 	}
 
@@ -40,12 +39,12 @@ public class Product
 		this.state = state;
 	}
 
-	public float getBasePriority() {
-		return basePriority;
+	public int getPriorityID() {
+		return priorityID;
 	}
 
-	public void setBasePriority(float basePriority) {
-		this.basePriority = basePriority;
+	public void setPriorityID(int basePriority) {
+		this.priorityID = priorityID;
 	}
 
 	public String getName() {
@@ -110,14 +109,6 @@ public class Product
 
 	public void setWeight(float weight) {
 		this.weight = weight;
-	}
-
-	public I_Priority getPriority() {
-		return priority;
-	}
-
-	public void setPriority(I_Priority priority) {
-		this.priority = priority;
 	}
 
 	public int getID() {

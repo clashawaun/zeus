@@ -39,11 +39,12 @@ public class ServerTools
 		return reportTools;
 	}
 	
-	/** This function will find items in the warehouse that will be used to fulfil the provided order*/
+	/** This function will find items in the system that will be used to fulfil the provided order*/
 	public boolean processNewOrder(Order newOrder)
 	{
 		//Get the product objects the ID's provided represent
 		ArrayList<Product> products = new ArrayList<Product>();
+		ArrayList<Integer> itemIDs = new ArrayList<Integer>();
 		for(int productID : newOrder.getProductIds())
 		{
 			Product temp = database.getProduct(productID);
@@ -53,14 +54,36 @@ public class ServerTools
 		}
 		for(Product product : products)
 		{
+			Item bestItem = null;
+			int bestItemPriority = -1;
 			ArrayList<Item> items = database.getItems(product.getID());
+			if(items==null)
+				return false;
 			for(Item item : items)
 			{
+				//DELETE THIS NEXT LINE ASAP
+				item.setCurrentState("AVAILABLE");
 				if(item.getCurrentState().equals("AVAILABLE"))
 				{
-					//Code that invokes the priority system
+					//Strategy Design Pattern ?
+					int itemPriority = database.getPriority(product.getPriorityID()).calculatePriority(item, product);
+					if(itemPriority > bestItemPriority)
+					{
+						bestItem = item;
+						bestItemPriority = itemPriority;
+					}
 				}
 			}
+			if(bestItem == null)
+				return false;
+			itemIDs.add(bestItem.getID());	
+		}
+		//Sanity check
+		if(itemIDs.size() == newOrder.getProductIds().size())
+		{
+			newOrder.setProductIds(itemIDs);
+			System.out.println("Items were selected as follows" + itemIDs.toString());
+			return true;
 		}
 		return false;
 	}

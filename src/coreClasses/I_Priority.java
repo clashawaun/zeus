@@ -2,6 +2,6 @@ package coreClasses;
 
 public interface I_Priority 
 {
-	public String getPriorityId();
-	public int calculatePriority();
+	public int getPriorityId();
+	public int calculatePriority(Item item, Product product);
 }

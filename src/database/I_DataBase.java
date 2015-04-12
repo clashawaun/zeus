@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import coreClasses.I_Cubby;
+import coreClasses.I_Priority;
 import coreClasses.I_Sector;
 import coreClasses.I_Shelf;
 import coreClasses.Item;
@@ -23,7 +24,7 @@ public interface I_Database {
 	public Order getOrder(int ID);
 	
 	public Item addItem(int productID, String manufactureDate, String expriryDate) throws ParseException, Exception;
-	public Product createProduct(String name, String description, double price, float height, float width, float depth, float weight, float basePriority );
+	public Product createProduct(String name, String description, double price, float height, float width, float depth, float weight, int basePriority );
 	
 	public ArrayList<Order> getOpenOrders();
 	public ArrayList<Item> getItems(int productID);
@@ -43,7 +44,7 @@ public interface I_Database {
 	public void updateProductStutas(int productID, String state);
 	
 	public void updateItemPriority(int itemID, float Priority );
-	public void updateProductPriority(int productID, float Priority );
+	public void updateProductPriority(int productID, int Priority );
 	public void updateOrderPriority(int orderID, float Priority );
 	
 	public I_Cubby createCubby(int type);
@@ -62,5 +63,7 @@ public interface I_Database {
 	
 	public ArrayList<Integer> getAllItemsForUser(int userID);
 	public ArrayList<Integer> getAllItemsForAllUsers();
+	
+	public I_Priority getPriority(int priorityID);
 
 }

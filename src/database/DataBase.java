@@ -16,6 +16,9 @@ import coreClasses.Product;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
 import coreClasses.User;
+import coreClasses.PriorityFactory;
+import coreClasses.I_Priority;
+import coreClasses.Priority;
 
 
 public class Database implements I_Database {
@@ -253,10 +256,10 @@ public class Database implements I_Database {
 
 	@Override
 	public Product createProduct(String name, String description, double price, 
-			float height, float width, float depth,float weight, float basePriority) 
+			float height, float width, float depth,float weight, int priorityID) 
 	{
 		
-		Product product = new Product(productIndexer, name, description, price, height, width, depth, weight, basePriority);
+		Product product = new Product(productIndexer, name, description, price, height, width, depth, weight, priorityID);
 		products.add(product);
 		productIndexer++;
 		
@@ -451,7 +454,7 @@ public class Database implements I_Database {
 	}
 	
 	@Override
-	public void updateProductPriority(int productID, float priority) 
+	public void updateProductPriority(int productID, int priority) 
 	{
 
 		
@@ -459,7 +462,7 @@ public class Database implements I_Database {
 		{
 			if(product.getID() == productID)
 			{
-				product.setBasePriority(priority);
+				product.setPriorityID(priority);
 			}
 		}
 		
@@ -597,6 +600,12 @@ public class Database implements I_Database {
 			tempList.addAll(user.getItems());
 		}
 		return tempList;
+	}
+	
+	@Override
+	public I_Priority getPriority(int priorityID)
+	{
+		return new PriorityFactory().getPriority(priorityID);
 	}
 
 
