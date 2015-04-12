@@ -3,21 +3,29 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+
 import coreClasses.*;
 import servercommunication.*;
 import database.Database;
 import database.I_Database;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -35,6 +43,7 @@ public class Server implements I_Server
 		messageFunctionMap = new HashMap<String, Command>();
 		buildMessageFunctionMap();
 		database = new Database();
+		serverTools = new ServerTools(database);
 	}
 	
 	public void runServer() throws IOException
@@ -96,8 +105,8 @@ public class Server implements I_Server
 		  to pre-existing architecture.
 		*/
 		messageFunctionMap.put("Login", new Command() {public ServerMessage runCommand(ServerMessage m) {return login(m);}});
-		messageFunctionMap.put("Register", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
-		messageFunctionMap.put("PickerItemRequest", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignPickerItems(m);}});
+		messageFunctionMap.put("RegisterUser", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
+		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
 	}
 	
 	private ServerMessage login(ServerMessage message)
@@ -115,6 +124,20 @@ public class Server implements I_Server
 	private ServerMessage assignPickerItems(ServerMessage message)
 	{
 		return new ServerMessage("It", "Worked");
+	}
+	
+	private ServerMessage processIncomingOrder(ServerMessage message)
+	{
+		JsonObject orderData = new JsonParser().parse(message.getData()).getAsJsonObject();
+		JsonArray jsonArray =  orderData.get("productIDs").getAsJsonArray();
+		ArrayList<Integer> productIDs = new ArrayList<Integer>();
+		for(JsonElement ID : jsonArray)
+		{
+			productIDs.add(ID.getAsInt());
+		}
+		JsonObject result = new JsonObject();
+		result.addProperty("isSubmitted", serverTools.processNewOrder(database.registerOrder(productIDs, orderData.get("shippingAddress").getAsString())));
+		return new ServerMessage("NewOrderResult", result.toString());
 	}
 		
 	private boolean authenticate(String userData)

@@ -8,9 +8,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -73,7 +70,7 @@ public class ServerCommunicator
 		}
 		catch(Exception e)
 		{
-			//Failed to auto selected, lets use defaults in this case
+			//Failed to auto select, lets use defaults in this case
 			setEndpoint("104.236.24.208");
 			setPort(9090);
 			//TODO: debug message, remove before finished version

@@ -15,12 +15,21 @@ public class ServerMessage implements Serializable
 	{
 		message = "None";
 		data = "None";
+		userData = "None";
 	}
 	
+	/** This constructor is deprecated, DO NOT USE for any new code. Use the one which takes all 3 parameters.*/
 	public ServerMessage(String message, String data)
 	{
 		this.message = message;
 		this.data = data;
+	}
+	
+	public ServerMessage(String message, String data, String userData)
+	{
+		this.message = message;
+		this.data = data;
+		this.userData = userData;
 	}
 	
 	public void setMessage(String message)
@@ -33,6 +42,11 @@ public class ServerMessage implements Serializable
 		this.data = data;
 	}
 	
+	public void setUserData(String userData)
+	{
+		this.userData = userData;
+	}
+	
 	public String getMessage()
 	{
 		return message;
@@ -41,5 +55,10 @@ public class ServerMessage implements Serializable
 	public String getData()
 	{
 		return data;
+	}
+	
+	public String getUserData()
+	{
+		return userData;
 	}
 }
