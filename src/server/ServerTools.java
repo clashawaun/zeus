@@ -24,6 +24,9 @@ public class ServerTools
 	public ServerTools(I_Database database)
 	{
 		this.database = database;
+		sectorTools = new ArrayList<SectorTools>();
+		packagingTools = new PackagingTools();
+		reportTools = new ReportTools();
 	}
 	
 	public ArrayList<SectorTools> getSectorTools() 
@@ -85,12 +88,13 @@ public class ServerTools
 		{
 			item.setCurrentState("AWAITING_PICKER");
 			database.updateItem(item);
+			itemIDs.add(item.getID());
 			//Need to stop at this point until I talk to JoN
 		}
 		newOrder.setProductIds(itemIDs);
 		database.updateOrder(newOrder);
 		System.out.println("Items were selected as follows" + itemIDs.toString());
-		return false;
+		return true;
 	}
 	
 	public void addSectorTool(SectorTools sectorTool)
