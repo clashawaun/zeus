@@ -44,6 +44,7 @@ public class Server implements I_Server
 		buildMessageFunctionMap();
 		database = new Database();
 		serverTools = new ServerTools(database);
+		setUpSectorTools();
 	}
 	
 	public void runServer() throws IOException
@@ -107,6 +108,15 @@ public class Server implements I_Server
 		messageFunctionMap.put("Login", new Command() {public ServerMessage runCommand(ServerMessage m) {return login(m);}});
 		messageFunctionMap.put("RegisterUser", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
 		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
+	}
+	
+	private void setUpSectorTools()
+	{
+		ArrayList<I_Sector> sectors = database.getAllSectors();
+		for(I_Sector sector : sectors)
+		{
+			serverTools.addSectorTool(new SectorTools(sector));
+		}
 	}
 	
 	private ServerMessage login(ServerMessage message)

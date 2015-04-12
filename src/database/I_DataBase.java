@@ -65,5 +65,11 @@ public interface I_Database {
 	public ArrayList<Integer> getAllItemsForAllUsers();
 	
 	public I_Priority getPriority(int priorityID);
+	
+	//TODO: This following functions will probably be deleted. Adding to test server code
+	public void updateProduct(Product product);
+	public void updateItem(Item item);
+	public void updateOrder(Order order);
+	public ArrayList<I_Sector> getAllSectors();
 
 }

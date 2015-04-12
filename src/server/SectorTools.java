@@ -2,18 +2,20 @@ package server;
 import java.util.ArrayList;
 
 
+
+import coreClasses.I_Sector;
 import coreClasses.Picker;
 import coreClasses.Sector;
 import coreClasses.Item;
 public class SectorTools 
 {
-	private Sector sector;
+	private I_Sector sector;
 	public SectorTools()
 	{
 		sector = null;
 	}
 	
-	public SectorTools(Sector sector)
+	public SectorTools(I_Sector sector)
 	{
 		this.sector = sector;
 	}

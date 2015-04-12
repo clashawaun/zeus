@@ -44,7 +44,7 @@ public class ServerTools
 	{
 		//Get the product objects the ID's provided represent
 		ArrayList<Product> products = new ArrayList<Product>();
-		ArrayList<Integer> itemIDs = new ArrayList<Integer>();
+		ArrayList<Item> chosenItems = new ArrayList<Item>();
 		for(int productID : newOrder.getProductIds())
 		{
 			Product temp = database.getProduct(productID);
@@ -65,7 +65,7 @@ public class ServerTools
 				item.setCurrentState("AVAILABLE");
 				if(item.getCurrentState().equals("AVAILABLE"))
 				{
-					//Strategy Design Pattern ?
+					//Is this strategy Design Pattern ?
 					int itemPriority = database.getPriority(product.getPriorityID()).calculatePriority(item, product);
 					if(itemPriority > bestItemPriority)
 					{
@@ -76,15 +76,20 @@ public class ServerTools
 			}
 			if(bestItem == null)
 				return false;
-			itemIDs.add(bestItem.getID());	
+			//This will probably change
+			chosenItems.add(bestItem);	
 		}
 		//Sanity check
-		if(itemIDs.size() == newOrder.getProductIds().size())
+		ArrayList<Integer> itemIDs = new ArrayList<Integer>();
+		for(Item item : chosenItems)
 		{
-			newOrder.setProductIds(itemIDs);
-			System.out.println("Items were selected as follows" + itemIDs.toString());
-			return true;
+			item.setCurrentState("AWAITING_PICKER");
+			database.updateItem(item);
+			//Need to stop at this point until I talk to JoN
 		}
+		newOrder.setProductIds(itemIDs);
+		database.updateOrder(newOrder);
+		System.out.println("Items were selected as follows" + itemIDs.toString());
 		return false;
 	}
 	

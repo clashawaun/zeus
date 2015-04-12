@@ -13,6 +13,7 @@ import coreClasses.I_Shelf;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
+import coreClasses.Sector;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
 import coreClasses.User;
@@ -602,12 +603,62 @@ public class Database implements I_Database {
 		return tempList;
 	}
 	
+	
+//+-----------Anything added below this line was added by shane, so I take responsibility if it breaks things and for the shite code in general. Most will prob be deleted--------------------+
+	
+	
 	@Override
 	public I_Priority getPriority(int priorityID)
 	{
 		return new PriorityFactory().getPriority(priorityID);
 	}
+	
+	
+	
+	
+	//TODO: I dont know if this is ok todo, simply adding this in for the moment to speed up dev of ProcessinngOrder and will come back to change. Marked TODO so wont forget
+	public void updateProduct(Product product)
+	{
+		//This code is shite, do not use in the final version
+		for(int i = 0; i < products.size(); i++)
+		{
+			if(products.get(i).getID() == product.getID())
+			{
+				products.set(i, product);
+				return;
+			}
+		}
+	}
+	
+	public void updateItem(Item item)
+	{
+		//This code is shite, do not use in the final version
+		for(int i = 0; i < products.size(); i++)
+		{
+			if(items.get(i).getID() == item.getID())
+			{
+				items.set(i, item);
+				return;
+			}
+		}
+	}
 
+	public ArrayList<I_Sector> getAllSectors()
+	{
+		return sectors;
+	}
+	
+	public void updateOrder(Order order)
+	{
+		for(int i = 0; i < orders.size(); i++)
+		{
+			if(orders.get(i).getID() == order.getID())
+			{
+				orders.set(i, order);
+				return;
+			}
+		}
+	}
 
 
 }
