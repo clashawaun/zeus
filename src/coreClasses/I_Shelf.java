@@ -8,8 +8,8 @@ public interface I_Shelf {
 	public boolean addCubby(I_Cubby cubby);
 	public boolean removeCubby(I_Cubby cubby);
 	public ArrayList<Integer> getCubbies();
-	public int getId();
-	public void setId(int id);
+	public int getID();
+	public void setID(int id);
 	public void setCubbies(ArrayList<Integer> cubbies);
 	
 	public int getHeight();
@@ -19,4 +19,6 @@ public interface I_Shelf {
 	public void setWidth(int width);
 	public void setDepth(int depth);
 
+	@Override
+	public boolean equals(Object obj);
 }

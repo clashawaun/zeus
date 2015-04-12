@@ -9,7 +9,7 @@ public abstract class Cubby implements I_Cubby
 	private final int DEPTH;
 	private final int TYPE;
 	
-	public Cubby()
+	protected Cubby()
 	{
 		this.ID = 0;
 		this.HEIGHT = 0;
@@ -18,13 +18,19 @@ public abstract class Cubby implements I_Cubby
 		this.TYPE = 0;
 	}
 	
-	public Cubby(int id, int height, int width, int depth, int type)
+	protected Cubby(int id, int height, int width, int depth, int type)
 	{
 		this.ID = id;
 		this.HEIGHT = height;
 		this.WIDTH = width;
 		this.DEPTH = depth;
 		this.TYPE = type;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Cubby)) && ((Cubby) obj) != null && this.ID == ((Cubby) obj).getID());     
 	}
 	
 	public int getID()

@@ -3,10 +3,7 @@ package coreClasses;
 import java.util.Date;
 
 
-
-
-
-public class Item {
+public class Item  implements I_Item{
 
 	private final int PRODUCT_ID;
 	private final int ID;
@@ -15,10 +12,15 @@ public class Item {
 	
 	private String currentState;
 	private int assignedUserID;
-	private String cubbyID;
+	private int cubbyID;
 	private int xPlacementPoint;
 	private float priority;
 	
+	protected Item()
+	{
+		PRODUCT_ID = -1;
+		ID = -1;
+	}
 
 
 	public Item(int productID, int id, Date manufactureDate, Date expriryDate)
@@ -29,11 +31,16 @@ public class Item {
 		this.date_of_expriry = expriryDate;
 		
 		this.currentState = "";
-		this.cubbyID = "";
+		this.cubbyID = -1;
 		this.xPlacementPoint = 0;
 		this.priority = 0;
-		
-		
+	}
+	
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Item)) && ((Item) obj) != null && this.ID == ((Item) obj).getID());     
 	}
 	
 	public float getPriority() {
@@ -60,11 +67,11 @@ public class Item {
 		this.assignedUserID = assignedUserID;
 	}
 
-	public String getCubbyID() {
+	public int getCubbyID() {
 		return cubbyID;
 	}
 
-	public void setCubbyID(String cubbyID) {
+	public void setCubbyID(int cubbyID) {
 		this.cubbyID = cubbyID;
 	}
 

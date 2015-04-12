@@ -23,4 +23,8 @@ public interface I_Sector {
 	public void setWidth(int width);
 	public void setDepth(int depth);
 	public void setID(int id);
+	
+	@Override
+	public boolean equals(Object obj);
+	
 }

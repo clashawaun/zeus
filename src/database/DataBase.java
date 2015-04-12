@@ -185,7 +185,7 @@ public class Database implements I_Database {
 		
 		for(I_Shelf shelve : shelves)
 		{
-			tempShelve.add(shelve.getId());
+			tempShelve.add(shelve.getID());
 		}
 		
 		sectors.get(0).setShelves(tempShelve);

@@ -13,10 +13,12 @@ public class User
 	private String phone;
 	private String password;
 	private ArrayList<Integer> items;
-	public User()
+	
+	protected User()
 	{
-		ID = 0;
+		ID = -1;
 	}
+	
 	public User(String firstName, String surname, int userID, String email, String phone, String password)
 	{
 		
@@ -30,6 +32,12 @@ public class User
 		this.items = new ArrayList<Integer>();
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof User)) && ((User) obj) != null && this.ID == ((User) obj).getID());     
+	}
+	
 	public String getFirstname() {
 		return firstname;
 	}

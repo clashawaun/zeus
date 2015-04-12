@@ -10,4 +10,6 @@ public interface I_Cubby
 	public int getDepth();
 	public int getType();
 
+	@Override
+	public boolean equals(Object obj);
 }

@@ -11,14 +11,14 @@ public class Shelf implements I_Shelf
 	private int currentNumberOfMediumCubbies;
 	private int currentNumberOfLargeCubbies;
 	private ArrayList<Integer> cubbies;
-	private int id;
+	private int ID;
 	private int height;
 	private int width;
 	private int depth;
 	
-	public Shelf()
+	protected Shelf()
 	{
-		this.id = 0;
+		this.ID = 0;
 		this.height = 0;
 		this.width = 0;
 		this.depth =  0;
@@ -31,9 +31,9 @@ public class Shelf implements I_Shelf
 		cubbies = new ArrayList<Integer>();
 	}
 	
-	public Shelf(int id, int height, int width, int depth, int numberOfSmallCubbies, int numberOfMediumCubbies, int numberOfLargeCubbies )
+	protected Shelf(int id, int height, int width, int depth, int numberOfSmallCubbies, int numberOfMediumCubbies, int numberOfLargeCubbies )
 	{
-		this.id = id;
+		this.ID = id;
 		
 		this.height = height;
 		this.width = width;
@@ -50,6 +50,12 @@ public class Shelf implements I_Shelf
 
 	}
 
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Shelf)) && ((Shelf) obj) != null && this.ID == ((Shelf) obj).getID());     
+	}
+	
 	public int getHeight() {
 		return height;
 	}
@@ -75,13 +81,13 @@ public class Shelf implements I_Shelf
 	}
 
 	@Override
-	public int getId() {
-		return id;
+	public int getID() {
+		return ID;
 	}
 
 	@Override
-	public void setId(int id) {
-		this.id = id;
+	public void setID(int id) {
+		this.ID = id;
 	}
 
 	@Override
