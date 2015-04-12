@@ -70,6 +70,10 @@ public class Server implements I_Server
                 		
                 	}
                 } 
+                catch(Exception e)
+                {
+                	//Bad request or Zeus Server Selector checking if server is alive.
+                }
                 finally 
                 {
                     socket.close();
@@ -98,9 +102,9 @@ public class Server implements I_Server
 	
 	private ServerMessage login(ServerMessage message)
 	{
-		JsonObject results = new JsonObject();
-		results.addProperty("isValid", authenticate(message.getData()));
-		return new ServerMessage(message.getMessage()+"Result", results.toString());		
+		JsonObject result = new JsonObject();
+		result.addProperty("isValid", authenticate(message.getData()));
+		return new ServerMessage(message.getMessage()+"Result", result.toString());		
 	}
 	
 	private ServerMessage register(ServerMessage message)
@@ -112,7 +116,7 @@ public class Server implements I_Server
 	{
 		return new ServerMessage("It", "Worked");
 	}
-	
+		
 	private boolean authenticate(String userData)
 	{
 		//Convert the userData JSON string in a JsonObject 
