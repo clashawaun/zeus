@@ -1,9 +1,18 @@
 package servercommunication;
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class ServerCommunicator 
 {
@@ -14,10 +23,10 @@ public class ServerCommunicator
 	private String endpoint;
 	private int port;
 	
+	//For the purposes of this project the default constructor should be used.
 	public ServerCommunicator()
 	{
-		this.endpoint = "104.236.24.208"; //12
-		this.port = 9090;
+		autoServerSelection();
 	}
 	public ServerCommunicator(String endpoint)
 	{
@@ -42,6 +51,33 @@ public class ServerCommunicator
 			//DELETE ME For final version and add error handling
 			System.out.println("Error - Failed to connect to the server. Is it online ?");
 			return false;
+		}
+	}
+	
+	/** Use this function if you want the Zeus Server Selector to determine the best server to connect to*/
+	public void autoServerSelection()
+	{
+		try
+		{
+			//URL to the server Selector service
+			URL serverSelector = new URL("http://zeus.shanecraven.info/zeus_software/what_server.aspx");
+			URLConnection connection = serverSelector.openConnection();
+			//Read the JSON returned from the service
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			JsonObject selectedServer = new JsonParser().parse(in.readLine()).getAsJsonObject();
+			//Set the endpoint and port based on data returned from the service
+			setEndpoint(selectedServer.get("endpoint").getAsString());
+			setPort(selectedServer.get("port").getAsInt());
+			//TODO: Debug Message, remove before finished version
+			System.out.println("The selected info was: endpoint=" + selectedServer.get("endpoint").getAsString() + ", port=" + selectedServer.get("port").getAsInt());
+		}
+		catch(Exception e)
+		{
+			//Failed to auto selected, lets use defaults in this case
+			setEndpoint("104.236.24.208");
+			setPort(9090);
+			//TODO: debug message, remove before finished version
+			System.out.println("Defaults used");
 		}
 	}
 	
