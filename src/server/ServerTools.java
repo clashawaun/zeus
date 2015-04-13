@@ -1,6 +1,7 @@
 package server;
 import java.util.ArrayList;
 
+import coreClasses.I_Sector;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
@@ -84,18 +85,28 @@ public class ServerTools
 		ArrayList<Integer> itemIDs = new ArrayList<Integer>();
 		for(Item item : chosenItems)
 		{
+			queueItemForPickup(item);
 			item.setCurrentState("AWAITING_PICKER");
 			database.updateItem(item);
 			itemIDs.add(item.getID());
-			//Need to stop at this point until I talk to JoN
 		}
 		newOrder.setProductIds(itemIDs);
 		database.updateOrder(newOrder);
-		System.out.println("Items were selected as follows" + itemIDs.toString());
 		return true;
 	}
 	
-	//public boolean 
+	public void queueItemForPickup(Item item)
+	{
+		I_Sector itemSector = database.shelfBelongsToSector(database.cubbyBelongsToShelf(database.itemBelongsToCubby(item.getID()).getID()).getID());
+		for(SectorTools  tool : sectorTools)
+		{
+			if(tool.getSectorId() == itemSector.getID())
+			{
+				itemSector.putItemInQueue(item);
+				break;
+			}
+		}
+	}
 	
 	public void addSectorTool(SectorTools sectorTool)
 	{

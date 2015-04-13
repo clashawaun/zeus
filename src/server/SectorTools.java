@@ -34,6 +34,11 @@ public class SectorTools
 		return !sector.getItemQueue().isEmpty();
 	}
 	
+	public int getSectorId()
+	{
+		return sector.getID();
+	}
+	
 	public ArrayList<Item> getNewItemsForCollector(Picker picker)
 	{
 		//This function requires DB access to set certain variables to maintain state.
