@@ -11,13 +11,14 @@ public class Picker extends User{
 	public Picker()
 	{
 		super();
+		itemBasket = new ArrayList<Item>();
 	}
 	
 	public Picker(String firstName, String surname, int userID,
 			String email, String phone, String password) 
 	{
 		super(firstName, surname, userID, email, phone, password);
-		
+		itemBasket = new ArrayList<Item>();
 	}
 	
 	public boolean addItem(Item item)
@@ -29,5 +30,10 @@ public class Picker extends User{
 	public boolean removeItem(Item item)
 	{
 		return itemBasket.remove(item);
+	}
+	
+	public ArrayList<Item> getPickerItems()
+	{
+		return itemBasket;
 	}
 }
