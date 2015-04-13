@@ -19,7 +19,9 @@ public interface I_Database {
 	
 	public User createUser(String firstName, String secondName, String password, String email, String phone, int type );
 	public boolean isValidLogin(String username, String password);
-
+	public User getUser(String email, String password);
+	public User getUser(int userID);
+	
 	public Order registerOrder(ArrayList<Integer> productIDs, String shippingAddress);
 	public Order getOrder(int ID);
 	
@@ -37,7 +39,6 @@ public interface I_Database {
 	public int itemBelonngsTo(int itemID);
 	
 	public void assignItemToOrder(int itemID, int productID, int orderID);
-	public void assignItemToUserHistory(int itemID, int userID);
 	
 	public void updateOrderStatus(int orderID, String status);
 	public void updateItemStutas(int itemID, String state);
@@ -76,5 +77,6 @@ public interface I_Database {
 	public I_Cubby itemBelongsToCubby(int itemID );
 	public I_Shelf cubbyBelongsToShelf(int cubbyID);
 	public I_Sector shelfBelongsToSector(int shelfID);
+	public void updateUser(User user);
 
 }

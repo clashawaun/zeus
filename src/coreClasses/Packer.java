@@ -3,9 +3,9 @@ package coreClasses;
 public class Packer extends User {
 	
 
-	public Packer(String firstName, String surname, int userID, String email, String phone, String password)
+	public Packer(int userID, String firstName, String surname, String email, String phone, String password)
 	{
-		super(firstName, surname, userID, email, phone, password);
+		super(userID, firstName, surname, email, phone, password);
 	}
 	
 }

@@ -198,9 +198,10 @@ public class Database implements I_Database {
 		userIndexer++;
 		switch(type)
 		{
-			case 1: return new Picker(firstName, secondName, userIndexer, email, phone, password);
-			case 2: return new Packer(firstName, secondName, userIndexer, email, phone, password);
-			case 3: return new Manager(firstName, secondName, userIndexer, email, phone, password);
+			case 1: return new Picker(userIndexer, firstName, secondName, email, phone, password);
+			case 2: return new Packer(userIndexer, firstName, secondName, email, phone, password);
+			case 3: return new Manager(userIndexer, firstName, secondName, email, phone, password);
+			case 4: return new Stocker(userIndexer, firstName, secondName, email, phone, password);
 			default: return null;
 		}	
 	}
@@ -236,10 +237,7 @@ public class Database implements I_Database {
 	{
 		for(Order order : orders)
 		{
-			if(order.getID() == ID)
-			{
-				return order;
-			}
+			if(order.getID() == ID)  return order;
 		}
 		
 		return null;
@@ -381,29 +379,6 @@ public class Database implements I_Database {
 		}
 		
 	}
-	
-	@Override
-	public void assignItemToUserHistory(int itemID, int userID) 
-	{
-		
-//		for(User user : users)
-//		{
-//			if(user.getID() == userID)
-//			{
-//				for(Item item : items)
-//				{
-//					if(item.getID() == itemID)
-//					{
-//						item.setAssignedUserID(userID);
-//						user.addItemToHistory(itemID);
-//					}
-//				}
-//				
-//			}
-//		}
-	
-	}
-	
 	
 	@Override
 	public void updateOrderStatus(int orderID, String status)
@@ -599,7 +574,7 @@ public class Database implements I_Database {
 		//This code is shite, do not use in the final version
 		for(int i = 0; i < products.size(); i++)
 		{
-			if(products.get(i).getID() == product.getID())
+			if(products.equals(product))
 			{
 				products.set(i, product);
 				return;
@@ -693,6 +668,39 @@ public class Database implements I_Database {
 			if (sector.hasShelf(shelfID)) return sector;
 		}
 		return null;
+	}
+	
+	@Override
+	public User getUser(String email, String password) {
+		
+		for(User user : users)
+		{
+			if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) return user;
+		}
+		
+		return null;
+	}
+	@Override
+	public User getUser(int userID) {
+		
+		for(User user : users)
+		{
+			if(user.getID() == userID) return user;
+		}
+		return null;
+	}
+	
+	@Override
+	public void updateUser(User user)
+	{
+		for(int index = 0; index < users.size(); index++)
+		{
+			if(users.get(index).equals(user)) 
+			{
+				users.set(index, user);
+				return;
+			}
+		}
 	}
 
 }

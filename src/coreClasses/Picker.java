@@ -8,10 +8,9 @@ public class Picker extends User{
 
 	ArrayList<Item> itemBasket;
 	
-	public Picker(String firstName, String surname, int userID,
-			String email, String phone, String password) 
+	public Picker(int userID, String firstName, String surname, String email, String phone, String password) 
 	{
-		super(firstName, surname, userID, email, phone, password);
+		super(userID, firstName, surname,  email, phone, password);
 		itemBasket = new ArrayList<Item>();
 	}
 	
@@ -24,13 +23,11 @@ public class Picker extends User{
 	{
 		return itemBasket.remove(item);
 	}
-<<<<<<< HEAD
+
 	
 	public ArrayList<Item> getItemBasket()
 	{
 		return itemBasket;
 	}
-=======
 
->>>>>>> 026a47235d11ec53923b51ffc9735b64eeaa6c5a
 }
