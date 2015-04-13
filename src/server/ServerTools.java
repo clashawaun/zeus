@@ -64,8 +64,6 @@ public class ServerTools
 				return false;
 			for(Item item : items)
 			{
-				//DELETE THIS NEXT LINE ASAP
-				item.setCurrentState("AVAILABLE");
 				if(item.getCurrentState().equals("AVAILABLE"))
 				{
 					//Is this strategy Design Pattern ?
@@ -96,6 +94,8 @@ public class ServerTools
 		System.out.println("Items were selected as follows" + itemIDs.toString());
 		return true;
 	}
+	
+	//public boolean 
 	
 	public void addSectorTool(SectorTools sectorTool)
 	{
