@@ -92,7 +92,13 @@ public class ServerTools
 		newOrder.setProductIds(itemIDs);
 		database.updateOrder(newOrder);
 		System.out.println("Items were selected as follows" + itemIDs.toString());
+		
 		return true;
+	}
+	
+	private void pushItemsToSector(ArrayList<Item> items)
+	{
+		
 	}
 	
 	//public boolean 
