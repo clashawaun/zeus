@@ -660,5 +660,28 @@ public class Database implements I_Database {
 		}
 	}
 
+	public I_Sector createSector()
+	{
+		return sectorFactory.makeSector(1, sectorIndexer);
+	}
+	
+	public void updateSector(I_Sector sector)
+	{
+		for(int index = 0; index < sectors.size(); index++)
+		{
+			if(sectors.get(index).equals(sector))
+				sectors.set(index, sector);
+		}
+	}
+	
+	public I_Sector getSector(int ID)
+	{
+		for(I_Sector sec : sectors)
+		{
+			if(sec.getID() == ID ) return sec;
+		}
+		
+		return null;
+	}
 
 }
