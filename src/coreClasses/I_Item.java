@@ -10,8 +10,7 @@ public interface I_Item {
 	public void setCurrentState(String currentState);
 	public int getAssignedUserID() ;
 	public void setAssignedUserID(int assignedUserID);
-	public int getCubbyID();
-	public void setCubbyID(int cubbyID) ;
+
 	public int getxPlacementPoint() ;
 	public void setxPlacementPoint(int xPlacementPoint);
 	public int getPRODUCT_ID() ;

@@ -13,13 +13,12 @@ import coreClasses.I_Shelf;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Product;
-import coreClasses.Sector;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
 import coreClasses.User;
 import coreClasses.PriorityFactory;
 import coreClasses.I_Priority;
-import coreClasses.Priority;
+
 
 
 public class Database implements I_Database {
@@ -378,24 +377,24 @@ public class Database implements I_Database {
 	}
 	
 	@Override
-	public void assignItemToUser(int itemID, int userID) 
+	public void assignItemToUserHistory(int itemID, int userID) 
 	{
 		
-		for(User user : users)
-		{
-			if(user.getID() == userID)
-			{
-				for(Item item : items)
-				{
-					if(item.getID() == itemID)
-					{
-						item.setAssignedUserID(userID);
-						user.addItemToUser(itemID);
-					}
-				}
-				
-			}
-		}
+//		for(User user : users)
+//		{
+//			if(user.getID() == userID)
+//			{
+//				for(Item item : items)
+//				{
+//					if(item.getID() == itemID)
+//					{
+//						item.setAssignedUserID(userID);
+//						user.addItemToHistory(itemID);
+//					}
+//				}
+//				
+//			}
+//		}
 	
 	}
 	
@@ -521,7 +520,7 @@ public class Database implements I_Database {
 	}
 	
 	@Override
-	public void addItemFromCuby(int itemID, int cubbyID) 
+	public void addItemToCuby(int itemID, int cubbyID) 
 	{
 		// TODO Auto-generated method stub
 		
@@ -543,6 +542,7 @@ public class Database implements I_Database {
 			if(items.get(index).getID() == itemID)
 			{
 				items.remove(index);
+				return;
 			}
 		}
 
@@ -557,7 +557,7 @@ public class Database implements I_Database {
 			if(products.get(index).getID() == productID)
 			{
 				products.remove(index);
-				
+				return;
 			}
 		}
 		
@@ -577,30 +577,30 @@ public class Database implements I_Database {
 	}
 	
 	@Override
-	public ArrayList<Integer> getAllItemsForUser(int userID) 
+	public ArrayList<Integer> getAllItemsFromUserHistory(int userID) 
 	{
 		
-		for(User user : users)
-		{
-			if(user.getID() == userID)
-			{
-				return user.getItems();
-			}
-		}
+//		for(User user : users)
+//		{
+//			if(user.getID() == userID)
+//			{
+//				return user.getItemsFromHistory();
+//			}
+//		}
 		return null;
 	}
 	
 	@Override
-	public ArrayList<Integer> getAllItemsForAllUsers() 
+	public ArrayList<Integer> getAllItemsFromAllUsersHistory() 
 	{
 		
-		ArrayList<Integer> tempList = new ArrayList<Integer>();
-		
-		for(User user : users)
-		{
-			tempList.addAll(user.getItems());
-		}
-		return tempList;
+//		ArrayList<Integer> tempList = new ArrayList<Integer>();
+//		
+//		for(User user : users)
+//		{
+//			tempList.addAll(user.getItemsFromHistory());
+//		}
+		return null;
 	}
 	
 	
@@ -681,6 +681,33 @@ public class Database implements I_Database {
 			if(sec.getID() == ID ) return sec;
 		}
 		
+		return null;
+	}
+
+	public I_Cubby itemBelongsToCubby(int itemID )
+	{
+		for(I_Cubby cub : cubbies)
+		{
+			if(cub.hasItem(itemID)) return cub;
+		}
+		return null;
+	}
+	
+	public I_Shelf cubbyBelongsToShelf(int cubbyID)
+	{
+		for(I_Shelf shelf : shelves)
+		{
+			if (shelf.hasCubby(cubbyID)) return shelf;
+		}
+		return null;
+	}
+	
+	public I_Sector shelfBelongsToSector(int shelfID)
+	{
+		for(I_Sector sector : sectors)
+		{
+			if (sector.hasShelf(shelfID)) return sector;
+		}
 		return null;
 	}
 

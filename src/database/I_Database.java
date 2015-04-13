@@ -37,7 +37,7 @@ public interface I_Database {
 	public int itemBelonngsTo(int itemID);
 	
 	public void assignItemToOrder(int itemID, int productID, int orderID);
-	public void assignItemToUser(int itemID, int userID);
+	public void assignItemToUserHistory(int itemID, int userID);
 	
 	public void updateOrderStatus(int orderID, String status);
 	public void updateItemStutas(int itemID, String state);
@@ -54,15 +54,15 @@ public interface I_Database {
 	public void assignCubbyToShelve(int cubbyID, int shelveID);
 	public void removeCubbyFromShelve(int cubbyID, int shelveID);
 	
-	public void addItemFromCuby(int itemID, int cubbyID);
+	public void addItemToCuby(int itemID, int cubbyID);
 	public void removeItemFromCuby(int itemID, int cubbyID);
 	
 	public void deleteItem(int itemID);
 	public void deletePrdoct(int productID);
 	public void deleteOrder(int OrderID);
 	
-	public ArrayList<Integer> getAllItemsForUser(int userID);
-	public ArrayList<Integer> getAllItemsForAllUsers();
+	public ArrayList<Integer> getAllItemsFromUserHistory(int userID);
+	public ArrayList<Integer> getAllItemsFromAllUsersHistory();
 	
 	public I_Priority getPriority(int priorityID);
 	
@@ -75,4 +75,9 @@ public interface I_Database {
 	public I_Sector createSector();
 	public void updateSector(I_Sector sector);
 	public I_Sector getSector(int ID);
+	
+	public I_Cubby itemBelongsToCubby(int itemID );
+	public I_Shelf cubbyBelongsToShelf(int cubbyID);
+	public I_Sector shelfBelongsToSector(int shelfID);
+
 }

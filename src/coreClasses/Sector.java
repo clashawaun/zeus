@@ -112,6 +112,17 @@ public class Sector implements I_Sector
 		this.itemQueue = itemQueue;
 	}
 
+	@Override
+	public boolean hasShelf(int shelfID) {
+		
+		for(Integer shelf : shelves)
+		{
+			if(shelf == shelfID) return true;
+		}
+		
+		return false;
+	}
+
 
 
 	

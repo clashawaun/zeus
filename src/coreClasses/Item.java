@@ -12,7 +12,6 @@ public class Item  implements I_Item{
 	
 	private String currentState;
 	private int assignedUserID;
-	private int cubbyID;
 	private int xPlacementPoint;
 	private float priority;
 	
@@ -31,7 +30,7 @@ public class Item  implements I_Item{
 		this.date_of_expriry = expriryDate;
 		
 		this.currentState = "";
-		this.cubbyID = -1;
+
 		this.xPlacementPoint = 0;
 		this.priority = 0;
 	}
@@ -67,13 +66,7 @@ public class Item  implements I_Item{
 		this.assignedUserID = assignedUserID;
 	}
 
-	public int getCubbyID() {
-		return cubbyID;
-	}
 
-	public void setCubbyID(int cubbyID) {
-		this.cubbyID = cubbyID;
-	}
 
 	public int getxPlacementPoint() {
 		return xPlacementPoint;
