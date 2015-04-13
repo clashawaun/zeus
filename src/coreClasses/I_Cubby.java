@@ -1,15 +1,20 @@
 package coreClasses;
-import java.util.List;
+import java.util.ArrayList;
+
 
 public interface I_Cubby 
 {
 	public int getID();
-	public List<Item> getItems();
+	public ArrayList<Integer> getItems();
+	public void addItem(int itemID);
+	public boolean hasItem(int ItemID);
+	
 	public int getHeight();
 	public int getWidth();
 	public int getDepth();
 	public int getType();
 
+	
 	@Override
 	public boolean equals(Object obj);
 }

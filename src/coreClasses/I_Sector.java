@@ -13,6 +13,7 @@ public interface I_Sector {
 	public ArrayList<Integer> getShelves();
 	public void setShelves(ArrayList<Integer> shelves);
 	public void addShelve(int shelveID);
+	public boolean hasShelf(int shelfID);
 	
 	public int getID();
 	public int getHeight();

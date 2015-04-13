@@ -3,20 +3,13 @@ import java.util.ArrayList;
 public abstract class Cubby implements I_Cubby
 {
 	private int ID;
-	private ArrayList<Item> cubbyItems;
+	private ArrayList<Integer> items;
 	private final int HEIGHT;
 	private final int WIDTH;
 	private final int DEPTH;
 	private final int TYPE;
 	
-	protected Cubby()
-	{
-		this.ID = 0;
-		this.HEIGHT = 0;
-		this.WIDTH = 0;
-		this.DEPTH = 0;
-		this.TYPE = 0;
-	}
+
 	
 	protected Cubby(int id, int height, int width, int depth, int type)
 	{
@@ -25,6 +18,7 @@ public abstract class Cubby implements I_Cubby
 		this.WIDTH = width;
 		this.DEPTH = depth;
 		this.TYPE = type;
+		this.items = new ArrayList<Integer>();
 	}
 	
 	@Override
@@ -37,9 +31,14 @@ public abstract class Cubby implements I_Cubby
 	{
 		return ID;
 	}
-	public ArrayList<Item> getItems()
+	public ArrayList<Integer> getItems()
 	{
-		return cubbyItems;
+		return items;
+	}
+	
+	public void addItem(int itemID)
+	{
+		items.add(itemID);
 	}
 	public int getHeight()
 	{
@@ -59,4 +58,12 @@ public abstract class Cubby implements I_Cubby
 		return TYPE;
 	}
 	
+	public boolean hasItem(int itemID)
+	{
+		for(Integer i : items)
+		{
+			if(i == itemID) return true;
+		}
+		return false;
+	}
 }
