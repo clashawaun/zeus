@@ -31,9 +31,5 @@ public class Picker extends User{
 	{
 		return itemBasket.remove(item);
 	}
-	
-	public ArrayList<Item> getPickerItems()
-	{
-		return itemBasket;
-	}
+
 }
