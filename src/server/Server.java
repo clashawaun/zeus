@@ -136,7 +136,7 @@ public class Server implements I_Server
 	{
 		if (!authenticate(message.getUserData()))
 			return new ServerMessage(message.getMessage() + "Result", "Invalid Credentials");
-		
+		return new ServerMessage("standing", "return");
 		
 	}
 	
