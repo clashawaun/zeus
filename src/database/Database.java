@@ -18,6 +18,7 @@ import coreClasses.Picker;
 import coreClasses.Product;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
+import coreClasses.Stocker;
 import coreClasses.User;
 import coreClasses.PriorityFactory;
 import coreClasses.I_Priority;
@@ -55,9 +56,9 @@ public class Database implements I_Database {
 	{
 	
 		users = new ArrayList<User>();
-		users.add(new Manager("Cookie", "Monster", 1, "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
-		users.add(new Picker("Kermit", "the Frog", 2, "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
-		users.add(new Packer("Big", "Bird",3, "Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
+		users.add(new Manager(1, "Cookie", "Monster",  "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
+		users.add(new Picker(2 , "Kermit", "the Frog", "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
+		users.add(new Packer(3, "Big", "Bird","Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
 		
 		userIndexer = 4;
 		
