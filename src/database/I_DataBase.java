@@ -72,4 +72,7 @@ public interface I_Database {
 	public void updateOrder(Order order);
 	public ArrayList<I_Sector> getAllSectors();
 
+	public I_Sector createSector();
+	public void updateSector(I_Sector sector);
+	public I_Sector getSector(int ID);
 }
