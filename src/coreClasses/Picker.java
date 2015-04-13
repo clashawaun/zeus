@@ -24,9 +24,13 @@ public class Picker extends User{
 	{
 		return itemBasket.remove(item);
 	}
+<<<<<<< HEAD
 	
 	public ArrayList<Item> getItemBasket()
 	{
 		return itemBasket;
 	}
+=======
+
+>>>>>>> 026a47235d11ec53923b51ffc9735b64eeaa6c5a
 }

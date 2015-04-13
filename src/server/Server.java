@@ -108,6 +108,7 @@ public class Server implements I_Server
 		messageFunctionMap.put("Login", new Command() {public ServerMessage runCommand(ServerMessage m) {return login(m);}});
 		messageFunctionMap.put("RegisterUser", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
 		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
+		messageFunctionMap.put("AssignItemsToPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignPickerItems(m);}});
 	}
 	
 	private void setUpSectorTools()
@@ -133,7 +134,10 @@ public class Server implements I_Server
 	
 	private ServerMessage assignPickerItems(ServerMessage message)
 	{
-		return new ServerMessage("It", "Worked");
+		if (!authenticate(message.getUserData()))
+			return new ServerMessage(message.getMessage() + "Result", "Invalid Credentials");
+		return new ServerMessage("standing", "return");
+		
 	}
 	
 	private ServerMessage processIncomingOrder(ServerMessage message)
