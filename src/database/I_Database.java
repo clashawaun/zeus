@@ -17,7 +17,7 @@ public interface I_Database {
 
 
 	
-	public User createUser(String firstName, String secondName, String password, int type, String email, String phone );
+	public User createUser(String firstName, String secondName, String password, String email, String phone, int type );
 	public boolean isValidLogin(String username, String password);
 
 	public Order registerOrder(ArrayList<Integer> productIDs, String shippingAddress);
@@ -60,9 +60,6 @@ public interface I_Database {
 	public void deleteItem(int itemID);
 	public void deletePrdoct(int productID);
 	public void deleteOrder(int OrderID);
-	
-	public ArrayList<Integer> getAllItemsFromUserHistory(int userID);
-	public ArrayList<Integer> getAllItemsFromAllUsersHistory();
 	
 	public I_Priority getPriority(int priorityID);
 	

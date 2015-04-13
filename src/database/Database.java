@@ -11,14 +11,16 @@ import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
 import coreClasses.I_Shelf;
 import coreClasses.Item;
+import coreClasses.Manager;
 import coreClasses.Order;
+import coreClasses.Packer;
+import coreClasses.Picker;
 import coreClasses.Product;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
 import coreClasses.User;
 import coreClasses.PriorityFactory;
 import coreClasses.I_Priority;
-
 
 
 public class Database implements I_Database {
@@ -53,9 +55,9 @@ public class Database implements I_Database {
 	{
 	
 		users = new ArrayList<User>();
-		users.add(new User("Cookie", "Monster", 1, "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
-		users.add(new User("Kermit", "the Frog", 2, "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
-		users.add(new User("Big", "Bird",3, "Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
+		users.add(new Manager("Cookie", "Monster", 1, "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
+		users.add(new Picker("Kermit", "the Frog", 2, "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
+		users.add(new Packer("Big", "Bird",3, "Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
 		
 		userIndexer = 4;
 		
@@ -191,12 +193,16 @@ public class Database implements I_Database {
 		
 	}
 	@Override
-	public User createUser(String firstName, String secondName, String password, int type, String email, String phone) 
+	public User createUser(String firstName, String secondName, String password, String email, String phone, int type ) 
 	{
-		User user = new User(firstName, secondName, userIndexer, email, phone, password);
 		userIndexer++;
-		
-		return user;
+		switch(type)
+		{
+			case 1: return new Picker(firstName, secondName, userIndexer, email, phone, password);
+			case 2: return new Packer(firstName, secondName, userIndexer, email, phone, password);
+			case 3: return new Manager(firstName, secondName, userIndexer, email, phone, password);
+			default: return null;
+		}	
 	}
 
 	@Override
@@ -576,36 +582,7 @@ public class Database implements I_Database {
 		
 	}
 	
-	@Override
-	public ArrayList<Integer> getAllItemsFromUserHistory(int userID) 
-	{
-		
-//		for(User user : users)
-//		{
-//			if(user.getID() == userID)
-//			{
-//				return user.getItemsFromHistory();
-//			}
-//		}
-		return null;
-	}
-	
-	@Override
-	public ArrayList<Integer> getAllItemsFromAllUsersHistory() 
-	{
-		
-//		ArrayList<Integer> tempList = new ArrayList<Integer>();
-//		
-//		for(User user : users)
-//		{
-//			tempList.addAll(user.getItemsFromHistory());
-//		}
-		return null;
-	}
-	
-	
 //+-----------Anything added below this line was added by shane, so I take responsibility if it breaks things and for the shite code in general. Most will prob be deleted--------------------+
-	
 	
 	@Override
 	public I_Priority getPriority(int priorityID)
@@ -630,6 +607,7 @@ public class Database implements I_Database {
 		}
 	}
 	
+	@Override
 	public void updateItem(Item item)
 	{
 		//This code is shite, do not use in the final version
@@ -643,6 +621,7 @@ public class Database implements I_Database {
 		}
 	}
 
+	@Override
 	public ArrayList<I_Sector> getAllSectors()
 	{
 		return sectors;
@@ -659,7 +638,8 @@ public class Database implements I_Database {
 			}
 		}
 	}
-
+	
+	@Override
 	public I_Sector createSector()
 	{
 		return sectorFactory.makeSector(1, sectorIndexer);
@@ -674,6 +654,7 @@ public class Database implements I_Database {
 		}
 	}
 	
+	@Override
 	public I_Sector getSector(int ID)
 	{
 		for(I_Sector sec : sectors)
@@ -684,6 +665,7 @@ public class Database implements I_Database {
 		return null;
 	}
 
+	@Override
 	public I_Cubby itemBelongsToCubby(int itemID )
 	{
 		for(I_Cubby cub : cubbies)
@@ -693,6 +675,7 @@ public class Database implements I_Database {
 		return null;
 	}
 	
+	@Override
 	public I_Shelf cubbyBelongsToShelf(int cubbyID)
 	{
 		for(I_Shelf shelf : shelves)
@@ -702,6 +685,7 @@ public class Database implements I_Database {
 		return null;
 	}
 	
+	@Override
 	public I_Sector shelfBelongsToSector(int shelfID)
 	{
 		for(I_Sector sector : sectors)

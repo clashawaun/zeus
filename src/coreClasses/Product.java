@@ -44,7 +44,7 @@ public class Product
 	}
 
 	public void setPriorityID(int basePriority) {
-		this.priorityID = priorityID;
+		this.priorityID = basePriority;
 	}
 
 	public String getName() {

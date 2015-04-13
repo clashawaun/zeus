@@ -6,10 +6,6 @@ public class Stocker extends User {
 
 	ArrayList<Item> stackQueue = new ArrayList<Item>();
 	
-	public Stocker()
-	{
-		super();
-	}
 	
 	public Stocker(String firstName, String surname, int userID, String email, String phone, String password)
 	{
@@ -25,5 +21,7 @@ public class Stocker extends User {
 	{
 		return stackQueue.remove(item);
 	}
+	
+	
 	
 }

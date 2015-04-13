@@ -1,8 +1,6 @@
 package coreClasses;
 
-import java.util.ArrayList;
-
-public class User 
+public abstract class User 
 {
 	
 	private final int ID;
@@ -11,25 +9,17 @@ public class User
 	private String surname; 
 	private String email;
 	private String phone;
-	private String password;
-	private ArrayList<Integer> items;
-	
-	protected User()
-	{
-		ID = -1;
-	}
+	private String password;	
 	
 	public User(String firstName, String surname, int userID, String email, String phone, String password)
 	{
-		
+
 		ID = userID;
-		
 		this.firstname = firstName;
 		this.surname = surname;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
-		this.items = new ArrayList<Integer>();
 	}
 
 	@Override
@@ -81,18 +71,5 @@ public class User
 	public int getID() {
 		return ID;
 	}
-	
-	public ArrayList<Integer> getItems() {
-		return items;
-	}
-	
-	public void setItems(ArrayList<Integer> items) {
-		this.items = items;
-	}
 
-	public void addItemToUser(int itemID)
-	{
-		items.add(itemID);
-	}
-	
 }
