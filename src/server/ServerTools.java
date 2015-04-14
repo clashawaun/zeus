@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import coreClasses.I_Sector;
 import coreClasses.Item;
 import coreClasses.Order;
+import coreClasses.Picker;
 import coreClasses.Product;
 import database.Database;
 import database.I_Database;
@@ -106,6 +107,12 @@ public class ServerTools
 				break;
 			}
 		}
+	}
+	
+	public ArrayList<Item> processPickerItemAssignments(Picker picker)
+	{
+		return new ArrayList<Item>();
+		//sectorTools.
 	}
 	
 	public void addSectorTool(SectorTools sectorTool)

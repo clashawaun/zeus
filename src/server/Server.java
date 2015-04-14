@@ -156,6 +156,8 @@ public class Server implements I_Server
 		
 	private boolean authenticate(String userData)
 	{
+		//TODO: This function currently has no way of knowing what type of user these credentials should be validated under.
+		//TODO: look into this before submitting this portion of the framework
 		//Convert the userData JSON string in a JsonObject 
 		JsonObject credentials = new JsonParser().parse(userData).getAsJsonObject();
 		//Return the result of isValidLogin where true denotes a valid set of credentials.

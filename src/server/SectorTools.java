@@ -39,7 +39,7 @@ public class SectorTools
 		return sector.getID();
 	}
 	
-	public ArrayList<Item> getNewItemsForCollector(Picker picker)
+	public ArrayList<Item> assignItemsForPicker(Picker picker)
 	{
 		//This function requires DB access to set certain variables to maintain state.
 		//Also its required that the server message objects always carry the user ID
