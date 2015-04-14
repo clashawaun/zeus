@@ -1,6 +1,5 @@
 package database;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import coreClasses.I_Cubby;
@@ -12,9 +11,7 @@ import coreClasses.Order;
 import coreClasses.Product;
 import coreClasses.User;
 
-
 public interface I_Database {
-
 
 	
 	public User createUser(String firstName, String secondName, String password, String email, String phone, int type );
@@ -25,7 +22,7 @@ public interface I_Database {
 	public Order registerOrder(ArrayList<Integer> productIDs, String shippingAddress);
 	public Order getOrder(int ID);
 	
-	public Item addItem(int productID, String manufactureDate, String expriryDate) throws ParseException, Exception;
+	public Item createItem(int productID, String manufactureDate, String expriryDate) throws Exception;
 	public Product createProduct(String name, String description, double price, float height, float width, float depth, float weight, int basePriority );
 	
 	public ArrayList<Order> getOpenOrders();

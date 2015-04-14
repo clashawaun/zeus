@@ -4,12 +4,13 @@ import java.util.ArrayList;
 //Comment
 public class Stocker extends User {
 
-	ArrayList<Item> stackQueue = new ArrayList<Item>();
+	private ArrayList<Item> stackQueue;
 	
 	
-	public Stocker(int userID, String firstName, String surname, String email, String phone, String password)
+	protected Stocker(int userID, String firstName, String surname, String email, String phone, String password)
 	{
 		super(userID, firstName, surname, email, phone, password);
+		stackQueue = new ArrayList<Item>();
 	}
 	
 	public boolean addItem(Item item)

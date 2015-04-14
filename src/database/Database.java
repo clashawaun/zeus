@@ -1,27 +1,21 @@
 package database;
-import java.text.DateFormat;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
 import coreClasses.I_Shelf;
 import coreClasses.Item;
-import coreClasses.Manager;
 import coreClasses.Order;
-import coreClasses.Packer;
-import coreClasses.Picker;
 import coreClasses.Product;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
-import coreClasses.Stocker;
 import coreClasses.User;
 import coreClasses.PriorityFactory;
 import coreClasses.I_Priority;
+import coreClasses.UserFactory;
 
 
 public class Database implements I_Database {
@@ -50,17 +44,25 @@ public class Database implements I_Database {
 	private CubbyFactory cubbyFactory;
 	private ShelfFactory shelveFactory;
 	private SectorFactory sectorFactory;
-
+	private UserFactory userFactory;
 	
 	public Database() throws ParseException, Exception
 	{
 	
 		users = new ArrayList<User>();
-		users.add(new Manager(1, "Cookie", "Monster",  "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
-		users.add(new Picker(2 , "Kermit", "the Frog", "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
-		users.add(new Packer(3, "Big", "Bird","Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
 		
-		userIndexer = 4;
+		userFactory = new UserFactory();
+		
+		users.add(userFactory.makeUser(1, 1, "Cookie", "Monster",  "Cookie.Monster@gmail.com", "087XXXXXXX0", "cookies"));
+		users.add(userFactory.makeUser(2, 2,"Big", "Bird","Big.Bird@gmail.com", "087XXXXXXX2", "yellow"));
+		users.add(userFactory.makeUser(3, 3, "Kermit", "the Frog", "Kermit.the.Frog@gmail.com", "087XXXXXXX1", "swamp"));
+		users.add(userFactory.makeUser(4, 4, "Power", "Rangers", "Power.Rangers@gmail.com", "087XXXXXXX4", "morphin"));
+		
+		users.add(userFactory.makeUser(1, 5, "Mr", "Picker",  "picker", "087XXXXXXX0", "1234"));
+		users.add(userFactory.makeUser(2, 6,"Mr", "Packer","packer", "087XXXXXXX2", "1234"));
+		users.add(userFactory.makeUser(3, 7, "Mr", "Manager", "manager", "087XXXXXXX1", "1234"));
+		users.add(userFactory.makeUser(4, 8, "Mr", "Stocker", "stocker", "087XXXXXXX4", "1234"));
+		userIndexer = 9;
 		
 		products = new ArrayList<Product>();
 		products.add(new Product(1,"X-Box One","This is description one.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
@@ -70,34 +72,16 @@ public class Database implements I_Database {
 		
 		
 		items = new ArrayList<Item>();
-		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-
-		Date date = (Date) format.parse("2014-12-01");
-		items.add(new Item(1, 50000, date, null));
 		
-		date = (Date) format.parse("2015-04-12");
-		items.add(new Item(3, 50001, null, date));
-		
-		date = (Date) format.parse("2013-12-06");
-		items.add(new Item(2, 50002, date, null));
-		
-		date = (Date) format.parse("2014-12-05");
-		items.add(new Item(2, 50003, date, null));
-		
-		date = (Date) format.parse("2015-01-12");
-		items.add(new Item(1, 50004, date, null));
-		
-		date = (Date) format.parse("2015-04-03");
-		items.add(new Item(3, 50005, null, date));
-		
-		date = (Date) format.parse("2014-08-07");
-		items.add(new Item(1, 50006, date, null));
-		
-		date = (Date) format.parse("2012-12-05");
-		items.add(new Item(2, 50007, date, null));
-		
-		date = (Date) format.parse("2014-12-05");
-		items.add(new Item(3, 50008, null, date));
+		items.add(new Item(1, 50000, "2014-12-01", null));
+		items.add(new Item(3, 50001, null, "2015-04-12"));
+		items.add(new Item(2, 50002, "2013-12-06", null));
+		items.add(new Item(2, 50003, "2014-12-05", null));
+		items.add(new Item(1, 50004, "2015-01-12", null));
+		items.add(new Item(3, 50005, null, "2015-04-03"));
+		items.add(new Item(1, 50006, "2014-08-07", null));
+		items.add(new Item(2, 50007, "2012-12-05", null));
+		items.add(new Item(3, 50008, null, "2014-12-05"));
 		
 		itemIndexer = 50009;
 		
@@ -197,14 +181,9 @@ public class Database implements I_Database {
 	public User createUser(String firstName, String secondName, String password, String email, String phone, int type ) 
 	{
 		userIndexer++;
-		switch(type)
-		{
-			case 1: return new Picker(userIndexer, firstName, secondName, email, phone, password);
-			case 2: return new Packer(userIndexer, firstName, secondName, email, phone, password);
-			case 3: return new Manager(userIndexer, firstName, secondName, email, phone, password);
-			case 4: return new Stocker(userIndexer, firstName, secondName, email, phone, password);
-			default: return null;
-		}	
+			User temp = userFactory.makeUser(type, userIndexer, firstName, secondName, password, email, phone);
+			users.add(temp);
+			return temp;
 	}
 
 	@Override
@@ -245,14 +224,9 @@ public class Database implements I_Database {
 	}
 
 	@Override
-	public Item addItem(int productID, String manufactureDate, String expriryDate) throws ParseException,Exception
+	public Item createItem(int productID, String manufactureDate, String expriryDate) throws Exception
 	{
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		
-		Date manDate = (Date) format.parse(manufactureDate);
-		Date expDate = (Date) format.parse(manufactureDate);
-		
-		Item item= new Item(productID, itemIndexer, manDate, expDate);
+		Item item= new Item(productID, itemIndexer, manufactureDate, expriryDate);
 		items.add(item);
 		itemIndexer++;
 		
@@ -294,7 +268,7 @@ public class Database implements I_Database {
 		
 		for(Item item : items)
 		{
-			if(item.getPRODUCT_ID() == productID)
+			if(item.getProductID() == productID)
 			{
 				tempItems.add(item);
 			}

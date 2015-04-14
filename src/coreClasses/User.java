@@ -11,7 +11,7 @@ public abstract class User
 	private String phone;
 	private String password;	
 	
-	public User(int userID,String firstName, String surname,  String email, String phone, String password)
+	protected User(int userID,String firstName, String surname,  String email, String phone, String password)
 	{
 
 		ID = userID;

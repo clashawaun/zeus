@@ -1,7 +1,6 @@
 package coreClasses;
 
 import java.util.Date;
-import java.util.Calendar;
 
 public class Priority implements I_Priority
 {
@@ -23,8 +22,8 @@ public class Priority implements I_Priority
 		//For the final version we may want to make this algorithm more in depth. But the concept remains the same
 		int priorityScore = 0;
 		Date today = new Date();
-		Date expiry = item.getDATE_OF_EXPRIRY();
-		Date manufacture = item.getDATE_OF_MANUFACTURE();
+		Date expiry = item.getDateOfExpriry();
+		Date manufacture = item.getDateOfManufacture();
 		if(expiry == null)
 		{
 			//If we dont have a expiry, for this trivial example simply return a higher priority based on how old the product is.

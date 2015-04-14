@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class Picker extends User{
 
-	ArrayList<Item> itemBasket;
+	private ArrayList<Item> itemBasket;
 	
-	public Picker(int userID, String firstName, String surname, String email, String phone, String password) 
+	protected Picker(int userID, String firstName, String surname, String email, String phone, String password) 
 	{
 		super(userID, firstName, surname,  email, phone, password);
 		itemBasket = new ArrayList<Item>();

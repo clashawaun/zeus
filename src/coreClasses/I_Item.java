@@ -13,10 +13,10 @@ public interface I_Item {
 
 	public int getxPlacementPoint() ;
 	public void setxPlacementPoint(int xPlacementPoint);
-	public int getPRODUCT_ID() ;
+	public int getProductID() ;
 	public int getID() ;
-	public Date getDATE_OF_MANUFACTURE();
-	public Date getDATE_OF_EXPRIRY();
+	public Date getDateOfManufacture();
+	public Date getDateOfExpriry();
 	
 	@Override
 	public boolean equals(Object obj);
