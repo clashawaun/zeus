@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+
+import javax.swing.JOptionPane;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -66,7 +69,7 @@ public class ServerCommunicator
 			setEndpoint(selectedServer.get("endpoint").getAsString());
 			setPort(selectedServer.get("port").getAsInt());
 			//TODO: Debug Message, remove before finished version
-			System.out.println("The selected info was: endpoint=" + selectedServer.get("endpoint").getAsString() + ", port=" + selectedServer.get("port").getAsInt());
+			JOptionPane.showMessageDialog(null, "Welcome to the Zeus Client Application, You are connected to the following Server:\nServer Name: " + selectedServer.get("server") + "\nIP Address: " + selectedServer.get("endpoint") + "\nPort: " + selectedServer.get("port"), "Zeus Client", 1);
 		}
 		catch(Exception e)
 		{
