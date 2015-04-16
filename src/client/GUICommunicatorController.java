@@ -37,5 +37,19 @@ public class GUICommunicatorController
 		return credentials.get("isValid").getAsBoolean();
 		
 	}
+	
+	public int getUserType(String email, String password)
+	{
+		JsonObject jsonSender = new JsonObject();
+		jsonSender.addProperty("email", email);
+		jsonSender.addProperty("password", password);
+		
+		serverResult = communicator.sendServerMessage(new ServerMessage("Login", jsonSender.toString()));
+		
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+	
+		//return credentials.get("type").getAsInt();
+		return 1;
+	}
 
 }
