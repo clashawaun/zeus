@@ -154,10 +154,7 @@ public class Server implements I_Server
 		ArrayList<Item> items = serverTools.processPickerItemAssignments((Picker) user, database.getSector(messageData.get("sector").getAsInt()));
 		JsonObject result = new JsonObject();
 		result.addProperty("isSuccess", !items.isEmpty());
-		JsonArray itemArray = gson.toJsonTree(items).getAsJsonArray();
-		if (itemArray == null);
-		else
-			result.addProperty("items", itemArray.toString());
+		result.add("items", gson.toJsonTree(items).getAsJsonArray());
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 	
@@ -188,10 +185,8 @@ public class Server implements I_Server
 		//... all of this should be integrated into a function
 		//I hate this next part ... this needs to be revised
 		Picker picker = (Picker) user;
-		JsonArray itemArray = gson.toJsonTree(picker.getItemBasket()).getAsJsonArray();
-		result.addProperty("items", itemArray.toString());
-		return new ServerMessage(message.getMessage()+"Result", result.toString());
-		
+		result.add("items", gson.toJsonTree(picker.getItemBasket()).getAsJsonArray());
+		return new ServerMessage(message.getMessage()+"Result", result.toString());	
 	}
 	
 	
