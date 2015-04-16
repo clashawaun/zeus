@@ -6,26 +6,26 @@ import java.util.ArrayList;
 
 public class Picker extends User{
 
-	private ArrayList<Integer> itemBasket;
+	private ArrayList<Item> itemBasket;
 	
 	protected Picker(int userID, String firstName, String surname, String email, String phone, String password) 
 	{
 		super(userID, firstName, surname,  email, phone, password);
-		itemBasket = new ArrayList<Integer>();
+		itemBasket = new ArrayList<Item>();
 	}
 	
-	public boolean addItemToBasket(Integer item)
+	public boolean addItemToBasket(Item item)
 	{
 		return itemBasket.add(item);
 	}
 
-	public boolean removeItemFromBasket(Integer item)
+	public boolean removeItemFromBasket(Item item)
 	{
 		return itemBasket.remove(item);
 	}
 
 	
-	public ArrayList<Integer> getItemBasket()
+	public ArrayList<Item> getItemBasket()
 	{
 		return itemBasket;
 	}
