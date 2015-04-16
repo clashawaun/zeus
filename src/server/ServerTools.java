@@ -6,6 +6,7 @@ import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Picker;
 import coreClasses.Product;
+import coreClasses.Sector;
 import database.Database;
 import database.I_Database;
 
@@ -99,20 +100,28 @@ public class ServerTools
 	public void queueItemForPickup(Item item)
 	{
 		I_Sector itemSector = database.shelfBelongsToSector(database.cubbyBelongsToShelf(database.itemBelongsToCubby(item.getID()).getID()).getID());
-		for(SectorTools  tool : sectorTools)
-		{
-			if(tool.getSectorId() == itemSector.getID())
-			{
-				itemSector.putItemInQueue(item);
-				break;
-			}
-		}
+		SectorTools tool = getSectorTool(itemSector.getID());
+		if(tool == null)
+			return;
+		tool.addItemToQueue(item);
 	}
 	
-	public ArrayList<Item> processPickerItemAssignments(Picker picker)
+	public ArrayList<Item> processPickerItemAssignments(Picker picker, I_Sector sector)
 	{
-		return new ArrayList<Item>();
-		//sectorTools.
+		SectorTools tool = getSectorTool(sector.getID());
+		if(tool == null)
+			return null;
+		return tool.assignItemsForPicker(picker);
+	}
+	
+	private SectorTools getSectorTool(int ID)
+	{
+		for(SectorTools tool : sectorTools)
+		{
+			if(tool.getSectorId() == ID)
+				return tool;
+		}
+		return null;
 	}
 	
 	public void addSectorTool(SectorTools sectorTool)

@@ -44,7 +44,19 @@ public class SectorTools
 		//This function requires DB access to set certain variables to maintain state.
 		//Also its required that the server message objects always carry the user ID
 		//of the person sending request.
-		return new ArrayList<Item>();
+		ArrayList<Item> assignedItems = new ArrayList<Item>();
+		for(int i = 0; i < 5; i++)
+		{
+			Item tempItem = sector.getNextItem();
+			if(tempItem == null)
+				break;
+			//TODO: Duplication of logic .... needs to be revised
+			tempItem.setAssignedUserID(picker.getID());
+			tempItem.setCurrentState("AWAITING_CHECK_IN");
+			picker.addItemToBasket(tempItem);
+			assignedItems.add(tempItem);
+		}
+		return assignedItems;
 	}
 	
 }

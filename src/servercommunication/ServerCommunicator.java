@@ -69,7 +69,7 @@ public class ServerCommunicator
 			setEndpoint(selectedServer.get("endpoint").getAsString());
 			setPort(selectedServer.get("port").getAsInt());
 			//TODO: Debug Message, remove before finished version
-			JOptionPane.showMessageDialog(null, "Welcome to the Zeus Client Application, You are connected to the following Server:\nServer Name: " + selectedServer.get("server") + "\nIP Address: " + selectedServer.get("endpoint") + "\nPort: " + selectedServer.get("port"), "Zeus Client", 1);
+			JOptionPane.showMessageDialog(null, "Welcome to the Zeus Client Application, You are connected to the following Server:\nServer Name: " + selectedServer.get("server") + "\nIP Address: " + selectedServer.get("endpoint") + "\nPort: " + selectedServer.get("port"), "Zeus Server Connector", 1);
 		}
 		catch(Exception e)
 		{
