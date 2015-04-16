@@ -44,6 +44,7 @@ public class Server implements I_Server
 		buildMessageFunctionMap();
 		database = new Database();
 		serverTools = new ServerTools(database);
+		gson = new Gson();
 		setUpSectorTools();
 	}
 	
@@ -116,6 +117,7 @@ public class Server implements I_Server
 		ArrayList<I_Sector> sectors = database.getAllSectors();
 		for(I_Sector sector : sectors)
 		{
+			System.out.println(sector.getID() + "added");
 			serverTools.addSectorTool(new SectorTools(sector));
 		}
 	}
@@ -151,9 +153,11 @@ public class Server implements I_Server
 		JsonObject messageData = new JsonParser().parse(message.getData()).getAsJsonObject();
 		ArrayList<Item> items = serverTools.processPickerItemAssignments((Picker) user, database.getSector(messageData.get("sector").getAsInt()));
 		JsonObject result = new JsonObject();
-		JsonArray itemArray = gson.toJsonTree(items).getAsJsonArray();
 		result.addProperty("isSuccess", !items.isEmpty());
-		result.addProperty("items", itemArray.getAsString());
+		JsonArray itemArray = gson.toJsonTree(items).getAsJsonArray();
+		if (itemArray == null);
+		else
+			result.addProperty("items", itemArray.toString());
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 	
