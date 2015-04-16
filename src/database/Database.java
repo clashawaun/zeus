@@ -11,9 +11,11 @@ import coreClasses.I_Sector;
 import coreClasses.I_Shelf;
 import coreClasses.Item;
 import coreClasses.Order;
+import coreClasses.Picker;
 import coreClasses.Product;
 import coreClasses.SectorFactory;
 import coreClasses.ShelfFactory;
+import coreClasses.Stocker;
 import coreClasses.User;
 import coreClasses.PriorityFactory;
 import coreClasses.I_Priority;
@@ -74,54 +76,49 @@ public class Database implements I_Database {
 		
 		
 		items = new ArrayList<Item>();
+		items.add(new Item(3, 1, null, "2015-04-12"));
+		items.add(new Item(2, 2, "2013-12-06", null));
+		items.add(new Item(2, 3, "2014-12-05", null));
+		items.add(new Item(1, 4, "2015-01-12", null));
+		items.add(new Item(3, 5, null, "2015-04-03"));
+		items.add(new Item(1, 6, "2014-08-07", null));
+		items.add(new Item(2, 7, "2012-12-05", null));
+		items.add(new Item(3, 8, null, "2014-12-05"));
+		items.add(new Item(3, 9, null, "2015-04-12"));
+		items.add(new Item(2, 10, "2013-12-06", null));
+		items.add(new Item(2, 11, "2014-12-05", null));
+		items.add(new Item(1, 12, "2015-01-12", null));
+		items.add(new Item(3, 13, null, "2015-04-03"));
+		items.add(new Item(1, 14, "2015-01-12", null));
+		items.add(new Item(3, 15, null, "2015-04-03"));
 		
-		ArrayList<String> dates = new ArrayList<String>();
-		dates.add(null);
-		dates.add("2013-12-01");		dates.add("2013-11-01");
-		dates.add("2013-10-01");		dates.add("2013-09-01");
-		dates.add("2013-08-01");		dates.add("2013-07-01");
-		dates.add("2013-06-01");		dates.add("2013-05-01");
-		dates.add("2013-04-01");		dates.add("2013-03-01");
-		dates.add("2013-02-01");		dates.add("2013-01-01");
-		dates.add("2014-12-01");		dates.add("2014-11-01");
-		dates.add("2014-10-01");		dates.add("2014-09-01");
-		dates.add("2014-08-01");		dates.add("2014-07-01");
-		dates.add("2014-06-01");		dates.add("2014-05-01");
-		dates.add("2014-04-01");		dates.add("2014-03-01");
-		dates.add("2014-02-01");		dates.add("2014-01-01");
-		dates.add("2015-04-01");		dates.add("2015-03-01");
-		dates.add("2015-02-01");		dates.add("2015-01-01");
+		items.get(0).setCurrentState("AWAITING_STOCKER");
+		items.get(1).setCurrentState("AWAITING_STOCKER");
 		
-		for (int index = 1; index < 101; index++)
-		{
-			if((int)(Math.random() * 2) == 1)
-			{
-				items.add(new Item((int)(Math.random() * (products.size()+1)), index, dates.get((int)(Math.random() * products.size())), null));
-			}
-			else
-			{
-				items.add(new Item((int)(Math.random() * (products.size()+1)), index, null, dates.get((int)(Math.random() * products.size()))));
-			}
-		}
+		items.get(2).setCurrentState("PENDING_STOCKING");
+		items.get(3).setCurrentState("PENDING_STOCKING");
+		((Stocker)(users.get(7))).addItem(items.get(2).getID());
+		((Stocker)(users.get(7))).addItem(items.get(3).getID());
 		
+		items.get(4).setCurrentState("AVAILABLE");
+		items.get(5).setCurrentState("AVAILABLE");
 		
-		ArrayList<String> states = new ArrayList<String>();
-
-		states.add("AWAITING_STOCKER");
-		states.add("PENDING_STOCKING");
-		states.add("AVAILABLE");
-		states.add("AWAITING_PICKER");
-		states.add("AWAITING_CHECK_IN");
-		states.add("AWAITING_PACKER");
-		states.add("PACKED");
-		states.add("SHIPPED");
+		items.get(6).setCurrentState("AWAITING_PICKER");
+		items.get(7).setCurrentState("AWAITING_PICKER");
+		((Picker) (users.get(4))).addItemToBasket(items.get(6).getID());
+		((Picker) (users.get(4))).addItemToBasket(items.get(7).getID());
 		
-		for(Item item : items)
-			item.setCurrentState(states.get((int)(Math.random() * states.size()) ));
+		items.get(8).setCurrentState("AWAITING_CHECK_In");
+		items.get(9).setCurrentState("AWAITING_CHECK_IN");
+		((Picker) (users.get(4))).addItemToBasket(items.get(6).getID());
+		((Picker) (users.get(4))).addItemToBasket(items.get(7).getID());
 		
-		for(Item item : items)
-				System.out.println(item.toString());	
-		
+		items.get(10).setCurrentState("AWAITING_PACKER");
+		items.get(11).setCurrentState("AWAITING_PACKER");
+		items.get(12).setCurrentState("PACKED");
+		items.get(13).setCurrentState("PACKED");
+		items.get(14).setCurrentState("SHIPPED");
+		items.get(15).setCurrentState("SHIPPED");
 		
 		orders = new ArrayList<Order>();
 		ArrayList<Integer> tempOrderList = new ArrayList<Integer>();
@@ -198,6 +195,12 @@ public class Database implements I_Database {
 			shelve.setCubbies(tempCubbies);
 		}
 		
+		for(I_Cubby cub : cubbies)
+		{
+			for(int i=0; i < 3; i++)
+				
+		}
+			
 		sectors = new ArrayList<I_Sector>();
 		sectorIndexer = 1;
 		sectorFactory = new SectorFactory();
