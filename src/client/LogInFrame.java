@@ -61,7 +61,7 @@ public class LogInFrame extends JFrame implements ActionListener {
 		{
 			if (GCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
 			{
-				switch(GCC.getUserType(usernameField.getText(), new String(passwordField.getPassword())))
+				switch(GCC.getUserType())
 				{
 					case 1 :  //Picker
 						System.out.println("I am in switch state ment");

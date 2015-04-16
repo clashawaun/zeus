@@ -11,10 +11,12 @@ public class GUICommunicatorController
 {
 	private ServerCommunicator communicator;
 	private ServerMessage serverResult;
+	private int type;
 	
 	public GUICommunicatorController() 
 	{
 		communicator = new ServerCommunicator();
+		type = 1;
 	}
 	
 	public GUICommunicatorController(String endAddress, String port) 
@@ -33,23 +35,15 @@ public class GUICommunicatorController
 		serverResult = communicator.sendServerMessage(new ServerMessage("Login", jsonSender.toString()));
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-	
+		//type = credentials.get("type").getAsInt();
 		return credentials.get("isValid").getAsBoolean();
 		
 	}
 	
-	public int getUserType(String email, String password)
+	public int getUserType()
 	{
-		JsonObject jsonSender = new JsonObject();
-		jsonSender.addProperty("email", email);
-		jsonSender.addProperty("password", password);
 		
-		serverResult = communicator.sendServerMessage(new ServerMessage("Login", jsonSender.toString()));
-		
-		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-	
-		//return credentials.get("type").getAsInt();
-		return 1;
+		return type;
 	}
 
 }
