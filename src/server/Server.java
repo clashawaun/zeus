@@ -122,8 +122,19 @@ public class Server implements I_Server
 	
 	private ServerMessage login(ServerMessage message)
 	{
+		//TODO: THIS FUNCTION NOW NEEDS A SERIOUS REFACTOR
 		JsonObject result = new JsonObject();
-		result.addProperty("isValid", authenticate(message.getData()));
+		//TODO: And I needed to add this bool to use this style, which sucks
+		boolean isLogin = authenticate(message.getData());
+		result.addProperty("isValid", isLogin);
+		//TODO: THIS CODE NEEDS TO BE REMOVED
+		if(isLogin)
+		{
+			//Convert the userData JSON string in a JsonObject 
+			JsonObject credentials = new JsonParser().parse(message.getData()).getAsJsonObject();
+			//Return the result of isValidLogin where true denotes a valid set of credentials.
+			result.addProperty("type", getUserTypeAsInt(database.getUser(credentials.get("email").getAsString(), credentials.get("password").getAsString())));
+		}
 		return new ServerMessage(message.getMessage()+"Result", result.toString());		
 	}
 	
@@ -162,6 +173,48 @@ public class Server implements I_Server
 		JsonObject credentials = new JsonParser().parse(userData).getAsJsonObject();
 		//Return the result of isValidLogin where true denotes a valid set of credentials.
 		return database.isValidLogin(credentials.get("email").getAsString(), credentials.get("password").getAsString());
+	}
+	
+	private boolean authenticate(String userData, Class<?> userType)
+	{
+		//Convert the userData JSON string in a JsonObject 
+		JsonObject credentials = new JsonParser().parse(userData).getAsJsonObject();
+		//Return the result of isValidLogin where true denotes a valid set of credentials.
+		User testUser = database.getUser(credentials.get("email").getAsString(), credentials.get("password").getAsString());
+		try
+		{
+			userType.cast(testUser);
+			return true;
+		}
+		catch(ClassCastException e)
+		{
+			return false;
+		}
+	}
+	
+	//TODO: This function must not be used in the final version of the software
+	private int getUserTypeAsInt(User user)
+	{
+		//This code is horrendous ....... DO NOT USE IN SUBMISSION
+		Map<Integer, Class<?>> test = new HashMap<Integer, Class<?>>();
+		test.put(1, Picker.class);
+		test.put(2, Packer.class);
+		test.put(3, Manager.class);
+		test.put(4, Stocker.class);
+		//This code is horrendous and breaks the servers ignorance of underlying framework
+		for(int key : test.keySet())
+		{
+			try
+			{
+				test.get(key).cast(user);
+				return key;
+			}
+			catch (ClassCastException e)
+			{
+				//If this happens its not a valid type
+			}
+		}
+		return -1;
 	}
 	
 	/*public ServerMessage processServerMessage(ServerMessage msg)

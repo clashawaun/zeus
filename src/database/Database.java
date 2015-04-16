@@ -192,7 +192,7 @@ public class Database implements I_Database {
 		for(User user: users)
 		{
 			//Shane - I changed this since it was using == which is incorrect for strings
-			if(user.getEmail().equals(email) && user.getPassword().equals(password))
+			if(email.equals(user.getEmail()) && password.equals(user.getPassword()))
 			{
 				return true;
 			}

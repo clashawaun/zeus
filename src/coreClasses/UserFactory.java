@@ -7,7 +7,7 @@ public class UserFactory implements I_UserFactory {
 	}
 
 	@Override
-	public User makeUser(int type, int userID, String firstName, String secondName, String password, String email, String phone) {
+	public User makeUser(int type, int userID, String firstName, String secondName, String email, String phone, String password) {
 		
 		switch(type)
 		{
