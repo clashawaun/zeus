@@ -14,16 +14,16 @@ public class ShelfFactory {
 		switch(type)
 		{
 		case 1:
-			shelve = new Shelf(id, 400, 1000, 100, 8, 4, 2);
+			shelve = new Shelf(id, 400, 1000, 100);
 			break;
 		case 2:
-			shelve = new Shelf(id,400, 1000, 100, 40, 0, 0);
+			shelve = new Shelf(id,400, 1000, 100);
 			break;
 		case 3:
-			shelve = new Shelf(id,400, 1000, 100, 0, 12, 0);
+			shelve = new Shelf(id,400, 1000, 100);
 			break;
 		case 4:
-			shelve = new Shelf(id,400, 1000, 100, 0, 0, 6);
+			shelve = new Shelf(id,400, 1000, 100);
 			break;
 		default:
 			shelve = null;
