@@ -1,7 +1,5 @@
 package client;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,27 +10,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class LogInFrame extends JFrame {
+public class LogInFrame extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JTextField usernameField;
 	private JPasswordField passwordField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LogInFrame frame = new LogInFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	JButton logInButton;
+	GUICommunicatorController GCC;
 
 	/**
 	 * Create the frame.
@@ -56,12 +40,52 @@ public class LogInFrame extends JFrame {
 		passwordField.setBounds(171, 126, 86, 20);
 		contentPane.add(passwordField);
 		
-		JButton logInButton = new JButton("Log In");
-		logInButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		logInButton = new JButton("Log In");
 		logInButton.setBounds(171, 157, 89, 23);
 		contentPane.add(logInButton);
+		
+		logInButton.addActionListener(this);
+		
+		GCC = null;
+	}
+
+	public void addGUICommunicationController(GUICommunicatorController GCC)
+	{
+		this.GCC = GCC;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (GCC != null)
+		{
+			if (GCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
+			{
+				switch(GCC.getUserType(usernameField.getText(), new String(passwordField.getPassword())))
+				{
+					case 1 :  //Picker
+						System.out.println("I am in switch state ment");
+						ItemsCollectedFrame aFrame = new ItemsCollectedFrame();
+						aFrame.setVisible(true);
+						break;
+					case 2 :  //Packer
+						
+						break;
+					case 3 :  //Manager
+						
+						break;
+					case 4 :  //Stocker
+						
+						break;
+						
+					default: 
+						break;
+				}
+				
+			}
+			
+		}
+		
+		
 	}
 }
