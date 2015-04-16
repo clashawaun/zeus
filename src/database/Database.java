@@ -1,8 +1,10 @@
 package database;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javafx.util.converter.DateStringConverter;
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
@@ -73,34 +75,70 @@ public class Database implements I_Database {
 		
 		items = new ArrayList<Item>();
 		
-		items.add(new Item(1, 50000, "2014-12-01", null));
-		items.add(new Item(3, 50001, null, "2015-04-12"));
-		items.add(new Item(2, 50002, "2013-12-06", null));
-		items.add(new Item(2, 50003, "2014-12-05", null));
-		items.add(new Item(1, 50004, "2015-01-12", null));
-		items.add(new Item(3, 50005, null, "2015-04-03"));
-		items.add(new Item(1, 50006, "2014-08-07", null));
-		items.add(new Item(2, 50007, "2012-12-05", null));
-		items.add(new Item(3, 50008, null, "2014-12-05"));
+		ArrayList<String> dates = new ArrayList<String>();
+		dates.add(null);
+		dates.add("2013-12-01");		dates.add("2013-11-01");
+		dates.add("2013-10-01");		dates.add("2013-09-01");
+		dates.add("2013-08-01");		dates.add("2013-07-01");
+		dates.add("2013-06-01");		dates.add("2013-05-01");
+		dates.add("2013-04-01");		dates.add("2013-03-01");
+		dates.add("2013-02-01");		dates.add("2013-01-01");
+		dates.add("2014-12-01");		dates.add("2014-11-01");
+		dates.add("2014-10-01");		dates.add("2014-09-01");
+		dates.add("2014-08-01");		dates.add("2014-07-01");
+		dates.add("2014-06-01");		dates.add("2014-05-01");
+		dates.add("2014-04-01");		dates.add("2014-03-01");
+		dates.add("2014-02-01");		dates.add("2014-01-01");
+		dates.add("2015-04-01");		dates.add("2015-03-01");
+		dates.add("2015-02-01");		dates.add("2015-01-01");
 		
-		itemIndexer = 50009;
+		for (int index = 1; index < 101; index++)
+		{
+			if((int)(Math.random() * 2) == 1)
+			{
+				items.add(new Item((int)(Math.random() * (products.size()+1)), index, dates.get((int)(Math.random() * products.size())), null));
+			}
+			else
+			{
+				items.add(new Item((int)(Math.random() * (products.size()+1)), index, null, dates.get((int)(Math.random() * products.size()))));
+			}
+		}
+		
+		
+		ArrayList<String> states = new ArrayList<String>();
+
+		states.add("AWAITING_STOCKER");
+		states.add("PENDING_STOCKING");
+		states.add("AVAILABLE");
+		states.add("AWAITING_PICKER");
+		states.add("AWAITING_CHECK_IN");
+		states.add("AWAITING_PACKER");
+		states.add("PACKED");
+		states.add("SHIPPED");
+		
+		for(Item item : items)
+			item.setCurrentState(states.get((int)(Math.random() * states.size()) ));
+		
+		for(Item item : items)
+				System.out.println(item.toString());	
+		
 		
 		orders = new ArrayList<Order>();
 		ArrayList<Integer> tempOrderList = new ArrayList<Integer>();
-		tempOrderList.add(0);
+		tempOrderList.add(3);
 		tempOrderList.add(2);
 		tempOrderList.add(1);
 		orders.add(new Order(0,tempOrderList, "Order Address one \n Address two \n Town"));
 		tempOrderList.clear();
 		
-		tempOrderList.add(0);
-		tempOrderList.add(0);
-		tempOrderList.add(2);
+		tempOrderList.add(1);
+		tempOrderList.add(1);
+		tempOrderList.add(3);
 		orders.add(new Order(1,tempOrderList, "Order Address two \n Address two \n Town"));
 		tempOrderList.clear();
 		
 		tempOrderList.add(1);
-		tempOrderList.add(1);
+		tempOrderList.add(3);
 		tempOrderList.add(2);
 		orders.add(new Order(2,tempOrderList, "Order Address Three \n Address two \n Town"));
 		tempOrderList.clear();
