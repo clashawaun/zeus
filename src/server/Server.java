@@ -110,6 +110,7 @@ public class Server implements I_Server
 		messageFunctionMap.put("RegisterUser", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
 		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
 		messageFunctionMap.put("AssignItemsToPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignPickerItems(m);}});
+		messageFunctionMap.put("GetItemsForPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return getItemsForPicker(m);}});
 	}
 	
 	private void setUpSectorTools()
@@ -117,7 +118,6 @@ public class Server implements I_Server
 		ArrayList<I_Sector> sectors = database.getAllSectors();
 		for(I_Sector sector : sectors)
 		{
-			System.out.println(sector.getID() + "added");
 			serverTools.addSectorTool(new SectorTools(sector));
 		}
 	}
@@ -172,9 +172,29 @@ public class Server implements I_Server
 		}
 		JsonObject result = new JsonObject();
 		result.addProperty("isSubmitted", serverTools.processNewOrder(database.registerOrder(productIDs, orderData.get("shippingAddress").getAsString())));
-		return new ServerMessage("NewOrderResult", result.toString());
+		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 		
+	private ServerMessage getItemsForPicker(ServerMessage message)
+	{
+		JsonObject result = new JsonObject();
+		//This logic is repeating itself.......
+		User user = authenticate(message.getUserData(), Picker.class);
+		if(user == null)
+		{
+			result.addProperty("error", "Invalid Credentials");
+			return new ServerMessage(message.getMessage()+"Result", result.toString());
+		}
+		//... all of this should be integrated into a function
+		//I hate this next part ... this needs to be revised
+		Picker picker = (Picker) user;
+		JsonArray itemArray = gson.toJsonTree(picker.getItemBasket()).getAsJsonArray();
+		result.addProperty("items", itemArray.toString());
+		return new ServerMessage(message.getMessage()+"Result", result.toString());
+		
+	}
+	
+	
 	private boolean authenticate(String userData)
 	{
 		//TODO: This function currently has no way of knowing what type of user these credentials should be validated under.
