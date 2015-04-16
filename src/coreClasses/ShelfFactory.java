@@ -1,6 +1,6 @@
 package coreClasses;
 
-public class ShelfFactory {
+public class ShelfFactory implements I_ShelfFactory{
 
 	public ShelfFactory() 
 	{

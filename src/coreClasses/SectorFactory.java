@@ -1,6 +1,6 @@
 package coreClasses;
 
-public class SectorFactory {
+public class SectorFactory implements I_SectorFactory {
 
 	public SectorFactory() {
 	

@@ -13,15 +13,6 @@ public class Sector implements I_Sector
 	private int depth;
 	private int ID;
 	
-	protected Sector()
-	{
-		itemQueue = new LinkedList<Item>();
-		shelves = new ArrayList<Integer>();
-		this.ID = 0;
-		this.height = 0;
-		this.width = 0;
-		this.depth = 0;
-	}
 	
 	protected Sector(int ID, int height, int width, int depth)
 	{

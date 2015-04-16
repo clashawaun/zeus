@@ -1,7 +1,7 @@
 package coreClasses;
 
 
-public class CubbyFactory 
+public class CubbyFactory implements I_CubbyFactory
 {
 	public CubbyFactory()
 	{

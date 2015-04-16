@@ -1,6 +1,6 @@
 package coreClasses;
 
-public class PriorityFactory 
+public class PriorityFactory implements I_PriorityFactory
 {
 
 	public PriorityFactory()

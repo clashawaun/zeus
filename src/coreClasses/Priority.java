@@ -6,7 +6,7 @@ public class Priority implements I_Priority
 {
 	private final int ID;
 	
-	public Priority(int id)
+	protected Priority(int id)
 	{
 		this.ID = id;
 	}
