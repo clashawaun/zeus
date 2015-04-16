@@ -4,21 +4,21 @@ import java.util.ArrayList;
 //Comment
 public class Stocker extends User {
 
-	private ArrayList<Item> stackQueue;
+	private ArrayList<Integer> stackQueue;
 	
 	
-	protected Stocker(int userID, String firstName, String surname, String email, String phone, String password)
+	public Stocker(int userID, String firstName, String surname, String email, String phone, String password)
 	{
 		super(userID, firstName, surname, email, phone, password);
-		stackQueue = new ArrayList<Item>();
+		stackQueue = new ArrayList<Integer>();
 	}
 	
-	public boolean addItem(Item item)
+	public boolean addItem(Integer item)
 	{
 		return stackQueue.add(item);
 	}
 	
-	public boolean removeItem(Item item)
+	public boolean removeItem(Integer item)
 	{
 		return stackQueue.remove(item);
 	}
