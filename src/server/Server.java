@@ -145,10 +145,16 @@ public class Server implements I_Server
 	
 	private ServerMessage assignPickerItems(ServerMessage message)
 	{
-		if (!authenticate(message.getUserData()))
+		User user = authenticate(message.getUserData(), Picker.class);
+		if (user == null)
 			return new ServerMessage(message.getMessage() + "Result", "Invalid Credentials");
-		return new ServerMessage("standing", "return");
-		
+		JsonObject messageData = new JsonParser().parse(message.getData()).getAsJsonObject();
+		ArrayList<Item> items = serverTools.processPickerItemAssignments((Picker) user, database.getSector(messageData.get("sector").getAsInt()));
+		JsonObject result = new JsonObject();
+		JsonArray itemArray = gson.toJsonTree(items).getAsJsonArray();
+		result.addProperty("isSuccess", !items.isEmpty());
+		result.addProperty("items", itemArray.getAsString());
+		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 	
 	private ServerMessage processIncomingOrder(ServerMessage message)
@@ -175,7 +181,7 @@ public class Server implements I_Server
 		return database.isValidLogin(credentials.get("email").getAsString(), credentials.get("password").getAsString());
 	}
 	
-	private boolean authenticate(String userData, Class<?> userType)
+	private User authenticate(String userData, Class<?> userType)
 	{
 		//Convert the userData JSON string in a JsonObject 
 		JsonObject credentials = new JsonParser().parse(userData).getAsJsonObject();
@@ -183,12 +189,11 @@ public class Server implements I_Server
 		User testUser = database.getUser(credentials.get("email").getAsString(), credentials.get("password").getAsString());
 		try
 		{
-			userType.cast(testUser);
-			return true;
+			return (User) userType.cast(testUser);
 		}
 		catch(ClassCastException e)
 		{
-			return false;
+			return null;
 		}
 	}
 	
@@ -214,6 +219,7 @@ public class Server implements I_Server
 				//If this happens its not a valid type
 			}
 		}
+		//We should never encounter this case if a valid user is passed into the function. 
 		return -1;
 	}
 	
