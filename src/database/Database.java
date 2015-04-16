@@ -91,6 +91,7 @@ public class Database implements I_Database {
 		items.add(new Item(3, 13, null, "2015-04-03"));
 		items.add(new Item(1, 14, "2015-01-12", null));
 		items.add(new Item(3, 15, null, "2015-04-03"));
+		items.add(new Item(3, 16, null, "2015-04-03"));
 		
 		items.get(0).setCurrentState("AWAITING_STOCKER");
 		items.get(1).setCurrentState("AWAITING_STOCKER");
@@ -105,13 +106,13 @@ public class Database implements I_Database {
 		
 		items.get(6).setCurrentState("AWAITING_PICKER");
 		items.get(7).setCurrentState("AWAITING_PICKER");
-		((Picker) (users.get(4))).addItemToBasket(items.get(6).getID());
-		((Picker) (users.get(4))).addItemToBasket(items.get(7).getID());
+		((Picker) (users.get(4))).addItemToBasket(items.get(6));
+		((Picker) (users.get(4))).addItemToBasket(items.get(7));
 		
 		items.get(8).setCurrentState("AWAITING_CHECK_In");
 		items.get(9).setCurrentState("AWAITING_CHECK_IN");
-		((Picker) (users.get(4))).addItemToBasket(items.get(6).getID());
-		((Picker) (users.get(4))).addItemToBasket(items.get(7).getID());
+		((Picker) (users.get(4))).addItemToBasket(items.get(6));
+		((Picker) (users.get(4))).addItemToBasket(items.get(7));
 		
 		items.get(10).setCurrentState("AWAITING_PACKER");
 		items.get(11).setCurrentState("AWAITING_PACKER");
@@ -195,12 +196,7 @@ public class Database implements I_Database {
 			shelve.setCubbies(tempCubbies);
 		}
 		
-		for(I_Cubby cub : cubbies)
-		{
-			for(int i=0; i < 3; i++)
-				
-		}
-			
+
 		sectors = new ArrayList<I_Sector>();
 		sectorIndexer = 1;
 		sectorFactory = new SectorFactory();
