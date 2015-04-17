@@ -36,7 +36,12 @@ public class GUICommunicatorController
 		serverResult = communicator.sendServerMessage(new ServerMessage("Login", user.toString()));
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-		user.addProperty("type", credentials.get("type").getAsInt());
+		
+		if(credentials.get("isValid").getAsBoolean())
+		{
+			user.addProperty("type", credentials.get("type").getAsInt());
+			System.out.println(user);
+		} else user = null;
 		
 		return credentials.get("isValid").getAsBoolean();
 	}
@@ -49,7 +54,8 @@ public class GUICommunicatorController
 	
 	public int getUserType()
 	{
-		if(user != null)	return user.get("type").getAsInt();
+		if(user != null)	
+			return user.get("type").getAsInt();
 		
 		return 0;
 	}
@@ -66,17 +72,11 @@ public class GUICommunicatorController
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForPicker", "" ,user.toString() ));
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-		
 		JsonArray jsonArray = credentials.getAsJsonArray("items");
-		
 		ArrayList<String> basket = new ArrayList<String>();
 		
 		for(JsonElement element : jsonArray)
-		{
-			JsonObject obj = element.getAsJsonObject();
-				
-			basket.add(" Item Id: "+ obj.get("ID") + "  Location: " + "XXXX");
-		}
+				basket.add(" Item Id: "+ element.getAsJsonObject().get("ID") + "  Location: " + "XXXX");
 		
 		return basket;
 	}
@@ -86,6 +86,5 @@ public class GUICommunicatorController
 		JsonObject items = new JsonObject();
 		items.add("items", gson.toJsonTree(new int[] {itemID}).getAsJsonArray());
 		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsPicked", items.toString() ,user.toString() ));
-
 	}
 }
