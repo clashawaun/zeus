@@ -107,8 +107,6 @@ public class Database implements I_Database {
 		
 		items.get(6).setCurrentState("AWAITING_PICKER");
 		items.get(7).setCurrentState("AWAITING_PICKER");
-		((Picker) (users.get(4))).addItemToBasket(items.get(6));
-		((Picker) (users.get(4))).addItemToBasket(items.get(7));
 		
 		items.get(8).setCurrentState("AWAITING_CHECK_IN");
 		items.get(9).setCurrentState("AWAITING_CHECK_IN");
