@@ -110,7 +110,10 @@ public class Database implements I_Database {
 		
 		items.get(8).setCurrentState("AWAITING_CHECK_IN");
 		items.get(9).setCurrentState("AWAITING_CHECK_IN");
+		//----Code is out of control here ... there has to be better way
+		items.get(8).setAssignedUserID(users.get(4).getID());
 		((Picker) (users.get(4))).addItemToBasket(items.get(8));
+		items.get(9).setAssignedUserID(users.get(4).getID());
 		((Picker) (users.get(4))).addItemToBasket(items.get(9));
 		
 		items.get(10).setCurrentState("AWAITING_PACKER");
