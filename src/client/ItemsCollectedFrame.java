@@ -20,18 +20,8 @@ public class ItemsCollectedFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ItemsCollectedFrame frame = new ItemsCollectedFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
+	
 
 	/**
 	 * Create the frame.
@@ -47,7 +37,9 @@ public class ItemsCollectedFrame extends JFrame {
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);
@@ -61,7 +53,9 @@ public class ItemsCollectedFrame extends JFrame {
 		
 		JButton itemCollectedButton = new JButton("Item Collected");
 		itemCollectedButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
 			}
 		});
 		itemCollectedButton.setBounds(215, 43, 109, 40);

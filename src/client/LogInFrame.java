@@ -65,9 +65,9 @@ public class LogInFrame extends JFrame implements ActionListener {
 				{
 					case 1 :  //Picker
 						System.out.println("I am in switch state ment");
-						ItemsCollectedFrame aFrame = new ItemsCollectedFrame();
-						aFrame.setVisible(true);
+						GUIManager.changeFrame(new ItemsCollectedFrame());
 						break;
+						
 					case 2 :  //Packer
 						
 						break;
