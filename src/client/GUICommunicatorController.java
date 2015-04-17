@@ -16,11 +16,13 @@ public class GUICommunicatorController
 	private ServerCommunicator communicator;
 	private ServerMessage serverResult;
 	private JsonObject user;
-
+	private Gson gson;
+	
 	public GUICommunicatorController() 
 	{
 		communicator = new ServerCommunicator();
 		user = null;
+		gson = new Gson();
 	}
 
 	public boolean LoginUser(String email, String password)
@@ -81,18 +83,9 @@ public class GUICommunicatorController
 	
 	public void collectItem(int itemID)
 	{
-		/*//"MarkItemAsPicked"
 		JsonObject items = new JsonObject();
-		items.addProperty("key", itemID);
-		
-		JsonArray array = new JsonArray();
-
-		JsonElement element = items.get("key");
-		array.add(element);
-		items.addProperty("items", itemID);
-		
-		System.out.println(items);
+		items.add("items", gson.toJsonTree(new int[] {itemID}).getAsJsonArray());
 		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsPicked", items.toString() ,user.toString() ));
-		*/
+
 	}
 }
