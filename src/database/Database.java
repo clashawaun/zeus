@@ -3,8 +3,9 @@ package database;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
-import javafx.util.converter.DateStringConverter;
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
@@ -109,10 +110,10 @@ public class Database implements I_Database {
 		((Picker) (users.get(4))).addItemToBasket(items.get(6));
 		((Picker) (users.get(4))).addItemToBasket(items.get(7));
 		
-		items.get(8).setCurrentState("AWAITING_CHECK_In");
+		items.get(8).setCurrentState("AWAITING_CHECK_IN");
 		items.get(9).setCurrentState("AWAITING_CHECK_IN");
-		((Picker) (users.get(4))).addItemToBasket(items.get(6));
-		((Picker) (users.get(4))).addItemToBasket(items.get(7));
+		((Picker) (users.get(4))).addItemToBasket(items.get(8));
+		((Picker) (users.get(4))).addItemToBasket(items.get(9));
 		
 		items.get(10).setCurrentState("AWAITING_PACKER");
 		items.get(11).setCurrentState("AWAITING_PACKER");
@@ -205,7 +206,12 @@ public class Database implements I_Database {
 		sectorIndexer++;
 		
 		ArrayList<Integer> tempShelve = new ArrayList<Integer>();
-		
+		//This should all be in its own function ... doing it this way for testing purposes
+		sectors.get(0).putItemInQueue(items.get(6));
+		sectors.get(0).putItemInQueue(items.get(7));
+		cubbies.get(0).addItem(items.get(6).getID());
+		cubbies.get(0).addItem(items.get(7).getID());
+		//--end of test code
 		for(I_Shelf shelve : shelves)
 		{
 			tempShelve.add(shelve.getID());

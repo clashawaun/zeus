@@ -114,6 +114,27 @@ public class ServerTools
 		return tool.assignItemsForPicker(picker);
 	}
 	
+	public boolean markItemCollected(Item item, Picker picker)
+	{
+		if(item.getAssignedUserID() != picker.getID())
+			return false;
+		ArrayList<Item> pickerItems = picker.getItemBasket();
+		for(int i = 0; i < pickerItems.size(); i++)
+		{
+			if(pickerItems.get(i).getID() == item.getID())
+			{
+				//Again duplication of logic with assigned users needs to be revised
+				pickerItems.remove(i);
+				item.setCurrentState("AWAITING_PACKER");
+				item.setAssignedUserID(-1);
+				database.updateItem(item);
+				database.updateUser(picker);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private SectorTools getSectorTool(int ID)
 	{
 		for(SectorTools tool : sectorTools)

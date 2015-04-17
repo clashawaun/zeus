@@ -111,6 +111,7 @@ public class Server implements I_Server
 		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
 		messageFunctionMap.put("AssignItemsToPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignPickerItems(m);}});
 		messageFunctionMap.put("GetItemsForPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return getItemsForPicker(m);}});
+		messageFunctionMap.put("MarkItemAsPicked", new Command() {public ServerMessage runCommand(ServerMessage m) {return markItemAsPicked(m);}});
 	}
 	
 	private void setUpSectorTools()
@@ -147,12 +148,15 @@ public class Server implements I_Server
 	
 	private ServerMessage assignPickerItems(ServerMessage message)
 	{
+		JsonObject result = new JsonObject();
 		User user = authenticate(message.getUserData(), Picker.class);
-		if (user == null)
-			return new ServerMessage(message.getMessage() + "Result", "Invalid Credentials");
+		if(user == null)
+		{
+			result.addProperty("error", "Invalid Credentials");
+			return new ServerMessage(message.getMessage()+"Result", result.toString());
+		}
 		JsonObject messageData = new JsonParser().parse(message.getData()).getAsJsonObject();
 		ArrayList<Item> items = serverTools.processPickerItemAssignments((Picker) user, database.getSector(messageData.get("sector").getAsInt()));
-		JsonObject result = new JsonObject();
 		result.addProperty("isSuccess", !items.isEmpty());
 		result.add("items", gson.toJsonTree(items).getAsJsonArray());
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
@@ -187,6 +191,26 @@ public class Server implements I_Server
 		Picker picker = (Picker) user;
 		result.add("items", gson.toJsonTree(picker.getItemBasket()).getAsJsonArray());
 		return new ServerMessage(message.getMessage()+"Result", result.toString());	
+	}
+	
+	private ServerMessage markItemAsPicked(ServerMessage message)
+	{
+		JsonObject result = new JsonObject();
+		User user = authenticate(message.getUserData(), Picker.class);
+		if(user == null)
+		{
+			result.addProperty("error", "Invalid Credentials");
+			return new ServerMessage(message.getMessage()+"Result", result.toString());
+		}
+		JsonObject itemData = new JsonParser().parse(message.getData()).getAsJsonObject();
+		JsonArray items = itemData.get("items").getAsJsonArray();
+		for(JsonElement item: items)
+		{
+			serverTools.markItemCollected(database.getItem(item.getAsInt()), (Picker) user);
+		}
+		result.addProperty("isSuccess", true);
+		return new ServerMessage(message.getMessage()+"Result", result.toString());
+		
 	}
 	
 	
