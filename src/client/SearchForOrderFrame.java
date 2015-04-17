@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -20,18 +21,7 @@ public class SearchForOrderFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SearchForOrderFrame frame = new SearchForOrderFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -47,7 +37,9 @@ public class SearchForOrderFrame extends JFrame {
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);
@@ -61,7 +53,9 @@ public class SearchForOrderFrame extends JFrame {
 		
 		JButton searchForOrderButton = new JButton("Search For Order");
 		searchForOrderButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Searches information on database
 			}
 		});
 		searchForOrderButton.setBounds(211, 62, 133, 23);
@@ -69,7 +63,9 @@ public class SearchForOrderFrame extends JFrame {
 		
 		JButton printAddressButton = new JButton("Print Address");
 		printAddressButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Searches information on database.
 			}
 		});
 		printAddressButton.setBounds(211, 153, 133, 23);
@@ -81,7 +77,9 @@ public class SearchForOrderFrame extends JFrame {
 		
 		JButton dispatchOrderButton = new JButton("Dispatch Order");
 		dispatchOrderButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new DispatchOrderFrame());
 			}
 		});
 		dispatchOrderButton.setBounds(211, 91, 133, 23);

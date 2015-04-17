@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextArea;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -20,18 +21,7 @@ public class CollectItemsFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CollectItemsFrame frame = new CollectItemsFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -47,7 +37,9 @@ public class CollectItemsFrame extends JFrame {
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);
@@ -59,7 +51,9 @@ public class CollectItemsFrame extends JFrame {
 		
 		JButton readyToCollectButton = new JButton("Ready");
 		readyToCollectButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new ItemsCollectedFrame());
 			}
 		});
 		readyToCollectButton.setBounds(161, 219, 89, 23);

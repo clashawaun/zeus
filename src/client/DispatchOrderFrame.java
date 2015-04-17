@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -20,18 +21,6 @@ public class DispatchOrderFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DispatchOrderFrame frame = new DispatchOrderFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -53,7 +42,9 @@ public class DispatchOrderFrame extends JFrame {
 		
 		JButton searchForOrderButton = new JButton("Search For Order");
 		searchForOrderButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new SearchForOrderFrame());
 			}
 		});
 		searchForOrderButton.setBounds(193, 74, 122, 23);
@@ -61,7 +52,9 @@ public class DispatchOrderFrame extends JFrame {
 		
 		JButton disptachOrderButton = new JButton("Dispatch Order");
 		disptachOrderButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Updates the status of order status in the database.
 			}
 		});
 		disptachOrderButton.setBounds(193, 105, 122, 23);
@@ -74,7 +67,9 @@ public class DispatchOrderFrame extends JFrame {
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);

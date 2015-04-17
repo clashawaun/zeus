@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -21,19 +22,7 @@ public class GenerateItemIDFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenerateItemIDFrame frame = new GenerateItemIDFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -48,7 +37,9 @@ public class GenerateItemIDFrame extends JFrame {
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);
@@ -74,7 +65,9 @@ public class GenerateItemIDFrame extends JFrame {
 		
 		JButton generateItemIDButton = new JButton("Generate Item ID");
 		generateItemIDButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Prints label.
 			}
 		});
 		generateItemIDButton.setBounds(134, 187, 129, 23);
@@ -82,7 +75,9 @@ public class GenerateItemIDFrame extends JFrame {
 		
 		JButton stockItemsFrameButton = new JButton("Stock Items");
 		stockItemsFrameButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new StockItemsFrame());
 			}
 		});
 		stockItemsFrameButton.setBounds(10, 11, 129, 23);

@@ -55,25 +55,31 @@ public class LogInFrame extends JFrame implements ActionListener {
 	{
 		GUICommunicatorController aGCC = GUIManager.getGCC();
 		
-		if (aGCC != null)
+		if (aGCC != null
+				)
 		{
 			if (aGCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
 			{
 				switch(aGCC.getUserType())
 				{
 					case 1 :  //Picker
-						System.out.println("I am in switch state ment");
-						GUIManager.changeFrame(new ItemsCollectedFrame());
+						System.out.println("You are signed in as a picker.");
+						GUIManager.changeFrame(new CollectItemsFrame());
 						break;
 						
 					case 2 :  //Packer
-						
+						System.out.println("You are signed in as a packer.");
+						GUIManager.changeFrame(new SearchForOrderFrame());
 						break;
+						
 					case 3 :  //Manager
-						
+						System.out.println("You are signed in as a manager.");
+						GUIManager.changeFrame(new RegisterNewProductFrame());
 						break;
-					case 4 :  //Stocker
 						
+					case 4 :  //Stocker
+						System.out.println("You are signed in as a stocker.");
+						GUIManager.changeFrame(new GenerateItemIDFrame());
 						break;
 						
 					default: 

@@ -55,7 +55,7 @@ public class ItemsCollectedFrame extends JFrame {
 		itemCollectedButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				
+				//Listing updates and removes items that are collected.
 			}
 		});
 		itemCollectedButton.setBounds(215, 43, 109, 40);

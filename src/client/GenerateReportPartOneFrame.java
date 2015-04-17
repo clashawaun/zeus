@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -23,18 +24,7 @@ public class GenerateReportPartOneFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GenerateReportPartOneFrame frame = new GenerateReportPartOneFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -50,7 +40,9 @@ public class GenerateReportPartOneFrame extends JFrame {
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);
@@ -58,7 +50,9 @@ public class GenerateReportPartOneFrame extends JFrame {
 		
 		JButton registerNewProductFrameButton = new JButton("Register New Product");
 		registerNewProductFrameButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new RegisterNewProductFrame());
 			}
 		});
 		registerNewProductFrameButton.setBounds(75, 11, 161, 23);
@@ -82,7 +76,9 @@ public class GenerateReportPartOneFrame extends JFrame {
 		
 		JRadioButton pieChartRadioButton = new JRadioButton("Pie Chart");
 		pieChartRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Gets data from database
 			}
 		});
 		pieChartRadioButton.setBounds(27, 175, 109, 23);
@@ -90,7 +86,9 @@ public class GenerateReportPartOneFrame extends JFrame {
 		
 		JRadioButton barChartRadioButton = new JRadioButton("Bar Chart");
 		barChartRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Gets data from database.
 			}
 		});
 		barChartRadioButton.setBounds(27, 197, 109, 23);
@@ -98,7 +96,9 @@ public class GenerateReportPartOneFrame extends JFrame {
 		
 		JRadioButton lineChartRadioButton = new JRadioButton("Line Chart");
 		lineChartRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				//Gets data from database
 			}
 		});
 		lineChartRadioButton.setBounds(27, 218, 109, 23);
@@ -106,7 +106,9 @@ public class GenerateReportPartOneFrame extends JFrame {
 		
 		JButton generateReportButton = new JButton("Generate Report");
 		generateReportButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new GenerateReportPartTwoFrame());
 			}
 		});
 		generateReportButton.setBounds(281, 186, 123, 45);
