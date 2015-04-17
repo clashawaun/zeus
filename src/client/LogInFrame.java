@@ -16,7 +16,7 @@ public class LogInFrame extends JFrame implements ActionListener {
 	private JTextField usernameField;
 	private JPasswordField passwordField;
 	JButton logInButton;
-	GUICommunicatorController GCC;
+	
 
 	/**
 	 * Create the frame.
@@ -46,22 +46,20 @@ public class LogInFrame extends JFrame implements ActionListener {
 		
 		logInButton.addActionListener(this);
 		
-		GCC = null;
+		
 	}
 
-	public void addGUICommunicationController(GUICommunicatorController GCC)
-	{
-		this.GCC = GCC;
-	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		if (GCC != null)
+		GUICommunicatorController aGCC = GUIManager.getGCC();
+		
+		if (aGCC != null)
 		{
-			if (GCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
+			if (aGCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
 			{
-				switch(GCC.getUserType())
+				switch(aGCC.getUserType())
 				{
 					case 1 :  //Picker
 						System.out.println("I am in switch state ment");

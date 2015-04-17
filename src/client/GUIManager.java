@@ -6,13 +6,18 @@ import javax.swing.JFrame;
 public class GUIManager 
 {
 	private static JFrame aFrame;
+	private static GUICommunicatorController GCC;
 	
 	public static void init()
 	{
-		GUICommunicatorController GCC = new GUICommunicatorController();
+		GCC = new GUICommunicatorController();
 		aFrame = new LogInFrame();
 		aFrame.setVisible(true);
-		((LogInFrame) aFrame).addGUICommunicationController(GCC);
+	}
+	
+	public static GUICommunicatorController getGCC()
+	{
+		return GCC;
 	}
 	
 	public static void changeFrame(JFrame bFrame)
