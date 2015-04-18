@@ -14,6 +14,7 @@ public class Item{
 	private Date manufactureDate;
 	private Date expriryDate;
 	
+	private String sku;
 	private String currentState;
 	private int assignedUserID;
 	private int xPlacementPoint;
@@ -139,6 +140,17 @@ public class Item{
 	public boolean equals(Object obj)
 	{
 		return (((obj instanceof Item)) && ((Item) obj) != null && this.ID == ((Item) obj).getID());     
+	}
+	
+	public String getSku() {
+		return sku;
+	}
+	public void setSku(String sku) throws Exception
+	{
+		//Barcode must satisfy EAN-13, UPC-A, EAN-8 or UPC-E standards
+		if(!sku.matches("[0-9]{8,13}"))
+			throw new Exception("Invalid SKU given. Must satisfy EAN-13, UPC-A, EAN-8 or UPC-E standards");
+		this.sku = sku;
 	}
 	
 	

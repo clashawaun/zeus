@@ -114,6 +114,12 @@ public class ServerTools
 		return tool.assignItemsForPicker(picker);
 	}
 	
+	public ArrayList<Item> processStockerItemAssignments(Stocker stocker, I_Sector sector)
+	{
+		SectorTools tool = getSectorTool(sector.getID());
+		
+	}
+	
 	public boolean markItemCollected(Item item, Picker picker)
 	{
 		if(item.getAssignedUserID() != picker.getID())
