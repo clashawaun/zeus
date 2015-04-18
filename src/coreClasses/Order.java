@@ -19,11 +19,6 @@ public class Order
 		this.priority = 0;
 	}
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		return (((obj instanceof Order)) && ((Order) obj) != null && this.ID == ((Order) obj).getID());     
-	}
 	
 	public float getPriority() {
 		return priority;
@@ -81,5 +76,16 @@ public class Order
 		return replaced;
 	}
 	
-
+	@Override
+	public String toString()
+	{
+		return "OrderID: " + ID + " Products: " + productIds;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Order)) && ((Order) obj) != null && this.ID == ((Order) obj).getID());     
+	}
+	
 }

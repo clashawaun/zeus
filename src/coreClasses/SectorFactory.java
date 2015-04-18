@@ -2,23 +2,19 @@ package coreClasses;
 
 public class SectorFactory implements I_SectorFactory {
 
-	public SectorFactory() {
+	public SectorFactory() 
+	{
 	
 	}
 	
 	public I_Sector makeSector(int type, int id)
 	{
-		I_Sector sector;
-		
 		switch(type)
 		{
 			case 1:
-				sector = new Sector(id, 10000, 10000, 5000 );
-				break;
+				return new Sector(id, 10000, 10000, 5000 );
 			default:
-				sector = null;
-				break;
+				return null;
 		}
-		return sector;
 	}
 }

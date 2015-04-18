@@ -22,11 +22,6 @@ public abstract class User
 		this.password = password;
 	}
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		return (((obj instanceof User)) && ((User) obj) != null && this.ID == ((User) obj).getID());     
-	}
 	
 	public String getFirstname() {
 		return firstname;
@@ -72,4 +67,15 @@ public abstract class User
 		return ID;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "UserID: " + ID + " email: " + email + " password: " + password;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof User)) && ((User) obj) != null && this.ID == ((User) obj).getID());     
+	}
 }

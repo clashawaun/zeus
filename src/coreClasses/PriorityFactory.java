@@ -8,7 +8,7 @@ public class PriorityFactory implements I_PriorityFactory
 		
 	}
 	
-	public I_Priority getPriority(int priorityID)
+	public I_Priority makePriority(int priorityID)
 	{
 		switch(priorityID)
 		{

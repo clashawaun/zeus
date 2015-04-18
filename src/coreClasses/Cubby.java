@@ -20,17 +20,12 @@ public abstract class Cubby implements I_Cubby
 		this.TYPE = type;
 		this.items = new ArrayList<Integer>();
 	}
-	
-	@Override
-	public boolean equals(Object obj)
-	{
-		return (((obj instanceof Cubby)) && ((Cubby) obj) != null && this.ID == ((Cubby) obj).getID());     
-	}
-	
+		
 	public int getID()
 	{
 		return ID;
 	}
+	
 	public ArrayList<Integer> getItems()
 	{
 		return items;
@@ -40,14 +35,17 @@ public abstract class Cubby implements I_Cubby
 	{
 		items.add(itemID);
 	}
+	
 	public int getHeight()
 	{
 		return HEIGHT; 
 	}
+	
 	public int getWidth()
 	{
 		return WIDTH;
 	}
+	
 	public int getDepth()
 	{
 		return DEPTH;
@@ -65,5 +63,17 @@ public abstract class Cubby implements I_Cubby
 			if(i == itemID) return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "CubbyId: " + ID + " Items: " + items;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Cubby)) && ((Cubby) obj) != null && this.ID == ((Cubby) obj).getID());     
 	}
 }

@@ -24,12 +24,6 @@ public class Shelf implements I_Shelf
 
 	}
 
-	@Override
-	public boolean equals(Object obj)
-	{
-		return (((obj instanceof Shelf)) && ((Shelf) obj) != null && this.ID == ((Shelf) obj).getID());     
-	}
-	
 	public int getHeight() {
 		return height;
 	}
@@ -69,8 +63,6 @@ public class Shelf implements I_Shelf
 		this.cubbies = cubbies;
 	}
 
-
-
 	@Override
 	public boolean hasCubby(int cubbyID) 
 	{
@@ -93,7 +85,6 @@ public class Shelf implements I_Shelf
 	@Override
 	public boolean removeCubby(I_Cubby cubby) {
 		
-		//Nice and compressed like Shane likes it. Dick
 		for(int index = 0 ; index < cubbies.size(); index++)
 			if(cubbies.get(index).equals(cubby)){
 				cubbies.remove(index);
@@ -102,4 +93,16 @@ public class Shelf implements I_Shelf
 		return false;
 	}
 
+	@Override
+	public String toString()
+	{
+		return "ShelfId: " + ID + " Items: " + cubbies;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Shelf)) && ((Shelf) obj) != null && this.ID == ((Shelf) obj).getID());     
+	}
+	
 }

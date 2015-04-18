@@ -9,27 +9,22 @@ public class ShelfFactory implements I_ShelfFactory{
 	
 	public I_Shelf makeShelve(int type, int id)
 	{
-		I_Shelf shelve;
+		
 		
 		switch(type)
 		{
 		case 1:
-			shelve = new Shelf(id, 400, 1000, 100);
-			break;
+			return new Shelf(id, 400, 1000, 100);
 		case 2:
-			shelve = new Shelf(id,400, 1000, 100);
-			break;
+			return new Shelf(id,400, 1000, 100);
 		case 3:
-			shelve = new Shelf(id,400, 1000, 100);
-			break;
+			return new Shelf(id,400, 1000, 100);
 		case 4:
-			shelve = new Shelf(id,400, 1000, 100);
-			break;
+			return new Shelf(id,400, 1000, 100);
 		default:
-			shelve = null;
+			return null;
 		}
-		
-		return shelve;
+
 	}
 
 }

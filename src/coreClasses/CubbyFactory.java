@@ -17,32 +17,18 @@ public class CubbyFactory implements I_CubbyFactory
 	 */
 	public I_Cubby makeCubby(int type, int id) 
 	{
-
-		Cubby cubby;
 		
 		switch (type)
 		{
 		case 1:
-			cubby = new CubbySmall(id);
-			break;
-			
+			return new CubbySmall(id);
 		case 2:
-			cubby = new CubbyMedium(id);
-			break;
-			
+			return new CubbyMedium(id);
 		case 3:
-			cubby =  new CubbyLarge(id);
-			break;
-		
+			return new CubbyLarge(id);	
 		default:
-			
-			cubby = null;
+			return null;
 		}
-		
-		
-		return cubby;
 	}
-	
-	
 	
 }

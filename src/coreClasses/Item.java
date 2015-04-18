@@ -66,11 +66,6 @@ public class Item{
 	}
 	
 	
-	public boolean equals(Object obj)
-	{
-		return (((obj instanceof Item)) && ((Item) obj) != null && this.ID == ((Item) obj).getID());     
-	}
-	
 	public float getPriority() 
 	{
 		return priority;
@@ -98,8 +93,6 @@ public class Item{
 	 *	SHIPPED
 	 * 
 	 */
-
-	
 	public void setCurrentState(String currentState) {
 		this.currentState = currentState;
 	}
@@ -134,6 +127,18 @@ public class Item{
 	
 	public Date getDateOfExpriry() {
 		return expriryDate;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "ItemID: " + ID + " Product ID: " + PRODUCT_ID;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		return (((obj instanceof Item)) && ((Item) obj) != null && this.ID == ((Item) obj).getID());     
 	}
 	
 	

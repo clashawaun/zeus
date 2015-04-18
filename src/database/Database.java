@@ -1,10 +1,8 @@
 package database;
 
-import java.sql.Date;
+
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import coreClasses.CubbyFactory;
 import coreClasses.I_Cubby;
@@ -94,6 +92,9 @@ public class Database implements I_Database {
 		items.add(new Item(3, 15, null, "2015-04-03"));
 		items.add(new Item(3, 16, null, "2015-04-03"));
 		
+		itemIndexer = 17;
+		
+		
 		items.get(0).setCurrentState("AWAITING_STOCKER");
 		items.get(1).setCurrentState("AWAITING_STOCKER");
 		
@@ -128,22 +129,22 @@ public class Database implements I_Database {
 		tempOrderList.add(3);
 		tempOrderList.add(2);
 		tempOrderList.add(1);
-		orders.add(new Order(0,tempOrderList, "Order Address one \n Address two \n Town"));
+		orders.add(new Order(1,tempOrderList, "Order Address one \n Address two \n Town"));
 		tempOrderList.clear();
 		
 		tempOrderList.add(1);
 		tempOrderList.add(1);
 		tempOrderList.add(3);
-		orders.add(new Order(1,tempOrderList, "Order Address two \n Address two \n Town"));
+		orders.add(new Order(2,tempOrderList, "Order Address two \n Address two \n Town"));
 		tempOrderList.clear();
 		
 		tempOrderList.add(1);
 		tempOrderList.add(3);
 		tempOrderList.add(2);
-		orders.add(new Order(2,tempOrderList, "Order Address Three \n Address two \n Town"));
+		orders.add(new Order(3,tempOrderList, "Order Address Three \n Address two \n Town"));
 		tempOrderList.clear();
 		
-		orderIndexer = 3;
+		orderIndexer = 4;
 		
 		
 		this.cubbyFactory = new CubbyFactory();
@@ -221,26 +222,28 @@ public class Database implements I_Database {
 		sectors.get(0).setShelves(tempShelve);
 		
 	}
+	
 	@Override
-	public User createUser(String firstName, String secondName, String password, String email, String phone, int type ) 
+	public User createUser(int type, String firstName, String surname, String email, String phone, String password)
 	{
-		userIndexer++;
-			User temp = userFactory.makeUser(type, userIndexer, firstName, secondName, password, email, phone);
+		
+		User temp = userFactory.makeUser(type, userIndexer, firstName, surname, email, phone, password);
+		
+		if(temp != null)
+		{
+			userIndexer++;
 			users.add(temp);
-			return temp;
+		}
+		
+		return temp;
 	}
 
 	@Override
 	public boolean isValidLogin(String email, String password) 
 	{
 		for(User user: users)
-		{
-			//Shane - I changed this since it was using == which is incorrect for strings
-			if(email.equals(user.getEmail()) && password.equals(user.getPassword()))
-			{
+			if(email.equals(user.getEmail()) && password.equals(user.getPassword())) 
 				return true;
-			}
-		}
 		
 		return false;
 	}
@@ -250,19 +253,22 @@ public class Database implements I_Database {
 	{
 
 		Order order = new Order(orderIndexer, productIDs, shippingAddress);
-		orders.add(order);
-		orderIndexer++;
+		
+		if(order != null)
+		{
+			orders.add(order);
+			orderIndexer++;
+		}
 		
 		return order;
 	}
 
 	@Override
-	public Order getOrder(int ID) 
+	public Order getOrder(int orderID) 
 	{
 		for(Order order : orders)
-		{
-			if(order.getID() == ID)  return order;
-		}
+			if(order.getID() == orderID)  
+				return order;
 		
 		return null;
 	}
@@ -271,20 +277,27 @@ public class Database implements I_Database {
 	public Item createItem(int productID, String manufactureDate, String expriryDate) throws Exception
 	{
 		Item item= new Item(productID, itemIndexer, manufactureDate, expriryDate);
-		items.add(item);
-		itemIndexer++;
+		
+		if (item != null)
+		{
+			items.add(item);
+			itemIndexer++;
+		}
 		
 		return item;
 	}
 
 	@Override
-	public Product createProduct(String name, String description, double price, 
-			float height, float width, float depth,float weight, int priorityID) 
+	public Product createProduct(String name, String description, double price, float height, float width, float depth,float weight, int priorityID) 
 	{
 		
 		Product product = new Product(productIndexer, name, description, price, height, width, depth, weight, priorityID);
-		products.add(product);
-		productIndexer++;
+		
+		if(product != null)
+		{
+			productIndexer++;
+			products.add(product);
+		}
 		
 		return product;
 	}
@@ -296,14 +309,18 @@ public class Database implements I_Database {
 		ArrayList<Order> tempOrders = new ArrayList<Order>();
 		
 		for(Order order : orders)
-		{
-			if(order.getStatus().equalsIgnoreCase( "OPEN"));
-			tempOrders.add(order);
-		}
+			if(order.getStatus().equalsIgnoreCase( "OPEN"))
+				tempOrders.add(order);
 		
 		return tempOrders;
 	}
 
+	@Override
+	public ArrayList<Item> getItems() 
+	{
+		return items;	
+	}
+	
 	@Override
 	public ArrayList<Item> getItems(int productID) 
 	{
@@ -311,12 +328,8 @@ public class Database implements I_Database {
 		ArrayList<Item> tempItems = new ArrayList<Item>();
 		
 		for(Item item : items)
-		{
 			if(item.getProductID() == productID)
-			{
 				tempItems.add(item);
-			}
-		}
 		
 		return tempItems;
 	}
@@ -332,13 +345,10 @@ public class Database implements I_Database {
 	{
 		
 		for(Product product : products)
-		{
-			if(product.getID() == productID)
-			{
+			if(product.getID() == productID)  
 				return product;
-			}
-		}
-		
+			
+
 		return null;
 	}
 	
@@ -347,272 +357,126 @@ public class Database implements I_Database {
 	{
 		
 		for(Item item : items)
-		{
 			if(item.getID() == itemID)
-			{
 				return item;
-			}
-		}
+			
 		return null;
 	}
 	
-	@Override
-	public String getOrderAddress(int orderID) 
-	{
 
-		for(Order order : orders)
-		{
-			if(order.getID() == orderID)
-			{
-				return order.getShippingAddress();
-			}
-		}
-		return null;
-	}
-	
 	@Override
 	public int itemBelonngsTo(int itemID)
 	{
 		for(Order order : orders)
-		{
 			if(order.hasItem(itemID))
-			{
 				return order.getID();
-			}
-		}
 		
-
 		return 0;
 	}
 	
-	@Override
-	public void assignItemToOrder( int itemID, int productID,int orderID) 
-	{
 
-		for(Order order : orders)
-		{
-			if(order.getID() == orderID)
-			{
-				order.addItemId(itemID, productID);
-			}
-		}
-		
-	}
-	
-	@Override
-	public void updateOrderStatus(int orderID, String status)
-	{
-		
-		for(Order order : orders)
-		{
-			if(order.getID() == orderID)
-			{
-				order.setStatus(status);
-			}
-		}
 
-	}
-	
-	@Override
-	public void updateItemStutas(int itemID, String state)
-	{
-		
-		for(Item item : items)
-		{
-			if(item.getID() == itemID)
-			{
-				item.setCurrentState(state);
-			}
-		}
-	}
-	
-	@Override
-	public void updateProductStutas(int productID, String state)
-	{
-		for(Product product: products)
-		{
-			if(product.getID() == productID)
-			{
-				product.setState(state);
-			}
-		}
-		
-	}
-	
-	@Override
-	public void updateItemPriority(int itemID, float priority)
-	{
-		
-		for(Item item : items)
-		{
-			if(item.getID() == itemID)
-			{
-				item.setPriority(priority);;
-			}
-		}
-		
-	}
-	
-	@Override
-	public void updateProductPriority(int productID, int priority) 
-	{
 
-		
-		for(Product product: products)
-		{
-			if(product.getID() == productID)
-			{
-				product.setPriorityID(priority);
-			}
-		}
-		
-	}
-	
-	@Override
-	public void updateOrderPriority(int orderID, float priority) 
-	{
-		for(Order order : orders)
-		{
-			if(order.getID() == orderID)
-			{
-				order.setPriority(priority);;
-			}
-		}
-	}
 	
 	@Override
 	public I_Cubby createCubby(int type) 
 	{
+		I_Cubby cubby = cubbyFactory.makeCubby(type, cubbyIndexer );
 		
-		cubbies.add(cubbyFactory.makeCubby(type, cubbyIndexer ));
-		
-		return cubbies.get(cubbies.size()-1);
-		
+		if(cubby != null)
+		{
+			cubbies.add(cubby);
+			cubbyIndexer++;
+		}
+		return cubby;
 	}
 	
 	@Override
 	public I_Shelf createShelve( int type) 
 	{
 		I_Shelf temp = shelveFactory.makeShelve(type, shelveIndexer);
-		shelveIndexer++;
+		
+		if(temp != null)
+		{
+			shelveIndexer++;
+			shelves.add(temp);
+		}
+		
 		return temp;
 	}
 	
 	@Override
 	public I_Sector createSector(int type)
 	{
-		I_Sector tempsector = sectorFactory.makeSector(type, sectorIndexer);
-		sectorIndexer++;
-		return tempsector;
-	}
-	
-	@Override
-	public void assignCubbyToShelve(int cubbyID, int shelveID) 
-	{
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void removeCubbyFromShelve(int cubbyID, int shelveID) 
-	{
-		// TODO Auto-generated method stub
+		I_Sector temp = sectorFactory.makeSector(type, sectorIndexer);
 		
-	}
-	
-	@Override
-	public void addItemToCuby(int itemID, int cubbyID) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeItemFromCuby(int itemID, int cubbyID) 
-	{
-		// TODO Auto-generated method stub
-		
+		if(temp != null)
+		{
+			sectorIndexer++;
+			sectors.add(temp);
+		}
+		return temp;
 	}
 	
 	@Override
 	public void deleteItem(int itemID)
 	{
-
 		for(int index = 0; index < items.size(); index++)
-		{
 			if(items.get(index).getID() == itemID)
 			{
 				items.remove(index);
 				return;
-			}
-		}
-
+			};
 	}
 	
 	@Override
-	public void deletePrdoct(int productID)
+	public void deleteProduct(int productID)
 	{
-
 		for(int index = 0; index <products.size(); index++)
-		{
 			if(products.get(index).getID() == productID)
 			{
 				products.remove(index);
 				return;
-			}
-		}
-		
+			};
 	}
 	
 	@Override
 	public void deleteOrder(int orderID) 
 	{
 		for(int index = 0; index <orders.size(); index++)
-		{
 			if(orders.get(index).getID() == orderID)
 			{
 				orders.remove(index);
-			}
-		}
-		
+			};
 	}
-	
-//+-----------Anything added below this line was added by shane, so I take responsibility if it breaks things and for the shite code in general. Most will prob be deleted--------------------+
+
 	
 	@Override
 	public I_Priority getPriority(int priorityID)
 	{
-		return new PriorityFactory().getPriority(priorityID);
+		return new PriorityFactory().makePriority(priorityID);
 	}
 	
-	
-	
-	
-	//TODO: I dont know if this is ok todo, simply adding this in for the moment to speed up dev of ProcessinngOrder and will come back to change. Marked TODO so wont forget
+	@Override
 	public void updateProduct(Product product)
 	{
-		//This code is shite, do not use in the final version
 		for(int i = 0; i < products.size(); i++)
-		{
 			if(products.equals(product))
 			{
 				products.set(i, product);
 				return;
-			}
-		}
+			};
 	}
 	
 	@Override
 	public void updateItem(Item item)
 	{
-		//This code is shite, do not use in the final version
-		for(int i = 0; i < products.size(); i++)
-		{
+		for(int i = 0; i < items.size(); i++)
 			if(items.get(i).getID() == item.getID())
 			{
 				items.set(i, item);
 				return;
-			}
-		}
+			};
 	}
 
 	@Override
@@ -623,14 +487,12 @@ public class Database implements I_Database {
 	
 	public void updateOrder(Order order)
 	{
-		for(int i = 0; i < orders.size(); i++)
-		{
-			if(orders.get(i).getID() == order.getID())
+		for(int index = 0; index < orders.size(); index++)
+			if(orders.get(index).equals(order))
 			{
-				orders.set(i, order);
+				orders.set(index, order);
 				return;
-			}
-		}
+			};
 	}
 	
 	@Override
@@ -642,19 +504,20 @@ public class Database implements I_Database {
 	public void updateSector(I_Sector sector)
 	{
 		for(int index = 0; index < sectors.size(); index++)
-		{
 			if(sectors.get(index).equals(sector))
+			{
 				sectors.set(index, sector);
-		}
+				return;
+			};
 	}
 	
 	@Override
 	public I_Sector getSector(int ID)
 	{
 		for(I_Sector sec : sectors)
-		{
-			if(sec.getID() == ID ) return sec;
-		}
+			if(sec.getID() == ID ) 
+				return sec;
+	
 		
 		return null;
 	}
@@ -662,10 +525,10 @@ public class Database implements I_Database {
 	@Override
 	public I_Cubby itemBelongsToCubby(int itemID )
 	{
-		for(I_Cubby cub : cubbies)
-		{
-			if(cub.hasItem(itemID)) return cub;
-		}
+		for(I_Cubby cubby : cubbies)
+			if(cubby.hasItem(itemID)) 
+				return cubby;
+		
 		return null;
 	}
 	
@@ -673,9 +536,9 @@ public class Database implements I_Database {
 	public I_Shelf cubbyBelongsToShelf(int cubbyID)
 	{
 		for(I_Shelf shelf : shelves)
-		{
-			if (shelf.hasCubby(cubbyID)) return shelf;
-		}
+			if (shelf.hasCubby(cubbyID))
+				return shelf;
+		
 		return null;
 	}
 	
@@ -683,9 +546,9 @@ public class Database implements I_Database {
 	public I_Sector shelfBelongsToSector(int shelfID)
 	{
 		for(I_Sector sector : sectors)
-		{
-			if (sector.hasShelf(shelfID)) return sector;
-		}
+			if (sector.hasShelf(shelfID)) 
+				return sector;
+		
 		return null;
 	}
 	
@@ -693,19 +556,19 @@ public class Database implements I_Database {
 	public User getUser(String email, String password) {
 		
 		for(User user : users)
-		{
-			if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) return user;
-		}
+			if(user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password))
+				return user;
 		
 		return null;
 	}
+	
 	@Override
 	public User getUser(int userID) {
 		
 		for(User user : users)
-		{
-			if(user.getID() == userID) return user;
-		}
+			if(user.getID() == userID) 
+				return user;
+	
 		return null;
 	}
 	
@@ -713,13 +576,11 @@ public class Database implements I_Database {
 	public void updateUser(User user)
 	{
 		for(int index = 0; index < users.size(); index++)
-		{
 			if(users.get(index).equals(user)) 
 			{
 				users.set(index, user);
 				return;
-			}
-		}
+			};
 	}
 
 }
