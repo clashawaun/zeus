@@ -115,7 +115,8 @@ public class Server implements I_Server
 		messageFunctionMap.put("MarkItemAsPicked", new Command() {public ServerMessage runCommand(ServerMessage m) {return markItemAsPicked(m);}});
 		//----end of picker commands
 		//----Stocker related commands
-		messageFunctionMap.put("AssignItemsToStocker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignItemsToStocker(m);}});
+		messageFunctionMap.put("StockItems", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignItemsToStocker(m);}});
+		//For StockItem example: jsonData should be in format : {"items": [{"productID": 0, "manufactureDate": "some_date", "expiryDate": "some_date"}, .....]}
 	}
 	
 	private void setUpSectorTools()
@@ -191,7 +192,7 @@ public class Server implements I_Server
 			return new ServerMessage(message.getMessage()+"Result", result.toString());
 		}
 		//... all of this should be integrated into a function
-		//I hate this next part ... this needs to be revised
+		//I hate this next part ... this needs to be revised.
 		Picker picker = (Picker) user;
 		result.add("items", gson.toJsonTree(picker.getItemBasket()).getAsJsonArray());
 		return new ServerMessage(message.getMessage()+"Result", result.toString());	
