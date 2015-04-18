@@ -64,6 +64,7 @@ public class Item{
 
 		this.xPlacementPoint = 0;
 		this.priority = 0;
+		this.sku = "";
 	}
 	
 	

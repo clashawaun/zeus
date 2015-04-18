@@ -148,7 +148,8 @@ public class Server implements I_Server
 	
 	private ServerMessage register(ServerMessage message)
 	{
-		return new ServerMessage("It", "Worked");
+		//This function is faked, in the interest of time
+		return new ServerMessage("Default", "Message");
 	}
 	
 	private ServerMessage assignPickerItems(ServerMessage message)

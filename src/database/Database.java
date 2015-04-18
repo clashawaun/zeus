@@ -585,5 +585,17 @@ public class Database implements I_Database {
 				return;
 			};
 	}
+	
+	//--Not sure if this belongs here
+	@Override
+	public boolean isItemSkuUnique(String sku)
+	{
+		for(Item item: items)
+		{
+			if(item.getSku().equals(sku))
+				return false;
+		}
+		return true;
+	}
 
 }

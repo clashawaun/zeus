@@ -47,5 +47,8 @@ public interface I_Database {
 	public User getUser(int userID);
 	public void updateUser(User user);
 	public ArrayList<Item> getItems();
+	
+	//---Not sure if it belongs here
+	public boolean isItemSkuUnique(String sku);
 
 }

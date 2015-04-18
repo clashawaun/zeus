@@ -7,6 +7,7 @@ import coreClasses.Order;
 import coreClasses.Picker;
 import coreClasses.Product;
 import coreClasses.Sector;
+import coreClasses.Stocker;
 import database.Database;
 import database.I_Database;
 
@@ -114,11 +115,12 @@ public class ServerTools
 		return tool.assignItemsForPicker(picker);
 	}
 	
-	public ArrayList<Item> processStockerItemAssignments(Stocker stocker, I_Sector sector)
+	/*public ArrayList<Item> processStockerItemAssignments(Stocker stocker, I_Sector sector)
 	{
 		SectorTools tool = getSectorTool(sector.getID());
 		
-	}
+	}*/
+	
 	
 	public boolean markItemCollected(Item item, Picker picker)
 	{
@@ -139,6 +141,29 @@ public class ServerTools
 			}
 		}
 		return false;
+	}
+	
+	private boolean generateItemSku(Item item)
+	{
+		boolean uniqueSku = false;
+		while(!uniqueSku)
+		{
+			String sku = String.format("%013d", (int) (Math.random() * 999999999));
+			System.out.println("SKU GENERATED " + sku);
+			if(database.isItemSkuUnique(sku))
+			{
+				try
+				{
+					item.setSku(sku);
+					uniqueSku = true;
+				}
+				catch(Exception e)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	private SectorTools getSectorTool(int ID)

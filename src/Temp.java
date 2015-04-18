@@ -11,6 +11,7 @@ public class Temp
 		ServerMessage result = t.sendServerMessage(new ServerMessage("NewOrder", "{\"productIDs\": [1,2,3], \"shippingAddress\": \"yellow\"}"));
 		t.sendServerMessage(new ServerMessage("GetItemsForPicker", "", "{\"email\": \"picker\", \"password\": \"1234\"}"));
 		t.sendServerMessage(new ServerMessage("MarkItemAsPicked", "{\"items\": [9]}", "{\"email\": \"picker\", \"password\": \"1234\"}"));
+		//t.sendServerMessage(new ServerMessage("RegisterUser", ""));
 		result = t.sendServerMessage(new ServerMessage("AssignItemsToPicker", "{\"sector\": 1}", "{\"email\": \"picker\", \"password\": \"1234\"}"));
 		System.out.println(result.getData());
 	}
