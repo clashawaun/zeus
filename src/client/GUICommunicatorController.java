@@ -16,6 +16,8 @@ public class GUICommunicatorController
 	private ServerCommunicator communicator;
 	private ServerMessage serverResult;
 	private JsonObject user;
+	private JsonObject currentSector;
+	
 	private Gson gson;
 	
 	public GUICommunicatorController() 
@@ -88,7 +90,14 @@ public class GUICommunicatorController
 		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsPicked", items.toString() ,user.toString() ));
 	}
 	
-	public boolean requestItemsForBasket()
+	public boolean requestItemsForPickerBasket()
+	{
+		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		return credentials.get("isSuccess").getAsBoolean();
+	}
+	
+	public boolean requestItemsForStockerBasket()
 	{
 		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
