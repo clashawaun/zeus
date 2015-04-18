@@ -39,6 +39,7 @@ public class GenerateItemIDFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});

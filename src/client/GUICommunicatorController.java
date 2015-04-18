@@ -2,6 +2,8 @@ package client;
 
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+
 import servercommunication.ServerCommunicator;
 import servercommunication.ServerMessage;
 
@@ -82,6 +84,7 @@ public class GUICommunicatorController
 		
 		return basket;
 	}
+	
 	
 	public void collectItem(int itemID)
 	{

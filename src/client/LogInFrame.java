@@ -60,6 +60,8 @@ public class LogInFrame extends JFrame implements ActionListener {
 		{
 			if (aGCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
 			{
+				GUIManager.getGCC().setCurrentSectorLocation(1);
+				
 				switch(aGCC.getUserType())
 				{
 					case 1 :  //Picker

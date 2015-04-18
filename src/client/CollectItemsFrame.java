@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextArea;
@@ -13,6 +14,7 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class CollectItemsFrame extends JFrame {
 
@@ -39,13 +41,24 @@ public class CollectItemsFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
-		JList listOfItemsToCollect = new JList();
+		DefaultListModel <String> aListModel = new DefaultListModel <String>();
+		ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
+		JList<String> listOfItemsToCollect = new JList<String>();
+		
+		 for (String temp : aArrayList) 
+		 {
+		        aListModel.addElement(temp);
+		 }
+		
+		listOfItemsToCollect.setModel(aListModel);
+		
 		listOfItemsToCollect.setBounds(126, 100, 157, 108);
 		contentPane.add(listOfItemsToCollect);
 		
@@ -67,4 +80,5 @@ public class CollectItemsFrame extends JFrame {
 		itemsToBeCollectedMessage.setBounds(65, 66, 291, 23);
 		contentPane.add(itemsToBeCollectedMessage);
 	}
+	
 }
