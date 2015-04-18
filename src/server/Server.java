@@ -109,9 +109,13 @@ public class Server implements I_Server
 		messageFunctionMap.put("Login", new Command() {public ServerMessage runCommand(ServerMessage m) {return login(m);}});
 		messageFunctionMap.put("RegisterUser", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
 		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
+		//----Picker related commands
 		messageFunctionMap.put("AssignItemsToPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignPickerItems(m);}});
 		messageFunctionMap.put("GetItemsForPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return getItemsForPicker(m);}});
 		messageFunctionMap.put("MarkItemAsPicked", new Command() {public ServerMessage runCommand(ServerMessage m) {return markItemAsPicked(m);}});
+		//----end of picker commands
+		//----Stocker related commands
+		messageFunctionMap.put("AssignItemsToStocker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignItemsToStocker(m);}});
 	}
 	
 	private void setUpSectorTools()
@@ -215,6 +219,18 @@ public class Server implements I_Server
 		result.add("state", markResults);
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 		
+	}
+	
+	private ServerMessage assignItemsToStocker(ServerMessage message)
+	{
+		JsonObject result = new JsonObject();
+		User user = authenticate(message.getUserData(), Stocker.class);
+		if(user == null)
+		{
+			result.addProperty("error", "Invalid Credentials");
+			return new ServerMessage(message.getMessage()+"Result", result.toString());
+		}
+		return new ServerMessage("Default","Return");
 	}
 	
 	
