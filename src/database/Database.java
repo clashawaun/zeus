@@ -241,6 +241,9 @@ public class Database implements I_Database {
 	@Override
 	public boolean isValidLogin(String email, String password) 
 	{
+		if(email == null && password == null) 
+			return false;
+		
 		for(User user: users)
 			if(email.equals(user.getEmail()) && password.equals(user.getPassword())) 
 				return true;
@@ -568,7 +571,7 @@ public class Database implements I_Database {
 		for(User user : users)
 			if(user.getID() == userID) 
 				return user;
-	
+		
 		return null;
 	}
 	

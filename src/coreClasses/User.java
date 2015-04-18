@@ -14,7 +14,7 @@ public abstract class User
 	protected User(int userID,String firstName, String surname,  String email, String phone, String password)
 	{
 
-		ID = userID;
+		this.ID = userID;
 		this.firstname = firstName;
 		this.surname = surname;
 		this.email = email;
