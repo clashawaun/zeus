@@ -97,7 +97,7 @@ public class Server implements I_Server
         }
 	}
 	
-	public void buildMessageFunctionMap()
+	private void buildMessageFunctionMap()
 	{
 		/*Command Design Pattern
 		  Allows us to map functions to messages here so no change needs to be made to the incoming system.
@@ -204,11 +204,15 @@ public class Server implements I_Server
 		}
 		JsonObject itemData = new JsonParser().parse(message.getData()).getAsJsonObject();
 		JsonArray items = itemData.get("items").getAsJsonArray();
+		JsonArray markResults = new JsonArray();
 		for(JsonElement item: items)
 		{
-			serverTools.markItemCollected(database.getItem(item.getAsInt()), (Picker) user);
+			JsonObject markResult = new JsonObject();
+			markResult.addProperty("item", item.getAsInt());
+			markResult.addProperty("result", serverTools.markItemCollected(database.getItem(item.getAsInt()), (Picker) user));
+			markResults.add(markResult);
 		}
-		result.addProperty("isSuccess", true);
+		result.add("state", markResults);
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 		
 	}
