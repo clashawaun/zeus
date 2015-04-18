@@ -28,10 +28,10 @@ public class GUICommunicatorController
 	public boolean LoginUser(String email, String password)
 	{
 		if ( email == null || password == null) return false;
+		
 		user = new JsonObject();
 		user.addProperty("email", email);
 		user.addProperty("password", password);
-		
 		
 		serverResult = communicator.sendServerMessage(new ServerMessage("Login", user.toString()));
 		
@@ -86,5 +86,12 @@ public class GUICommunicatorController
 		JsonObject items = new JsonObject();
 		items.add("items", gson.toJsonTree(new int[] {itemID}).getAsJsonArray());
 		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsPicked", items.toString() ,user.toString() ));
+	}
+	
+	public boolean requestItemsForBasket()
+	{
+		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		return credentials.get("isSuccess").getAsBoolean();
 	}
 }
