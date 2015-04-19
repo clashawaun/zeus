@@ -24,6 +24,9 @@ public interface I_Database {
 	public ArrayList<Item> getItems(int productID);
 	public ArrayList<Product> getProducts();
 	public Product getProduct(int productID);
+	//Shane
+	public ArrayList<Product> getProducts(String searchTerm);
+	//--
 	public Item getItem(int itemID);
 	public int itemBelonngsTo(int itemID);
 	public I_Cubby createCubby(int type);

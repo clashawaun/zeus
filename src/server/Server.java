@@ -117,6 +117,7 @@ public class Server implements I_Server
 		//----Stocker related commands
 		messageFunctionMap.put("StockItems", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignItemsToStocker(m);}});
 		messageFunctionMap.put("GetSectors", new Command() {public ServerMessage runCommand(ServerMessage m) {return getSectors(m);}});
+		messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return searchProducts(m);}});
 		//messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return })
 		//For StockItem example: jsonData should be in format : {"items": [{"productID": 0, "manufactureDate": "some_date", "expiryDate": "some_date"}, .....]}
 	}
@@ -225,10 +226,20 @@ public class Server implements I_Server
 		
 	}
 	
-	/*private ServerMessage searchProducts(ServerMessage message)
+	private ServerMessage searchProducts(ServerMessage message)
 	{
-		
-	}*/
+		JsonObject result = new JsonObject();
+		User user = authenticate(message.getUserData(), Stocker.class);
+		if(user == null)
+		{
+			result.addProperty("error", "Invalid Credentials");
+			return new ServerMessage(message.getMessage()+"Result", result.toString());
+		}
+		JsonObject searchData = new JsonParser().parse(message.getData()).getAsJsonObject();
+		ArrayList<Product> results = database.getProducts(searchData.get("searchTerm").getAsString());
+		result.add("products", gson.toJsonTree(results).getAsJsonArray());
+		return new ServerMessage(message.getMessage()+"Result", result.toString());
+	}
 	
 	private ServerMessage getSectors(ServerMessage message)
 	{

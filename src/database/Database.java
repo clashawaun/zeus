@@ -68,7 +68,7 @@ public class Database implements I_Database {
 		userIndexer = 9;
 		
 		products = new ArrayList<Product>();
-		products.add(new Product(1,"X-Box One","This is description one.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
+		products.add(new Product(1,"XBox One","This is description one.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
 		products.add(new Product(2,"The Book of life","This is description two.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
 		products.add(new Product(3,"Pizza","This is description three.", 10.00f, 100.0f, 40.0f, 30.0f, 100.0f, 0));
 		productIndexer = 4;
@@ -596,6 +596,18 @@ public class Database implements I_Database {
 				return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public ArrayList<Product> getProducts(String searchTerm)
+	{
+		ArrayList<Product> results = new ArrayList<Product>();
+		for(Product product: products)
+		{
+			if(product.getName().toLowerCase().contains(searchTerm.toLowerCase()) || product.getSku().toLowerCase().contains(searchTerm.toLowerCase()))
+				results.add(product);
+		}
+		return results;
 	}
 
 }

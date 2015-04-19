@@ -22,6 +22,7 @@ public class Product
 	{
 		this.ID = id;
 		this.name = name;
+		this.sku = "";
 		this.description = description;
 		this.price = price;
 		this.heigth = height;
