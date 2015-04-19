@@ -117,10 +117,10 @@ public class GUICommunicatorController
 		return true;
 	}
 	
-	public boolean putItemInCubby(int sector, int shelf, int cubby)
+	public boolean putItemInCubby(int itemID)
 	{
 		
-		System.out.println("Stocker has put an items away on shelf number: " +  shelf + " cubby number: " + cubby + "  in sector: " + sector);
+		System.out.println("Stocker has put an items away on item number: " +  itemID);
 		return true;
 	}
 	
@@ -151,8 +151,8 @@ public class GUICommunicatorController
 		return products;
 	}
 	
-	public boolean registorItem(int productID, String manDate, String expDate)
+	public int registorItem(int productID, String manDate, String expDate)
 	{
-		return true;
+		return 7;
 	}
 }
