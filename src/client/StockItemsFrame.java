@@ -3,10 +3,10 @@ package client;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JList;
 
@@ -57,6 +58,7 @@ public class StockItemsFrame extends JFrame {
 				GUIManager.changeFrame(new GenerateItemIDFrame());
 			}
 		});
+		
 		generateItemIDButton.setBounds(114, 11, 130, 23);
 		contentPane.add(generateItemIDButton);
 		
@@ -66,9 +68,21 @@ public class StockItemsFrame extends JFrame {
 		txtrItemsToBe.setBounds(82, 58, 242, 23);
 		contentPane.add(txtrItemsToBe);
 		
-		JList listOfItemsToStock = new JList();
+		DefaultListModel <String> aListModel = new DefaultListModel <String>();
+		ArrayList<String> aArrayItemList = GUIManager.getGCC().getStockerCurrentBasket();
+		JList <String> listOfItemsToStock = new JList<String>();
+		
+		for (String temp : aArrayItemList) 
+		 {
+		        aListModel.addElement(temp);
+		 }
+		
+		listOfItemsToStock.setModel(aListModel);
+		
 		listOfItemsToStock.setBounds(82, 92, 242, 112);
 		contentPane.add(listOfItemsToStock);
+		
+		
 		
 		JButton readyToStockButton = new JButton("Ready");
 		readyToStockButton.addActionListener(new ActionListener() {

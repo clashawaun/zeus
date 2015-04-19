@@ -140,6 +140,9 @@ public class GUICommunicatorController
 		sectors.add(1);
 		sectors.add(2);
 		sectors.add(3);
+		sectors.add(4);
+		sectors.add(5);
+		sectors.add(6);
 		
 		return sectors;
 	}

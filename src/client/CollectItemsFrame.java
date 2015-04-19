@@ -1,6 +1,9 @@
 package client;
 
 import java.awt.BorderLayout;
+
+import javax.swing.JComboBox;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 public class CollectItemsFrame extends JFrame {
 
 	private JPanel contentPane;
+	private JComboBox<Integer> sectorList = new JComboBox<Integer>();
 
 	/**
 	 * Launch the application.
@@ -37,8 +41,58 @@ public class CollectItemsFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		sectorList.setEditable(false);
+		ArrayList<Integer> aItemList = GUIManager.getGCC().getSectorsIDs();
+		int i, c;
+		
+        for (i = 1, c = aItemList.size(); i < c; i++) 
+        {
+            sectorList.addItem(i);
+        }
+		
+		sectorList.setBounds(25, 11, 100, 23);
+		contentPane.add(sectorList);
+	
+		sectorList.addActionListener(new ActionListener()
+		{
+	        public void actionPerformed(ActionEvent e) 
+	        {
+	            if(sectorList.getSelectedItem().equals(1))
+	            {
+	            	GUIManager.getGCC().setCurrentSectorLocation(1);
+	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
+	            }
+	            
+	            else if(sectorList.getSelectedItem().equals(2))
+	            {
+	            	GUIManager.getGCC().setCurrentSectorLocation(2);
+	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
+	            }
+	            
+	            else if(sectorList.getSelectedItem().equals(3))
+	            {
+	            	GUIManager.getGCC().setCurrentSectorLocation(3);
+	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
+	            }
+	            
+	            else if(sectorList.getSelectedItem().equals(4))
+	            {
+	            	GUIManager.getGCC().setCurrentSectorLocation(4);
+	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
+	            }
+	            
+	            else if(sectorList.getSelectedItem().equals(5))
+	            {
+	            	GUIManager.getGCC().setCurrentSectorLocation(5);
+	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
+	            }
+	        }
+		});
+		
+		
 		JButton logOutButton = new JButton("Log Out");
-		logOutButton.addActionListener(new ActionListener() {
+		logOutButton.addActionListener(new ActionListener() 
+		{
 			public void actionPerformed(ActionEvent e) 
 			{
 				GUIManager.getGCC().logOut();
@@ -80,5 +134,5 @@ public class CollectItemsFrame extends JFrame {
 		itemsToBeCollectedMessage.setBounds(65, 66, 291, 23);
 		contentPane.add(itemsToBeCollectedMessage);
 	}
-	
 }
+	        
