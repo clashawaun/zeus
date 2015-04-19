@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -13,12 +14,14 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
 import javax.swing.JList;
 
 public class ItemsCollectedFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField itemIDToBeCollectedField;
+	private JList<String>  listOfItemsToBeCollected;
 
 	/**
 	 * Launch the application.
@@ -53,7 +56,7 @@ public class ItemsCollectedFrame extends JFrame {
 		
 		DefaultListModel <String> aListModel = new DefaultListModel <String>();
 		ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
-		JList<String> listOfItemsToBeCollected = new JList<String>();
+		listOfItemsToBeCollected = new JList<String>();
 		
 		 for (String temp : aArrayList) 
 		 {
@@ -70,7 +73,24 @@ public class ItemsCollectedFrame extends JFrame {
 		addMoreItemsToListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{		
-				 if (listOfItemsToBeCollected.getModel().getSize() != 0)
+				
+				if (GUIManager.getGCC().requestItemsForPickerBasket())
+				{
+					DefaultListModel <String> aListModel = new DefaultListModel <String>();
+					ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
+					//listOfItemsToBeCollected = new JList<String>();
+					
+					 for (String temp : aArrayList) 
+					 {
+					        aListModel.addElement(temp);
+					 }
+					
+					 listOfItemsToBeCollected.setModel(aListModel);
+				}
+				
+				
+				
+				/* if (listOfItemsToBeCollected.getModel().getSize() != 0)
 				 {
 					 DefaultListModel <String> aListModel = new DefaultListModel <String>();
 						ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
@@ -90,7 +110,7 @@ public class ItemsCollectedFrame extends JFrame {
 				 {
 					 GUIManager.getGCC().requestItemsForPickerBasket();
 					 listOfItemsToBeCollected.setModel(aListModel);
-				 }
+				 }*/
 			}
 		});
 		
@@ -104,16 +124,36 @@ public class ItemsCollectedFrame extends JFrame {
 		contentPane.add(itemIDToBeCollectedField);
 		itemIDToBeCollectedField.setColumns(10);
 		
-		JButton itemCollectedButton = new JButton("Item Collected");
+		JButton itemCollectedButton = new JButton("Collect Item");
 		itemCollectedButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				//Listing updates and removes items that are collected.
+				
+				if(itemIDToBeCollectedField.getText().matches("[0-9]+"))
+				{
 				String aText = itemIDToBeCollectedField.getText();
 				int aItemID = Integer.parseInt(aText);
 				GUIManager.getGCC().collectItem(aItemID);
 				
-				//Call the basket again (update jList)
-				//Listing updates and removes items that are collected.
+				DefaultListModel <String> aListModel = new DefaultListModel <String>();
+				ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
+				
+				
+				 for (String temp : aArrayList) 
+				 {
+				        aListModel.addElement(temp);
+				 }
+				
+				 listOfItemsToBeCollected.setModel(aListModel);
+				}
+				
+				else
+				{
+					JOptionPane.showMessageDialog(null, "You can't pass String as an Integer.");
+				}
+				
+				
 			}
 		});
 		
