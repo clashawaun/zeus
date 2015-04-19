@@ -151,7 +151,7 @@ public class GUICommunicatorController
 		return products;
 	}
 	
-	public boolean registorItem(int productID)
+	public boolean registorItem(int productID, String manDate, String expDate)
 	{
 		return true;
 	}
