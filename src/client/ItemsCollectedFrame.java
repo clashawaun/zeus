@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
 import javax.swing.JList;
 
 public class ItemsCollectedFrame extends JFrame {
@@ -51,11 +50,47 @@ public class ItemsCollectedFrame extends JFrame {
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
+		
+		DefaultListModel <String> aListModel = new DefaultListModel <String>();
+		ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
+		JList<String> listOfItemsToBeCollected = new JList<String>();
+		
+		 for (String temp : aArrayList) 
+		 {
+		        aListModel.addElement(temp);
+		 }
+		
+		 listOfItemsToBeCollected.setModel(aListModel);
+		listOfItemsToBeCollected.setBounds(51, 94, 273, 128);
+		
+		contentPane.add(listOfItemsToBeCollected);
+		
+		
 		JButton addMoreItemsToListButton = new JButton("Add More");
 		addMoreItemsToListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
-			{
-				GUIManager.getGCC().requestItemsForPickerBasket();
+			{		
+				 if (listOfItemsToBeCollected.getModel().getSize() != 0)
+				 {
+					 DefaultListModel <String> aListModel = new DefaultListModel <String>();
+						ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
+						JList<String> listOfItemsToBeCollected = new JList<String>();
+						
+						 for (String temp : aArrayList) 
+						 {
+						        aListModel.addElement(temp);
+						 }
+						
+						 listOfItemsToBeCollected.setModel(aListModel);
+						 GUIManager.getGCC().getPickerCurrentBasket();
+						 aListModel.removeAllElements();
+				 }
+				 
+				 else if (listOfItemsToBeCollected.getModel().getSize() == 0)
+				 {
+					 GUIManager.getGCC().requestItemsForPickerBasket();
+					 listOfItemsToBeCollected.setModel(aListModel);
+				 }
 			}
 		});
 		
@@ -74,7 +109,7 @@ public class ItemsCollectedFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String aText = itemIDToBeCollectedField.getText();
-				int aItemID = Integer.parseInt(aText);;
+				int aItemID = Integer.parseInt(aText);
 				GUIManager.getGCC().collectItem(aItemID);
 				
 				//Call the basket again (update jList)
@@ -85,18 +120,6 @@ public class ItemsCollectedFrame extends JFrame {
 		itemCollectedButton.setBounds(215, 43, 109, 40);
 		contentPane.add(itemCollectedButton);
 		
-		DefaultListModel <String> aListModel = new DefaultListModel <String>();
-		ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
-		JList<String> listOfItemsToBeCollected = new JList<String>();
 		
-		 for (String temp : aArrayList) 
-		 {
-		        aListModel.addElement(temp);
-		 }
-		
-		 listOfItemsToBeCollected.setModel(aListModel);
-		listOfItemsToBeCollected.setBounds(51, 94, 273, 128);
-		
-		contentPane.add(listOfItemsToBeCollected);
 	}
 }
