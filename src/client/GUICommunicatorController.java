@@ -28,6 +28,7 @@ public class GUICommunicatorController
 		communicator = new ServerCommunicator();
 		user = null;
 		gson = new Gson();
+		basket = new ArrayList<String>();
 	}
 
 	public boolean LoginUser(String email, String password)
