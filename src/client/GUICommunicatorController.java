@@ -145,6 +145,7 @@ public class GUICommunicatorController
 		if(sectors.size()>0)
 			sectors = new ArrayList<Integer>();
 		
+
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetSectors", "" ,user.toString() ));
 		
 		if(serverResult == null)

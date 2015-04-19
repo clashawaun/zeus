@@ -6,17 +6,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class ItemsStockedFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField itemIDToBeStockedField;
+	private JList<String> listOfItemsToBeStocked;
 
 	/**
 	 * Launch the application.
@@ -52,19 +56,56 @@ public class ItemsStockedFrame extends JFrame {
 		contentPane.add(itemIDToBeStockedField);
 		itemIDToBeStockedField.setColumns(10);
 		
-		JButton itemStockedButton = new JButton("Item Stocked");
+		DefaultListModel <String> aListModel = new DefaultListModel <String>();
+		ArrayList<String> aArrayList = GUIManager.getGCC().getStockerCurrentBasket();
+		listOfItemsToBeStocked = new JList<String>();
+		
+		for (String temp : aArrayList) 
+		 {
+		        aListModel.addElement(temp);
+		 }
+		
+		listOfItemsToBeStocked.setModel(aListModel);
+		
+		listOfItemsToBeStocked.setBounds(65, 113, 241, 95);
+		contentPane.add(listOfItemsToBeStocked);
+		
+		
+		JButton itemStockedButton = new JButton("Stock Item");
 		itemStockedButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				//Listing updates and removes items that are stocked.
+				
+				if(itemIDToBeStockedField.getText().matches("[0-9]+"))
+				{
+					
+				String aText = itemIDToBeStockedField.getText();
+				int aItemID = Integer.parseInt(aText);
+				GUIManager.getGCC().putItemInCubby(aItemID);
+				
+				DefaultListModel <String> aListModel = new DefaultListModel <String>();
+				ArrayList<String> aArrayList = GUIManager.getGCC().getStockerCurrentBasket();
+				
+				
+				 for (String temp : aArrayList) 
+				 {
+				        aListModel.addElement(temp);
+				 }
+				
+				 listOfItemsToBeStocked.setModel(aListModel);
+				}
+				
+				else
+				{
+					JOptionPane.showMessageDialog(null, "You can't pass String as an Integer.");
+				}
+				
 			}
 		});
 		itemStockedButton.setBounds(194, 63, 112, 33);
 		contentPane.add(itemStockedButton);
 		
-		JList listOfItemsToBeStocked = new JList();
-		listOfItemsToBeStocked.setBounds(65, 113, 241, 95);
-		contentPane.add(listOfItemsToBeStocked);
 	}
 
 }
