@@ -19,6 +19,7 @@ public class GUICommunicatorController
 	private ServerMessage serverResult;
 	private JsonObject user;
 	private JsonObject currentSector;
+	private ArrayList<String> basket;
 	
 	private Gson gson;
 	
@@ -102,8 +103,55 @@ public class GUICommunicatorController
 	
 	public boolean requestItemsForStockerBasket()
 	{
-		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
-		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-		return credentials.get("isSuccess").getAsBoolean();
+//		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
+//		
+//		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+//		return credentials.get("isSuccess").getAsBoolean();
+		basket.add("Item Id: "+ 20 +"shelf number: " +  1 + " cubby number: " + 2 + "  in sector: " + 1);
+		basket.add("Item Id: "+ 22 +"shelf number: " +  2 + " cubby number: " + 1 + "  in sector: " + 1);
+		basket.add("Item Id: "+ 26 +"shelf number: " +  3 + " cubby number: " + 3 + "  in sector: " + 1);
+		
+		System.out.println("Stocker is Requesting Items from server");
+		System.out.println("Server has items for stocker");
+		return true;
+	}
+	
+	public boolean putItemInCubby(int sector, int shelf, int cubby)
+	{
+		
+		System.out.println("Stocker has put an items away on shelf number: " +  shelf + " cubby number: " + cubby + "  in sector: " + sector);
+		return true;
+	}
+	
+	public ArrayList<String> getStockerCurrentBasket()
+	{
+		basket.add("Item Id: "+ 20 +"shelf number: " +  1 + " cubby number: " + 2 + "  in sector: " + 1);
+		basket.add("Item Id: "+ 22 +"shelf number: " +  2 + " cubby number: " + 1 + "  in sector: " + 1);
+		basket.add("Item Id: "+ 26 +"shelf number: " +  3 + " cubby number: " + 3 + "  in sector: " + 1);
+		
+		return basket;
+	}
+	
+	public ArrayList<Integer> getSectorsIDs()
+	{
+		ArrayList<Integer> sectors = new ArrayList<Integer>();
+		
+		sectors.add(1);
+		sectors.add(2);
+		sectors.add(3);
+		
+		return sectors;
+	}
+	
+	public ArrayList<String> searchForProduct(String product)
+	{
+		ArrayList<String> products = new ArrayList<String>();
+		products.add("Produnt name: " + "name" + " Product ID: " + "ID" + "Product Sku: "+"Sku code");
+		return products;
+	}
+	
+	public boolean registorItem(int productID)
+	{
+		return true;
 	}
 }
