@@ -2,6 +2,7 @@ package servercommunication;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -100,6 +101,20 @@ public class ServerCommunicator
 	{
 		return port;
 	}
+	
+	public boolean closeConnection()
+	{
+		try
+		{
+			serverSocket.close();
+			return true;
+		}
+		catch(IOException e )
+		{
+			return false;
+		}
+	}
+	
 	public ServerMessage sendServerMessage(ServerMessage serverMessage)
 	{
 		ServerMessage response = null;
