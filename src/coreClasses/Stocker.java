@@ -4,23 +4,28 @@ import java.util.ArrayList;
 //Comment
 public class Stocker extends User {
 
-	private ArrayList<Integer> stackBasket;
+	private ArrayList<Item> stackBasket;
 	
 	
 	public Stocker(int userID, String firstName, String surname, String email, String phone, String password)
 	{
 		super(userID, firstName, surname, email, phone, password);
-		stackBasket = new ArrayList<Integer>();
+		stackBasket = new ArrayList<Item>();
 	}
 	
-	public boolean addItem(Integer item)
+	public boolean addItem(Item item)
 	{
 		return stackBasket.add(item);
 	}
 	
-	public boolean removeItem(Integer item)
+	public boolean removeItem(Item item)
 	{
 		return stackBasket.remove(item);
+	}
+	
+	public ArrayList<Item> getStockerBasket()
+	{
+		return stackBasket;
 	}
 	
 	

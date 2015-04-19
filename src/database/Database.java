@@ -100,8 +100,8 @@ public class Database implements I_Database {
 		
 		items.get(2).setCurrentState("PENDING_STOCKING");
 		items.get(3).setCurrentState("PENDING_STOCKING");
-		((Stocker)(users.get(7))).addItem(items.get(2).getID());
-		((Stocker)(users.get(7))).addItem(items.get(3).getID());
+		((Stocker)(users.get(7))).addItem(items.get(2));
+		((Stocker)(users.get(7))).addItem(items.get(3));
 		
 		items.get(4).setCurrentState("AVAILABLE");
 		items.get(5).setCurrentState("AVAILABLE");
