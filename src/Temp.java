@@ -13,6 +13,8 @@ public class Temp
 		//t.sendServerMessage(new ServerMessage("MarkItemAsPicked", "{\"items\": [9]}", "{\"email\": \"picker\", \"password\": \"1234\"}"));
 		//t.sendServerMessage(new ServerMessage("RegisterUser", ""));
 		t.sendServerMessage(new ServerMessage("SearchProduct", "{\"searchTerm\": \"xbox\"}", "{\"email\": \"stocker\", \"password\": \"1234\"}"));
+		t.sendServerMessage(new ServerMessage("GetItemsForStocker", "", "{\"email\": \"stocker\", \"password\": \"1234\"}"));
+		t.sendServerMessage(new ServerMessage("GetSectors", "", "{\"email\": \"stocker\", \"password\": \"1234\"}"));
 		result = t.sendServerMessage(new ServerMessage("AssignItemsToPicker", "{\"sector\": 1}", "{\"email\": \"picker\", \"password\": \"1234\"}"));
 		System.out.println(result.getData());
 	}
