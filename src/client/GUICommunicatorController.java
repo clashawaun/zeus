@@ -2,8 +2,6 @@ package client;
 
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
-
 import servercommunication.ServerCommunicator;
 import servercommunication.ServerMessage;
 
@@ -20,15 +18,18 @@ public class GUICommunicatorController
 	private JsonObject user;
 	private JsonObject currentSector;
 	private ArrayList<String> basket;
+	ArrayList<Integer> sectors;
 	
 	private Gson gson;
 	
 	public GUICommunicatorController() 
 	{
-		communicator = new ServerCommunicator();
+		communicator = new ServerCommunicator("127.0.0.1");
+		
 		user = null;
 		gson = new Gson();
 		basket = new ArrayList<String>();
+		sectors  = new ArrayList<Integer>();
 	}
 
 	public boolean LoginUser(String email, String password)
@@ -104,22 +105,28 @@ public class GUICommunicatorController
 	
 	public boolean requestItemsForStockerBasket()
 	{
-//		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
-//		
-//		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-//		return credentials.get("isSuccess").getAsBoolean();
-		basket.add("Item Id: "+ 20 +"shelf number: " +  1 + " cubby number: " + 2 + "  in sector: " + 1);
-		basket.add("Item Id: "+ 22 +"shelf number: " +  2 + " cubby number: " + 1 + "  in sector: " + 1);
-		basket.add("Item Id: "+ 26 +"shelf number: " +  3 + " cubby number: " + 3 + "  in sector: " + 1);
+		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", user.toString() ,user.toString() ));
 		
-		System.out.println("Stocker is Requesting Items from server");
-		System.out.println("Server has items for stocker");
-		return true;
+		if(serverResult == null)
+			return false;
+		
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		return credentials.get("isSuccess").getAsBoolean();
+//		
+//		basket.add("Item Id: "+ 20 +"shelf number: " +  1 + " cubby number: " + 2 + "  in sector: " + 1);
+//		basket.add("Item Id: "+ 22 +"shelf number: " +  2 + " cubby number: " + 1 + "  in sector: " + 1);
+//		basket.add("Item Id: "+ 26 +"shelf number: " +  3 + " cubby number: " + 3 + "  in sector: " + 1);
+//		
+//		System.out.println("Stocker is Requesting Items from server");
+//		System.out.println("Server has items for stocker");
+//		return true;
 	}
 	
 	public boolean putItemInCubby(int itemID)
 	{
-		
+		//"StockItems"
+		serverResult = communicator.sendServerMessage(new ServerMessage("StockItems", user.toString() ,user.toString() ));
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		System.out.println("Stocker has put an items away on item number: " +  itemID);
 		return true;
 	}
@@ -135,19 +142,50 @@ public class GUICommunicatorController
 	
 	public ArrayList<Integer> getSectorsIDs()
 	{
-		ArrayList<Integer> sectors = new ArrayList<Integer>();
+		if(sectors.size()>0)
+			sectors = new ArrayList<Integer>();
 		
-		sectors.add(1);
-		sectors.add(2);
-		sectors.add(3);
+		serverResult = communicator.sendServerMessage(new ServerMessage("GetSectors", "" ,user.toString() ));
+		
+		if(serverResult == null)
+			return null;
+	
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		JsonArray jsonArray = credentials.getAsJsonArray("sectors");
+		
+		
+		JsonObject obj;
+		for(int index=0; index < jsonArray.size(); index++ )
+		{
+			obj = gson.fromJson(jsonArray.get(index), JsonObject.class); 
+			sectors.add(obj.get("ID").getAsInt());
+		}
 		
 		return sectors;
 	}
 	
 	public ArrayList<String> searchForProduct(String product)
 	{
+
+		JsonObject obj = new JsonObject();
+		obj.addProperty("searchTerm", product);
+		
+		serverResult = communicator.sendServerMessage(new ServerMessage("SearchProduct", obj.toString() ,user.toString() ));
+		
+		if(serverResult == null)
+			return null;
+		
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		
+		JsonArray jsonArray = credentials.getAsJsonArray("products");
 		ArrayList<String> products = new ArrayList<String>();
-		products.add("Produnt name: " + "name" + " Product ID: " + "ID" + "Product Sku: "+"Sku code");
+		
+		for(int index=0; index < jsonArray.size(); index++ )
+		{
+			obj = gson.fromJson(jsonArray.get(index), JsonObject.class); 
+			products.add("Product Name: " + obj.get("name").getAsString() + " Product ID: " + obj.get("ID").getAsString());
+		}
+		
 		return products;
 	}
 	
