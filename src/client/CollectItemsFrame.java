@@ -42,12 +42,12 @@ public class CollectItemsFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		sectorList.setEditable(false);
-		ArrayList<Integer> aItemList = GUIManager.getGCC().getSectorsIDs();
-		int i, c;
+		ArrayList<Integer> aSectorList = GUIManager.getGCC().getSectorsIDs();
+		int i;
 		
-        for (i = 1, c = aItemList.size(); i < c; i++) 
+        for (i = 0; i < aSectorList.size(); i++) 
         {
-            sectorList.addItem(i);
+            sectorList.addItem(aSectorList.get(i));
         }
 		
 		sectorList.setBounds(25, 11, 100, 23);
@@ -57,16 +57,8 @@ public class CollectItemsFrame extends JFrame {
 		{
 	        public void actionPerformed(ActionEvent e) 
 	        {
-	        	int count = sectorList.getItemCount();
-	        	
-                for (int i = 0; i < count; i++) 
-                {
-                	if(sectorList.getSelectedItem().equals(i))
-                	{
-                		GUIManager.getGCC().setCurrentSectorLocation(i);
-                		System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
-                	}
-                }
+	        	GUIManager.getGCC().setCurrentSectorLocation((int) sectorList.getSelectedItem());
+
 	        }
          });
 		

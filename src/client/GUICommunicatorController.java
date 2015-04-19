@@ -24,7 +24,7 @@ public class GUICommunicatorController
 	
 	public GUICommunicatorController() 
 	{
-		communicator = new ServerCommunicator("127.0.0.1");
+		communicator = new ServerCommunicator();
 		
 		user = null;
 		gson = new Gson();
