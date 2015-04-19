@@ -57,37 +57,18 @@ public class CollectItemsFrame extends JFrame {
 		{
 	        public void actionPerformed(ActionEvent e) 
 	        {
-	            if(sectorList.getSelectedItem().equals(1))
-	            {
-	            	GUIManager.getGCC().setCurrentSectorLocation(1);
-	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
-	            }
-	            
-	            else if(sectorList.getSelectedItem().equals(2))
-	            {
-	            	GUIManager.getGCC().setCurrentSectorLocation(2);
-	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
-	            }
-	            
-	            else if(sectorList.getSelectedItem().equals(3))
-	            {
-	            	GUIManager.getGCC().setCurrentSectorLocation(3);
-	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
-	            }
-	            
-	            else if(sectorList.getSelectedItem().equals(4))
-	            {
-	            	GUIManager.getGCC().setCurrentSectorLocation(4);
-	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
-	            }
-	            
-	            else if(sectorList.getSelectedItem().equals(5))
-	            {
-	            	GUIManager.getGCC().setCurrentSectorLocation(5);
-	            	System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
-	            }
+	        	int count = sectorList.getItemCount();
+	        	
+                for (int i = 0; i < count; i++) 
+                {
+                	if(sectorList.getSelectedItem().equals(i))
+                	{
+                		GUIManager.getGCC().setCurrentSectorLocation(i);
+                		System.out.print("You selected the sector: " + (sectorList.getSelectedItem()));
+                	}
+                }
 	        }
-		});
+         });
 		
 		
 		JButton logOutButton = new JButton("Log Out");
