@@ -70,7 +70,7 @@ public class ServerTools
 			{
 				if(item.getCurrentState().equals("AVAILABLE"))
 				{
-					//Is this strategy Design Pattern ?
+					//Strategy Design Pattern 
 					int itemPriority = database.getPriority(product.getPriorityID()).calculatePriority(item, product);
 					if(itemPriority > bestItemPriority)
 					{
