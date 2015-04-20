@@ -208,11 +208,14 @@ public class Database implements I_Database {
 		sectorIndexer++;
 		
 		ArrayList<Integer> tempShelve = new ArrayList<Integer>();
-		//This should all be in its own function ... doing it this way for testing purposes
+		//This should all be in its own function ... doing it this way for testing purposes...disgusting
+		//perhaps use automation ? to use server functions to begin population
 		sectors.get(0).putItemInQueue(items.get(6));
 		sectors.get(0).putItemInQueue(items.get(7));
 		cubbies.get(0).addItem(items.get(6).getID());
+		items.get(6).setxPlacementPoint(0);
 		cubbies.get(0).addItem(items.get(7).getID());
+		items.get(7).setxPlacementPoint((int) (products.get(0).getWidth() + 5));
 		//--end of test code
 		for(I_Shelf shelve : shelves)
 		{
