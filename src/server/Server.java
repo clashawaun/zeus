@@ -2,12 +2,8 @@ package server;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
 
 import coreClasses.*;
 import servercommunication.*;
@@ -15,17 +11,13 @@ import database.Database;
 import database.I_Database;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -272,7 +264,7 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());	
 	}
 	
-	//Complicated function, may have some bugs that I havent spotted ... will come back later and debug if needed
+	//Complicated function, may have some bugs that I haven't spotted ... will come back later and debug if needed
 	private ServerMessage assignItemsToStocker(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
