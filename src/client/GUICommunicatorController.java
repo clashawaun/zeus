@@ -17,19 +17,16 @@ public class GUICommunicatorController
 	private ServerMessage serverResult;
 	private JsonObject user;
 	private JsonObject currentSector;
-	private ArrayList<String> basket;
-	ArrayList<Integer> sectors;
+
 	
 	private Gson gson;
 	
 	public GUICommunicatorController() 
 	{
 		communicator = new ServerCommunicator();
-		
 		user = null;
 		gson = new Gson();
-		basket = new ArrayList<String>();
-		sectors  = new ArrayList<Integer>();
+		currentSector = new JsonObject();
 	}
 
 	public boolean LoginUser(String email, String password)
@@ -56,6 +53,7 @@ public class GUICommunicatorController
 	public boolean logOut()
 	{
 		user = null;
+		currentSector = null;
 		return true;
 	}
 	
@@ -64,19 +62,22 @@ public class GUICommunicatorController
 		if(user != null)	
 			return user.get("type").getAsInt();
 		
-		return 0;
+		return -1;
 	}
 	
 	public void setCurrentSectorLocation(int sectorID)
 	{
 		if(user != null)
-			user.addProperty("sector", sectorID);
+			currentSector.addProperty("sector", sectorID);
 	}
 	
 	
 	public ArrayList<String> getPickerCurrentBasket()
 	{
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForPicker", "" ,user.toString() ));
+		
+		if(serverResult == null)
+			return null;
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		JsonArray jsonArray = credentials.getAsJsonArray("items");
@@ -98,54 +99,53 @@ public class GUICommunicatorController
 	
 	public boolean requestItemsForPickerBasket()
 	{
-		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", user.toString() ,user.toString() ));
-		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-		return credentials.get("isSuccess").getAsBoolean();
-	}
-	
-	public boolean requestItemsForStockerBasket()
-	{
-		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", user.toString() ,user.toString() ));
+		serverResult = communicator.sendServerMessage(new ServerMessage("AssignItemsToPicker", currentSector.toString() ,user.toString() ));
 		
 		if(serverResult == null)
 			return false;
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		return credentials.get("isSuccess").getAsBoolean();
-//		
-//		basket.add("Item Id: "+ 20 +"shelf number: " +  1 + " cubby number: " + 2 + "  in sector: " + 1);
-//		basket.add("Item Id: "+ 22 +"shelf number: " +  2 + " cubby number: " + 1 + "  in sector: " + 1);
-//		basket.add("Item Id: "+ 26 +"shelf number: " +  3 + " cubby number: " + 3 + "  in sector: " + 1);
-//		
-//		System.out.println("Stocker is Requesting Items from server");
-//		System.out.println("Server has items for stocker");
-//		return true;
 	}
 	
-	public boolean putItemInCubby(int itemID)
+	public boolean requestItemsForStockerBasket()
 	{
-		//"StockItems"
-		serverResult = communicator.sendServerMessage(new ServerMessage("StockItems", user.toString() ,user.toString() ));
+		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", currentSector.toString() ,user.toString() ));
+		
+		if(serverResult == null)
+			return false;
+		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-		System.out.println("Stocker has put an items away on item number: " +  itemID);
-		return true;
+		return credentials.get("isSuccess").getAsBoolean();
+
 	}
 	
 	public ArrayList<String> getStockerCurrentBasket()
 	{
-		basket.add("Item Id: "+ 20 +"shelf number: " +  1 + " cubby number: " + 2 + "  in sector: " + 1);
-		basket.add("Item Id: "+ 22 +"shelf number: " +  2 + " cubby number: " + 1 + "  in sector: " + 1);
-		basket.add("Item Id: "+ 26 +"shelf number: " +  3 + " cubby number: " + 3 + "  in sector: " + 1);
+		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", currentSector.toString() ,user.toString() ));
+		
+		if(serverResult == null)
+			return null;
+		
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		JsonArray jsonArray = credentials.getAsJsonArray("items");
+		ArrayList<String> basket = new ArrayList<String>();
+		
+		JsonObject obj;
+		
+		for(JsonElement element : jsonArray )
+		{
+			obj = gson.fromJson(element, JsonObject.class); 
+			basket.add("Product ID: " + obj.get("ID").getAsString() + " Location: " + "XXXXXX");
+		}
 		
 		return basket;
 	}
 	
 	public ArrayList<Integer> getSectorsIDs()
 	{
-		if(sectors.size()>0)
-			sectors = new ArrayList<Integer>();
-		
-
+		ArrayList<Integer> sectors = new ArrayList<Integer>();
+	
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetSectors", "" ,user.toString() ));
 		
 		if(serverResult == null)
@@ -154,13 +154,11 @@ public class GUICommunicatorController
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		JsonArray jsonArray = credentials.getAsJsonArray("sectors");
 		
+		for(JsonElement element : jsonArray )
+			sectors.add(gson.fromJson(element, JsonObject.class).get("ID").getAsInt());
 		
-		JsonObject obj;
-		for(int index=0; index < jsonArray.size(); index++ )
-		{
-			obj = gson.fromJson(jsonArray.get(index), JsonObject.class); 
-			sectors.add(obj.get("ID").getAsInt());
-		}
+		if(sectors.size()>0)
+			currentSector.addProperty("sector", sectors.get(0));
 		
 		return sectors;
 	}
@@ -181,9 +179,9 @@ public class GUICommunicatorController
 		JsonArray jsonArray = credentials.getAsJsonArray("products");
 		ArrayList<String> products = new ArrayList<String>();
 		
-		for(int index=0; index < jsonArray.size(); index++ )
+		for(JsonElement element : jsonArray )
 		{
-			obj = gson.fromJson(jsonArray.get(index), JsonObject.class); 
+			obj = gson.fromJson(element, JsonObject.class); 
 			products.add("Product Name: " + obj.get("name").getAsString() + " Product ID: " + obj.get("ID").getAsString());
 		}
 		
@@ -193,5 +191,12 @@ public class GUICommunicatorController
 	public int registorItem(int productID, String manDate, String expDate)
 	{
 		return 7;
+	}
+	
+	public boolean putItemInCubby(int itemID)
+	{
+		//"StockItems"
+
+		return true;
 	}
 }

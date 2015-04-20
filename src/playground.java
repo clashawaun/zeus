@@ -17,7 +17,8 @@ public class playground {
 	
 		GUICommunicatorController GCC = new GUICommunicatorController();
 		GCC.LoginUser("stocker", "1234");
-		System.out.println(GCC.requestItemsForStockerBasket());
+		GCC.getSectorsIDs();
+		System.out.println(GCC.getStockerCurrentBasket());
 
 		
 //		Database db = new Database();
