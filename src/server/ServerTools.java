@@ -280,6 +280,27 @@ public class ServerTools
 		return false;
 	}
 	
+	public boolean markItemStocked(Item item, Stocker stocker)
+	{
+		if(item.getAssignedUserID() != stocker.getID())
+			return false;
+		ArrayList<Item> stockerItems = stocker.getStockerBasket();
+		for(int i = 0; i < stockerItems.size(); i++)
+		{
+			if(stockerItems.get(i).getID() == item.getID())
+			{
+				//Again duplication of logic with assigned users needs to be revised
+				stockerItems.remove(i);
+				item.setCurrentState("AVAILABLE");
+				item.setAssignedUserID(-1);
+				database.updateItem(item);
+				database.updateUser(stocker);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private boolean generateItemSku(Item item)
 	{
 		boolean uniqueSku = false;
