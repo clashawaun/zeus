@@ -119,6 +119,7 @@ public class Server implements I_Server
 		messageFunctionMap.put("GetSectors", new Command() {public ServerMessage runCommand(ServerMessage m) {return getSectors(m);}});
 		messageFunctionMap.put("GetItemsForStocker", new Command() {public ServerMessage runCommand(ServerMessage m) {return getItemsForStocker(m);}});
 		messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return searchProducts(m);}});
+		messageFunctionMap.put("MarkItemAsStocked", new Command() {public ServerMessage runCommand(ServerMessage m) {return markItemAsStocked(m);}});
 		//messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return })
 		//For StockItem example: jsonData should be in format : {"items": [{"productID": 0, "manufactureDate": "some_date", "expiryDate": "some_date"}, .....]}
 		//Stock items: Get item info including product ID -> create the product -> find first available cubby to put it in -> return result.
@@ -313,6 +314,29 @@ public class Server implements I_Server
 		}
 		result.add("results", itemResults);
 		return new ServerMessage(message.getMessage()+"Result",result.toString());
+	}
+	
+	private ServerMessage markItemAsStocked(ServerMessage message)
+	{
+		JsonObject result = new JsonObject();
+		User user = authenticate(message.getUserData(), Stocker.class);
+		if(user == null)
+		{
+			result.addProperty("error", "Invalid Credentials");
+			return new ServerMessage(message.getMessage()+"Result", result.toString());
+		}
+		JsonObject itemData = new JsonParser().parse(message.getData()).getAsJsonObject();
+		JsonArray items = itemData.get("items").getAsJsonArray();
+		JsonArray markResults = new JsonArray();
+		for(JsonElement item: items)
+		{
+			JsonObject markResult = new JsonObject();
+			markResult.addProperty("item", item.getAsInt());
+			markResult.addProperty("result", serverTools.markItemStocked(database.getItem(item.getAsInt()), (Stocker) user));
+			markResults.add(markResult);
+		}
+		result.add("state", markResults);
+		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 	
 	
