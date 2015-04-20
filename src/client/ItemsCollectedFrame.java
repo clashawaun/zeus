@@ -33,7 +33,7 @@ public class ItemsCollectedFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public ItemsCollectedFrame() {
-		setTitle("Picker Main Window");
+		setTitle("Collect Items Window");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

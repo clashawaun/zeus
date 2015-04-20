@@ -24,6 +24,7 @@ public class LogOutFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LogOutFrame() {
+		setTitle("Log Out Window");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -32,7 +33,7 @@ public class LogOutFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JTextArea logOutOutputMessage = new JTextArea();
-		logOutOutputMessage.setText("Session ended. You have been logged out.");
+		logOutOutputMessage.setText("You have logged out. To gain access, please log in again.");
 		logOutOutputMessage.setEditable(false);
 		logOutOutputMessage.setBounds(48, 116, 324, 30);
 		contentPane.add(logOutOutputMessage);

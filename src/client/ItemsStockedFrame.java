@@ -31,7 +31,7 @@ public class ItemsStockedFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public ItemsStockedFrame() {
-		setTitle("Stocker Main Window");
+		setTitle("Stock Items Window");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -77,7 +77,7 @@ public class ItemsStockedFrame extends JFrame {
 				GUIManager.changeFrame(new SearchForProductFrame());
 			}
 		});
-		searchForProductButton.setBounds(10, 40, 140, 23);
+		searchForProductButton.setBounds(10, 11, 135, 23);
 		contentPane.add(searchForProductButton);
 		
 		JButton returnHomeButton = new JButton("Generate Item ID");
@@ -88,7 +88,7 @@ public class ItemsStockedFrame extends JFrame {
 			}
 		});
 		
-		returnHomeButton.setBounds(114, 11, 130, 23);
+		returnHomeButton.setBounds(160, 11, 130, 23);
 		contentPane.add(returnHomeButton);
 		
 		JButton itemStockedButton = new JButton("Stock Item");

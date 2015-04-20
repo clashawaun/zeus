@@ -32,7 +32,7 @@ public class StockItemsFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public StockItemsFrame() {
-		setTitle("Stocker Main Window");
+		setTitle("Stock Item List Window");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -48,6 +48,7 @@ public class StockItemsFrame extends JFrame {
 				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
+		
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
@@ -59,7 +60,7 @@ public class StockItemsFrame extends JFrame {
 			}
 		});
 		
-		generateItemIDButton.setBounds(130, 11, 130, 23);
+		generateItemIDButton.setBounds(160, 11, 130, 23);
 		contentPane.add(generateItemIDButton);
 		
 		JTextArea itemsToStock = new JTextArea();
@@ -91,7 +92,18 @@ public class StockItemsFrame extends JFrame {
 				GUIManager.changeFrame(new ItemsStockedFrame());
 			}
 		});
+		
 		readyToStockButton.setBounds(155, 215, 89, 23);
 		contentPane.add(readyToStockButton);
+		
+		JButton searchForProductButton = new JButton("Search a Product");
+		searchForProductButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new SearchForProductFrame());
+			}
+		});
+		searchForProductButton.setBounds(10, 11, 135, 23);
+		contentPane.add(searchForProductButton);
 	}
 }

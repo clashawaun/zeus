@@ -28,12 +28,11 @@ public class SearchForProductFrame extends JFrame {
 	 * Launch the application.
 	 */
 	
-
 	/**
 	 * Create the frame.
 	 */
 	public SearchForProductFrame() {
-		setTitle("Stocker Main Window");
+		setTitle("Search For a Product Window");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -94,25 +93,20 @@ public class SearchForProductFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String aProductName = productSearchBox.getText();
-				GUIManager.getGCC().searchForProduct(aProductName);
-				
+				ArrayList<String> aArrayList = GUIManager.getGCC().searchForProduct(aProductName);
 				DefaultListModel <String> aListModel = new DefaultListModel <String>();
-				ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
-				
 				
 				 for (String temp : aArrayList) 
 				 {
 				        aListModel.addElement(temp);
 				 }
-				
+				 
 				 productInfoListing.setModel(aListModel);
-				
 			}
 		});
 		
 		productSearchButton.setBounds(215, 43, 109, 40);
 		contentPane.add(productSearchButton);
-		
 	}
 
 }
