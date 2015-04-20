@@ -128,6 +128,16 @@ public class GenerateItemIDFrame extends JFrame {
 		});
 		stockItemsFrameButton.setBounds(10, 11, 130, 23);
 		contentPane.add(stockItemsFrameButton);
+		
+		JButton searchForProductButton = new JButton("Search a Product");
+		stockItemsFrameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new SearchForProductFrame());
+			}
+		});
+		searchForProductButton.setBounds(10, 40, 130, 23);
+		contentPane.add(searchForProductButton);
 	}
 
 }
