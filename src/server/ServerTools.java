@@ -130,10 +130,12 @@ public class ServerTools
 	{
 		if(!item.getCurrentState().equals("AWAITING_STOCKER"))
 			return false;
+		System.out.println("State is set correctly");
 		//Revise how this works in the database.... this level of code should not be needed in the server as far as Im concerned (To much boilerplate)
 		Product relatedProduct = database.getProduct(productID);
 		if(relatedProduct == null)
 			return false;
+		System.out.println("Related product found");
 		ArrayList<I_Shelf> shelves = new ArrayList<I_Shelf>();
 		for(int shelfID: sector.getShelves())
 			shelves.add(database.getShelf(shelfID));
@@ -143,6 +145,7 @@ public class ServerTools
 			for(int cubbyID: shelf.getCubbies())
 			{
 				cubbies.add(database.getCubby(cubbyID));
+				System.out.println("cubbyFound");
 			}
 		}
 		
@@ -157,15 +160,19 @@ public class ServerTools
 			{
 				cubbyItems.add(database.getItem(itemID));
 			}
-			if(isCubbyUsable(relatedProduct, cubby, cubbyItems))
+			if(isCubbyUsable(relatedProduct, cubby, cubbyItems, item))
 			{
 				//if the cubby can store the item lets store it.
 				//I dont like how manual this process is ..... room for improvement in the core classes...
 				cubby.addItem(item.getID());
 				database.updateCubby(cubby);
+				generateItemSku(item);
 				item.setAssignedUserID(stocker.getID());
 				stocker.addItem(item);
 				item.setCurrentState("PENDING_STOCKING");
+				System.out.println("item placement: " + item.getxPlacementPoint());
+				database.updateItem(item);
+				return true;
 			}
 			//Now we have the items that exist in the cubby, build the current dimensions.
 		}
@@ -174,27 +181,83 @@ public class ServerTools
 	}
 	
 	//Seperate this logic into its own method so we can modify how the algorithm determines if the cubby is a suitable stoarge unit for an item.
-	private boolean isCubbyUsable(Product product, I_Cubby cubby, ArrayList<Item> currentItems)
+	//It will also add a placement point to the new item if it finds it usuable
+	private boolean isCubbyUsable(Product product, I_Cubby cubby, ArrayList<Item> currentItems, Item itemToAdd)
 	{
 		//Check that the cubby satisfies height and depth requirements for this product.
 		if(product.getHeigth() > cubby.getHeight() || product.getDepth() > cubby.getDepth())
 			return false;
-		//If we have got this far we know that the cubby has sufficent depth and height
+		//If we have got this far we know that the cubby has sufficient depth and height
 		ArrayList<Integer> xAxis = new ArrayList<Integer>();
 		for(Item item: currentItems)
 		{
 			if(item == null);
 			else
 			{
+				//Could this go wrong ?
 				xAxis.add(item.getxPlacementPoint());
 			}
 		}
 		//Sort the collection of X Points so we have an X-Axis to work with
 		Collections.sort(xAxis);
 		int startPoint = 0;
-		//DELETE ME
+		//This algorithm will find a place in the cubby to try and fit the item
+		System.out.println("Lets start the terrible algorithm. Current cubby state: Dimensions=(" + cubby.getHeight() + "," + cubby.getWidth() + "," + cubby.getDepth() + ")");
+		if(xAxis.size() == 0 && product.getWidth() <= cubby.getWidth())
+		{
+			//If we have no items in the cubby, just check if it fits and add it
+			itemToAdd.setxPlacementPoint(0);
+			System.out.println("Default case satisfied");
+			cubby.addItem(itemToAdd.getID());
+			return true;
+		}
+		int endPoint = 0;
+		for(int i = 0; i < xAxis.size(); i++)
+		{
+			//Refector needed
+			if(i == 0)
+			{
+				if(startPoint < xAxis.get(i))
+				{
+					if(startPoint + product.getWidth() < xAxis.get(i))
+					{
+						System.out.println("Item will fit :D .. using default case and placing it in position zero");
+						itemToAdd.setxPlacementPoint(startPoint);
+						cubby.addItem(itemToAdd.getID());
+						return true;
+					}
+				}
+			}
+			else
+			{
+				//We should be dealing with either float or int, not both
+				startPoint = xAxis.get(i) - (xAxis.get(i-1) + (int) product.getWidth());
+				System.out.println("startPoint i " + xAxis.get(i));
+				System.out.println("startPoint i-1 " + xAxis.get(i-1));
+				System.out.println("Space between" + startPoint);
+				System.out.println("Checking if there is room .....");
+				if(product.getWidth() <= startPoint)
+				{
+					System.out.println("Cubby ID: " + cubby.getID() + " Item will fit :D .. putting the item into position: " + (xAxis.get(i-1) + (int) product.getWidth()));
+					//We have found a suitable place
+					itemToAdd.setxPlacementPoint(xAxis.get(i-1) + (int) product.getWidth());
+					cubby.addItem(itemToAdd.getID());
+					return true;
+				}
+				endPoint = xAxis.get(i) + (int) product.getWidth();
+			}
+		}
+		if(product.getWidth() < cubby.getWidth() - endPoint)
+		{
+			//Add the item at the end 
+			System.out.println("Add Item to end");
+			itemToAdd.setxPlacementPoint(endPoint+1);
+			cubby.addItem(itemToAdd.getID());
+			return true;
+		}
 		return false;
 	}
+	
 	
 	public boolean markItemCollected(Item item, Picker picker)
 	{
