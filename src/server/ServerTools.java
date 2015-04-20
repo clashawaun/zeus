@@ -1,5 +1,6 @@
 package server;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import coreClasses.CubbyFactory;
 import coreClasses.CubbySmall;
@@ -144,12 +145,56 @@ public class ServerTools
 				cubbies.add(database.getCubby(cubbyID));
 			}
 		}
-		//DELETE ME
-		return false;
-		//Now that we have a list of cubbies, lets go through the list and find one that meets our requirements.
 		
+		//Now that we have a list of cubbies, lets go through the list and find one that meets our requirements.
+		for(I_Cubby cubby: cubbies)
+		{
+			//Loop through the valid cubby and try and get one that meets our requirements
+			//Lets check that our cubby meets height and depth requirements
+			
+			ArrayList<Item> cubbyItems = new ArrayList<Item>();
+			for(int itemID: cubby.getItems())
+			{
+				cubbyItems.add(database.getItem(itemID));
+			}
+			if(isCubbyUsable(relatedProduct, cubby, cubbyItems))
+			{
+				//if the cubby can store the item lets store it.
+				//I dont like how manual this process is ..... room for improvement in the core classes...
+				cubby.addItem(item.getID());
+				database.updateCubby(cubby);
+				item.setAssignedUserID(stocker.getID());
+				stocker.addItem(item);
+				item.setCurrentState("PENDING_STOCKING");
+			}
+			//Now we have the items that exist in the cubby, build the current dimensions.
+		}
+		//DELETE ME 
+		return false;
 	}
 	
+	//Seperate this logic into its own method so we can modify how the algorithm determines if the cubby is a suitable stoarge unit for an item.
+	private boolean isCubbyUsable(Product product, I_Cubby cubby, ArrayList<Item> currentItems)
+	{
+		//Check that the cubby satisfies height and depth requirements for this product.
+		if(product.getHeigth() > cubby.getHeight() || product.getDepth() > cubby.getDepth())
+			return false;
+		//If we have got this far we know that the cubby has sufficent depth and height
+		ArrayList<Integer> xAxis = new ArrayList<Integer>();
+		for(Item item: currentItems)
+		{
+			if(item == null);
+			else
+			{
+				xAxis.add(item.getxPlacementPoint());
+			}
+		}
+		//Sort the collection of X Points so we have an X-Axis to work with
+		Collections.sort(xAxis);
+		int startPoint = 0;
+		//DELETE ME
+		return false;
+	}
 	
 	public boolean markItemCollected(Item item, Picker picker)
 	{
