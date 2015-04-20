@@ -288,15 +288,25 @@ public class Server implements I_Server
 		{
 			JsonObject info = item.getAsJsonObject();
 			JsonObject itemResult = new JsonObject();
-			itemResult.addProperty("id", info.get("id").getAsInt());
+			itemResult.addProperty("id", info.get("productID").getAsInt());
 			try
 			{
 				Item newItem = database.createItem(info.get("productID").getAsInt(), info.get("manufactureDate").getAsString(), info.get("expiryDate").getAsString());
-				itemResult.addProperty("isSuccess", serverTools.processNewItem((Stocker) user, database.getSector(itemInformation.get("sector").getAsInt()), newItem, itemInformation.get("productID").getAsInt()));
+				if(newItem == null)
+					System.out.println("newItem is null");
+				int sectorID = itemInformation.get("sector").getAsInt();
+				System.out.println(sectorID);
+				I_Sector s  = database.getSector(sectorID);
+				if(s == null)
+					System.out.println("s is null");
+				itemResult.addProperty("isSuccess", serverTools.processNewItem((Stocker) user, database.getSector(itemInformation.get("sector").getAsInt()), newItem, info.get("productID").getAsInt()));
 			}
 			catch(Exception e)
 			{
 				//Item failed to be created, add a failure to the list
+				System.out.println("Failed in server");
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 				itemResult.addProperty("isSuccess", false);
 			}
 			itemResults.add(itemResult);
