@@ -58,7 +58,7 @@ public class LogInFrame extends JFrame implements ActionListener {
 		if (aGCC != null
 				)
 		{
-			if (aGCC.LoginUser(usernameField.getText(), new String(passwordField.getPassword())))
+			if (aGCC.loginUser(usernameField.getText(), new String(passwordField.getPassword())))
 			{
 				switch(aGCC.getUserType())
 				{

@@ -27,17 +27,18 @@ public class GUICommunicatorController
 		gson = new Gson();
 	}
 
-	public void  init()
+	private void  init()
 	{
-		
 		user = new JsonObject();
-		
 		currentSector = new JsonObject();
 	}
-	public boolean LoginUser(String email, String password)
+	
+	public boolean loginUser(String email, String password)
 	{
 	
-		if ( email == null || password == null) return false;
+		if ( email == null || password == null)
+			return false;
+
 		init();
 		user.addProperty("email", email);
 		user.addProperty("password", password);
@@ -50,7 +51,9 @@ public class GUICommunicatorController
 		{
 			user.addProperty("type", credentials.get("type").getAsInt());
 			System.out.println(user);
-		} else user = null;
+		} 
+		else 
+			user = null;
 		
 		return credentials.get("isValid").getAsBoolean();
 	}
@@ -102,6 +105,8 @@ public class GUICommunicatorController
 		JsonObject items = new JsonObject();
 		items.add("items", gson.toJsonTree(new int[] {itemID}).getAsJsonArray());
 		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsPicked", items.toString() ,user.toString() ));
+		
+		System.out.println(serverResult);
 	}
 	
 	public boolean requestItemsForPickerBasket()
@@ -114,19 +119,7 @@ public class GUICommunicatorController
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		return credentials.get("isSuccess").getAsBoolean();
 	}
-	
-	public boolean requestItemsForStockerBasket()
-	{
-		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", currentSector.toString() ,user.toString() ));
 		
-		if(serverResult == null)
-			return false;
-		
-		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
-		return credentials.get("isSuccess").getAsBoolean();
-
-	}
-	
 	public ArrayList<String> getStockerCurrentBasket()
 	{
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", currentSector.toString() ,user.toString() ));
@@ -143,7 +136,7 @@ public class GUICommunicatorController
 		
 		for(JsonElement element : jsonArray )
 		{
-			obj = gson.fromJson(element, JsonObject.class); 
+			obj = element.getAsJsonObject(); 
 			basket.add("Product ID: " + obj.get("ID").getAsString() + " Location: " + "XXXXXX");
 		}
 		
@@ -199,13 +192,52 @@ public class GUICommunicatorController
 	
 	public int registorItem(int productID, String manDate, String expDate)
 	{
-		return 7;
+		JsonObject obj = new JsonObject();
+		
+		obj.addProperty("sector", currentSector.get("sector").getAsInt());
+		JsonArray itemInfo = new JsonArray();
+		JsonObject tempObj = new JsonObject();
+		
+		tempObj.addProperty("productID", productID);
+		tempObj.addProperty("manufactureDate", manDate);
+		tempObj.addProperty("expiryDate", expDate);
+		
+		itemInfo.add(tempObj);
+		
+		obj.add("items", itemInfo);
+		
+		serverResult = communicator.sendServerMessage(new ServerMessage("StockItems", obj.toString() ,user.toString() ));
+		
+		if(serverResult == null)
+			return -1;
+		
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		JsonArray jsonArray = credentials.get("results").getAsJsonArray();
+		System.out.println(jsonArray);
+		
+		obj = (jsonArray.get(0)).getAsJsonObject();
+		
+		if(!obj.get("isSuccess").getAsBoolean())
+			return -1;
+		
+//		TODO return sku Id number
+		return 1;
 	}
 	
 	public boolean putItemInCubby(int itemID)
 	{
-		//"StockItems"
 
-		return true;
+		JsonObject items = new JsonObject();
+		items.add("items", gson.toJsonTree(new int[] {itemID}).getAsJsonArray());
+		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsStocked", items.toString() ,user.toString() ));
+		
+		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
+		
+		JsonArray jsonArray = credentials.get("state").getAsJsonArray();
+		JsonObject obj = (jsonArray.get(0)).getAsJsonObject();
+
+		return obj.get("result").getAsBoolean();
 	}
 }
+
+
