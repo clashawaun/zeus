@@ -5,10 +5,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ AllDatabaseTests.class, CreateUserFalse.class,
-		CreateUserNagativeUser.class, CreateUserTrue.class, GetUserFalse.class,
-		GetUserTrue.class, IsValidLogInFalse.class, IsValidLogInNULL.class,
-		IsValidLogInTrue.class })
+@SuiteClasses({ CreateUserFalse.class, CreateUserNagativeUser.class,
+		CreateUserTrue.class, GetUserFalse.class, GetUserTrue.class,
+		IsValidLogInFalse.class, IsValidLogInNULL.class, IsValidLogInTrue.class })
 public class AllDatabaseTests {
 
 }

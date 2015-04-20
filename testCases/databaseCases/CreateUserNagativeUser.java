@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import coreClasses.User;
-
 import database.Database;
 
 public class CreateUserNagativeUser {
@@ -24,7 +23,7 @@ public class CreateUserNagativeUser {
 		
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			fail("Exception");
 		}
 	}
 

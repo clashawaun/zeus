@@ -23,14 +23,15 @@ public class GUICommunicatorController
 	
 	public GUICommunicatorController() 
 	{
-		
+		communicator = new ServerCommunicator();
+		gson = new Gson();
 	}
 
 	public void  init()
 	{
-		communicator = new ServerCommunicator();
+		
 		user = new JsonObject();
-		gson = new Gson();
+		
 		currentSector = new JsonObject();
 	}
 	public boolean LoginUser(String email, String password)
@@ -80,12 +81,14 @@ public class GUICommunicatorController
 	{
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForPicker", "" ,user.toString() ));
 		
+		ArrayList<String> basket = new ArrayList<String>();
+		
 		if(serverResult == null)
-			return null;
+			return basket;
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		JsonArray jsonArray = credentials.getAsJsonArray("items");
-		ArrayList<String> basket = new ArrayList<String>();
+		
 		
 		for(JsonElement element : jsonArray)
 				basket.add(" Item Id: "+ element.getAsJsonObject().get("ID") + "  Location: " + "XXXX");
@@ -128,12 +131,13 @@ public class GUICommunicatorController
 	{
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetItemsForStocker", currentSector.toString() ,user.toString() ));
 		
+		ArrayList<String> basket = new ArrayList<String>();
+		
 		if(serverResult == null)
-			return null;
+			return basket;
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		JsonArray jsonArray = credentials.getAsJsonArray("items");
-		ArrayList<String> basket = new ArrayList<String>();
 		
 		JsonObject obj;
 		
@@ -150,11 +154,10 @@ public class GUICommunicatorController
 	{
 		ArrayList<Integer> sectors = new ArrayList<Integer>();
 		
-		
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetSectors", "" ,user.toString() ));
 		
 		if(serverResult == null)
-			return null;
+			return sectors;
 	
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		JsonArray jsonArray = credentials.getAsJsonArray("sectors");
@@ -184,11 +187,7 @@ public class GUICommunicatorController
 		JsonArray jsonArray = credentials.getAsJsonArray("products");
 		ArrayList<String> products = new ArrayList<String>();
 		
-		
-		System.out.println(gson.fromJson(jsonArray.get(0), JsonObject.class));
-//		if(())
-//			return null;
-		
+
 		for(JsonElement element : jsonArray )
 		{
 			obj = gson.fromJson(element, JsonObject.class); 

@@ -23,7 +23,7 @@ public class GetUserFalse {
 	
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			fail("Exception");
 		}
 	}
 

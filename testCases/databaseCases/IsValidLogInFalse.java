@@ -18,7 +18,7 @@ public class IsValidLogInFalse {
 		assertEquals(false, db.isValidLogin("NotAUser", "1234"));
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			fail("Exception");
 		}
 		
 	}

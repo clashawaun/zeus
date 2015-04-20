@@ -23,7 +23,7 @@ public class CreateUserFalse {
 	
 		}catch(Exception e)
 		{
-			e.printStackTrace();
+			fail("Exception");
 		}
 	}
 
