@@ -1,7 +1,11 @@
 package server;
 import java.util.ArrayList;
 
+import coreClasses.CubbyFactory;
+import coreClasses.CubbySmall;
+import coreClasses.I_Cubby;
 import coreClasses.I_Sector;
+import coreClasses.I_Shelf;
 import coreClasses.Item;
 import coreClasses.Order;
 import coreClasses.Picker;
@@ -120,6 +124,31 @@ public class ServerTools
 		SectorTools tool = getSectorTool(sector.getID());
 		
 	}*/
+	
+	public boolean processNewItem(Stocker stocker, I_Sector sector, Item item, int productID)
+	{
+		if(!item.getCurrentState().equals("AWAITING_STOCKER"))
+			return false;
+		//Revise how this works in the database.... this level of code should not be needed in the server as far as Im concerned (To much boilerplate)
+		Product relatedProduct = database.getProduct(productID);
+		if(relatedProduct == null)
+			return false;
+		ArrayList<I_Shelf> shelves = new ArrayList<I_Shelf>();
+		for(int shelfID: sector.getShelves())
+			shelves.add(database.getShelf(shelfID));
+		ArrayList<I_Cubby> cubbies = new ArrayList<I_Cubby>();
+		for(I_Shelf shelf: shelves)
+		{
+			for(int cubbyID: shelf.getCubbies())
+			{
+				cubbies.add(database.getCubby(cubbyID));
+			}
+		}
+		//DELETE ME
+		return false;
+		//Now that we have a list of cubbies, lets go through the list and find one that meets our requirements.
+		
+	}
 	
 	
 	public boolean markItemCollected(Item item, Picker picker)
