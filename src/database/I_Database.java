@@ -26,6 +26,8 @@ public interface I_Database {
 	public Product getProduct(int productID);
 	//Shane
 	public ArrayList<Product> getProducts(String searchTerm);
+	public I_Shelf getShelf(int ID);
+	public I_Cubby getCubby(int ID);
 	//--
 	public Item getItem(int itemID);
 	public int itemBelonngsTo(int itemID);

@@ -121,6 +121,7 @@ public class Server implements I_Server
 		messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return searchProducts(m);}});
 		//messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return })
 		//For StockItem example: jsonData should be in format : {"items": [{"productID": 0, "manufactureDate": "some_date", "expiryDate": "some_date"}, .....]}
+		//Stock items: Get item info including product ID -> create the product -> find first available cubby to put it in -> return result.
 	}
 	
 	private void setUpSectorTools()
@@ -270,6 +271,7 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());	
 	}
 	
+	//Complicated function, may have some bugs that I havent spotted ... will come back later and debug if needed
 	private ServerMessage assignItemsToStocker(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -279,7 +281,28 @@ public class Server implements I_Server
 			result.addProperty("error", "Invalid Credentials");
 			return new ServerMessage(message.getMessage()+"Result", result.toString());
 		}
-		return new ServerMessage("Default","Return");
+		JsonObject itemInformation = new JsonParser().parse(message.getData()).getAsJsonObject();
+		JsonArray itemArray = itemInformation.get("items").getAsJsonArray();
+		JsonArray itemResults = new JsonArray();
+		for(JsonElement item : itemArray)
+		{
+			JsonObject info = item.getAsJsonObject();
+			JsonObject itemResult = new JsonObject();
+			itemResult.addProperty("id", info.get("id").getAsInt());
+			try
+			{
+				Item newItem = database.createItem(info.get("productID").getAsInt(), info.get("manufactureDate").getAsString(), info.get("expiryDate").getAsString());
+				itemResult.addProperty("isSuccess", serverTools.processNewItem((Stocker) user, database.getSector(itemInformation.get("sector").getAsInt()), newItem, itemInformation.get("productID").getAsInt()));
+			}
+			catch(Exception e)
+			{
+				//Item failed to be created, add a failure to the list
+				itemResult.addProperty("isSuccess", false);
+			}
+			itemResults.add(itemResult);
+		}
+		result.add("results", itemResults);
+		return new ServerMessage(message.getMessage()+"Result",result.toString());
 	}
 	
 	

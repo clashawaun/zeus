@@ -609,5 +609,27 @@ public class Database implements I_Database {
 		}
 		return results;
 	}
+	
+	@Override 
+	public I_Shelf getShelf(int ID)
+	{
+		for(I_Shelf shelf: shelves)
+		{
+			if(shelf.getID() == ID)
+				return shelf;
+		}
+		return null;
+	}
+	
+	@Override
+	public I_Cubby getCubby(int ID)
+	{
+		for(I_Cubby cubby: cubbies)
+		{
+			if(cubby.getID() == ID)
+				return cubby;
+		}
+		return null;
+	}
 
 }
