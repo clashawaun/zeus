@@ -631,5 +631,16 @@ public class Database implements I_Database {
 		}
 		return null;
 	}
+	
+	@Override
+	public void updateCubby(I_Cubby cubby)
+	{
+		for(int i = 0; i < cubbies.size(); i++)
+			if(cubbies.get(i).equals(cubby)) 
+			{
+				cubbies.set(i, cubby);
+				break;
+			}
+	}
 
 }
