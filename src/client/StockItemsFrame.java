@@ -59,14 +59,14 @@ public class StockItemsFrame extends JFrame {
 			}
 		});
 		
-		generateItemIDButton.setBounds(114, 11, 130, 23);
+		generateItemIDButton.setBounds(130, 11, 130, 23);
 		contentPane.add(generateItemIDButton);
 		
-		JTextArea txtrItemsToBe = new JTextArea();
-		txtrItemsToBe.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
-		txtrItemsToBe.setText("Items to be stocked below. Proceed when ready.");
-		txtrItemsToBe.setBounds(82, 58, 242, 23);
-		contentPane.add(txtrItemsToBe);
+		JTextArea itemsToStock = new JTextArea();
+		itemsToStock.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 10));
+		itemsToStock.setText("Items to be stocked below. Proceed when ready.");
+		itemsToStock.setBounds(82, 58, 242, 23);
+		contentPane.add(itemsToStock);
 		
 		DefaultListModel <String> aListModel = new DefaultListModel <String>();
 		ArrayList<String> aArrayItemList = GUIManager.getGCC().getStockerCurrentBasket();

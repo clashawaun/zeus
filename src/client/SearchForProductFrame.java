@@ -2,12 +2,18 @@ package client;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -15,6 +21,8 @@ public class SearchForProductFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField productToSearch;
+	private JTextField productSearchBox;
+	private JList<String>  productInfoListing;
 
 	/**
 	 * Launch the application.
@@ -25,12 +33,14 @@ public class SearchForProductFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public SearchForProductFrame() {
+		setTitle("Stocker Main Window");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		JButton logOutButton = new JButton("Log Out");
 		logOutButton.addActionListener(new ActionListener() {
@@ -40,26 +50,20 @@ public class SearchForProductFrame extends JFrame {
 				GUIManager.changeFrame(new LogOutFrame());
 			}
 		});
-		
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
-		productToSearch = new JTextField();
-		productToSearch.setText("Product Name");
-		productToSearch.setBounds(40, 63, 161, 51);
-		contentPane.add(productToSearch);
-		productToSearch.setColumns(10);
 		
-		JButton searchForOrderButton = new JButton("Search Product");
-		searchForOrderButton.addActionListener(new ActionListener() {
+		JButton returnHomeButton = new JButton("Generate Item ID");
+		returnHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				//Searches information on database
+				GUIManager.changeFrame(new GenerateItemIDFrame());
 			}
 		});
 		
-		searchForOrderButton.setBounds(211, 62, 133, 23);
-		contentPane.add(searchForOrderButton);
+		returnHomeButton.setBounds(150, 11, 130, 23);
+		contentPane.add(returnHomeButton);
 		
 		JButton stockItemsFrameButton = new JButton("Stock Items");
 		stockItemsFrameButton.addActionListener(new ActionListener() {
@@ -72,13 +76,43 @@ public class SearchForProductFrame extends JFrame {
 		stockItemsFrameButton.setBounds(10, 11, 130, 23);
 		contentPane.add(stockItemsFrameButton);
 		
-		JButton returnHomeButton = new JButton("Generate Item ID");
-		returnHomeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
+		productSearchBox = new JTextField();
+		productSearchBox.setText("Product Name");
+		
+		productSearchBox.setBounds(51, 44, 154, 39);
+		contentPane.add(productSearchBox);
+		productSearchBox.setColumns(10);
+		
+		productInfoListing = new JList<String>();
+		productInfoListing.setBounds(51, 94, 273, 128);
+		
+		contentPane.add(productInfoListing);
+		
+		JButton productSearchButton = new JButton("Search");
+		productSearchButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
 			{
-				GUIManager.changeFrame(new GenerateItemIDFrame());
+				String aProductName = productSearchBox.getText();
+				GUIManager.getGCC().searchForProduct(aProductName);
+				
+				DefaultListModel <String> aListModel = new DefaultListModel <String>();
+				ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
+				
+				
+				 for (String temp : aArrayList) 
+				 {
+				        aListModel.addElement(temp);
+				 }
+				
+				 productInfoListing.setModel(aListModel);
+				
 			}
 		});
+		
+		productSearchButton.setBounds(215, 43, 109, 40);
+		contentPane.add(productSearchButton);
+		
 	}
 
 }

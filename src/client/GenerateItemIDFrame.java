@@ -130,13 +130,13 @@ public class GenerateItemIDFrame extends JFrame {
 		contentPane.add(stockItemsFrameButton);
 		
 		JButton searchForProductButton = new JButton("Search a Product");
-		stockItemsFrameButton.addActionListener(new ActionListener() {
+		searchForProductButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				GUIManager.changeFrame(new SearchForProductFrame());
 			}
 		});
-		searchForProductButton.setBounds(10, 40, 130, 23);
+		searchForProductButton.setBounds(10, 40, 140, 23);
 		contentPane.add(searchForProductButton);
 	}
 

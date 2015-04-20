@@ -70,6 +70,16 @@ public class ItemsStockedFrame extends JFrame {
 		listOfItemsToBeStocked.setBounds(65, 113, 241, 95);
 		contentPane.add(listOfItemsToBeStocked);
 		
+		JButton searchForProductButton = new JButton("Search a Product");
+		searchForProductButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GUIManager.changeFrame(new SearchForProductFrame());
+			}
+		});
+		searchForProductButton.setBounds(10, 40, 140, 23);
+		contentPane.add(searchForProductButton);
+		
 		JButton returnHomeButton = new JButton("Generate Item ID");
 		returnHomeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
