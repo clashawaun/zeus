@@ -23,17 +23,21 @@ public class GUICommunicatorController
 	
 	public GUICommunicatorController() 
 	{
+		
+	}
+
+	public void  init()
+	{
 		communicator = new ServerCommunicator();
-		user = null;
+		user = new JsonObject();
 		gson = new Gson();
 		currentSector = new JsonObject();
 	}
-
 	public boolean LoginUser(String email, String password)
 	{
+	
 		if ( email == null || password == null) return false;
-		
-		user = new JsonObject();
+		init();
 		user.addProperty("email", email);
 		user.addProperty("password", password);
 		
@@ -145,7 +149,8 @@ public class GUICommunicatorController
 	public ArrayList<Integer> getSectorsIDs()
 	{
 		ArrayList<Integer> sectors = new ArrayList<Integer>();
-	
+		
+		
 		serverResult = communicator.sendServerMessage(new ServerMessage("GetSectors", "" ,user.toString() ));
 		
 		if(serverResult == null)
@@ -157,7 +162,7 @@ public class GUICommunicatorController
 		for(JsonElement element : jsonArray )
 			sectors.add(gson.fromJson(element, JsonObject.class).get("ID").getAsInt());
 		
-		if(sectors.size()>0)
+		if(sectors.size() > 0)
 			currentSector.addProperty("sector", sectors.get(0));
 		
 		return sectors;
@@ -178,6 +183,11 @@ public class GUICommunicatorController
 		
 		JsonArray jsonArray = credentials.getAsJsonArray("products");
 		ArrayList<String> products = new ArrayList<String>();
+		
+		
+		System.out.println(gson.fromJson(jsonArray.get(0), JsonObject.class));
+//		if(())
+//			return null;
 		
 		for(JsonElement element : jsonArray )
 		{
