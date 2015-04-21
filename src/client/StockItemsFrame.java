@@ -44,6 +44,7 @@ public class StockItemsFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Calling logOut function in GCC file using GUI Manager to end user session and be directed to the log out frame.
 				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
@@ -69,6 +70,7 @@ public class StockItemsFrame extends JFrame {
 		itemsToStock.setBounds(82, 58, 242, 23);
 		contentPane.add(itemsToStock);
 		
+		//Transferring data from an arrayList to a JList using a defaultListodel.
 		DefaultListModel <String> aListModel = new DefaultListModel <String>();
 		ArrayList<String> aArrayItemList = GUIManager.getGCC().getStockerCurrentBasket();
 		JList <String> listOfItemsToStock = new JList<String>();

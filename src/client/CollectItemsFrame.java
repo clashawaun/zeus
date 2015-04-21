@@ -45,6 +45,7 @@ public class CollectItemsFrame extends JFrame {
 		ArrayList<Integer> aSectorList = GUIManager.getGCC().getSectorsIDs();
 		int i;
 		
+		//Setting sector IDs into a local arraylist and added to a dropdown list.
         for (i = 0; i < aSectorList.size(); i++) 
         {
             sectorList.addItem(aSectorList.get(i));
@@ -57,6 +58,7 @@ public class CollectItemsFrame extends JFrame {
 		{
 	        public void actionPerformed(ActionEvent e) 
 	        {
+	        	//Getting sector selection from user
 	        	GUIManager.getGCC().setCurrentSectorLocation((int) sectorList.getSelectedItem());
 
 	        }
@@ -68,6 +70,7 @@ public class CollectItemsFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Calling logOut function in GCC file using GUI Manager to end user session and be directed to the log out frame.
 				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
@@ -75,6 +78,7 @@ public class CollectItemsFrame extends JFrame {
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
+		//Transferring data from an arrayList to a JList using a defaultListodel.
 		DefaultListModel <String> aListModel = new DefaultListModel <String>();
 		ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
 		JList<String> listOfItemsToCollect = new JList<String>();

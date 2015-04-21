@@ -58,26 +58,27 @@ public class LogInFrame extends JFrame implements ActionListener {
 		if (aGCC != null
 				)
 		{
+			//Validating log in credentials
 			if (aGCC.loginUser(usernameField.getText(), new String(passwordField.getPassword())))
 			{
 				switch(aGCC.getUserType())
 				{
-					case 1 :  //Picker
+					case 1 :  //Picker entry point to application
 						System.out.println("You are signed in as a picker.");
 						GUIManager.changeFrame(new CollectItemsFrame());
 						break;
 						
-					case 2 :  //Packer
+					case 2 :  //Packer entry point t application
 						System.out.println("You are signed in as a packer.");
 						GUIManager.changeFrame(new SearchForOrderFrame());
 						break;
 						
-					case 3 :  //Manager
+					case 3 :  //Manager entry point to application
 						System.out.println("You are signed in as a manager.");
 						GUIManager.changeFrame(new RegisterNewProductFrame());
 						break;
 						
-					case 4 :  //Stocker
+					case 4 :  //Stocker entry point to application
 						System.out.println("You are signed in as a stocker.");
 						GUIManager.changeFrame(new GenerateItemIDFrame());
 						break;

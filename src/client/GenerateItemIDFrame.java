@@ -42,6 +42,7 @@ public class GenerateItemIDFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//Transferring data from an arrayList to a JList using a defaultListodel.
 		sectorList.setEditable(false);
 		ArrayList<Integer> aSectorList = GUIManager.getGCC().getSectorsIDs();
 		int i;
@@ -58,6 +59,7 @@ public class GenerateItemIDFrame extends JFrame {
 		{
 	        public void actionPerformed(ActionEvent e) 
 	        {
+	        	//Setting sector IDs into a local arraylist and added to a dropdown list.
 	        	GUIManager.getGCC().setCurrentSectorLocation((int) sectorList.getSelectedItem());
 	        }
 		});
@@ -67,6 +69,7 @@ public class GenerateItemIDFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Calling logOut function in GCC file using GUI Manager to end user session and be directed to the log out frame.
 				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
@@ -96,7 +99,7 @@ public class GenerateItemIDFrame extends JFrame {
 		generateItemIDButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				
+				//Registering a new item to system and generate ID label for that item
 				String aText = productIDField.getText();
 				int aProductID = Integer.parseInt(aText);
 				String aManDateText = manufactureDateField.getText();

@@ -45,6 +45,7 @@ public class SearchForProductFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Calling logOut function in GCC file using GUI Manager to end user session and be directed to the log out frame.
 				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
@@ -92,6 +93,9 @@ public class SearchForProductFrame extends JFrame {
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				//Gets a product name from user
+				//Transferring data from an arrayList to a JList using a defaultListodel.
+				//Displays product info on JList
 				String aProductName = productSearchBox.getText();
 				ArrayList<String> aArrayList = GUIManager.getGCC().searchForProduct(aProductName);
 				DefaultListModel <String> aListModel = new DefaultListModel <String>();

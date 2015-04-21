@@ -10,6 +10,7 @@ public class GUIManager
 	
 	public static void init()
 	{
+		//Entry to application.
 		GCC = new GUICommunicatorController();
 		aFrame = new LogInFrame();
 		aFrame.setVisible(true);
@@ -22,6 +23,7 @@ public class GUIManager
 	
 	public static void changeFrame(JFrame bFrame)
 	{
+		//Disposes of current frame and makes the input frame the new frame to show.
 		aFrame.dispose();
 		aFrame = bFrame;
 		aFrame.setVisible(true);

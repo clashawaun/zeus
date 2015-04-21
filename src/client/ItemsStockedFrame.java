@@ -43,6 +43,7 @@ public class ItemsStockedFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Calling logOut function in GCC file using GUI Manager to end user session and be directed to the log out frame.
 				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
@@ -56,6 +57,7 @@ public class ItemsStockedFrame extends JFrame {
 		contentPane.add(itemIDToBeStockedField);
 		itemIDToBeStockedField.setColumns(10);
 		
+		//Transferring data from an arrayList to a JList using a defaultListodel.
 		DefaultListModel <String> aListModel = new DefaultListModel <String>();
 		ArrayList<String> aArrayList = GUIManager.getGCC().getStockerCurrentBasket();
 		listOfItemsToBeStocked = new JList<String>();
@@ -95,6 +97,7 @@ public class ItemsStockedFrame extends JFrame {
 		itemStockedButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Gets itemID from user.
 				//Listing updates and removes items that are stocked.
 				
 				if(itemIDToBeStockedField.getText().matches("[0-9]+"))

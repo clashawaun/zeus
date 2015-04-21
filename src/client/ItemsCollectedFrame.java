@@ -45,6 +45,7 @@ public class ItemsCollectedFrame extends JFrame {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				//Calling logOut function in GCC file using GUI Manager to end user session and be directed to the log out frame.
 				GUIManager.getGCC().logOut();
 				GUIManager.changeFrame(new LogOutFrame());
 			}
@@ -53,7 +54,7 @@ public class ItemsCollectedFrame extends JFrame {
 		logOutButton.setBounds(335, 11, 89, 23);
 		contentPane.add(logOutButton);
 		
-		
+		//Transferring data from an arrayList to a JList using a defaultListodel.
 		DefaultListModel <String> aListModel = new DefaultListModel <String>();
 		ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
 		listOfItemsToBeCollected = new JList<String>();
@@ -73,12 +74,12 @@ public class ItemsCollectedFrame extends JFrame {
 		addMoreItemsToListButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{		
-				
+				//Requesting for more items for Picker
 				if (GUIManager.getGCC().requestItemsForPickerBasket())
 				{
+					//Transferring data from an arrayList to a JList using a defaultListodel.
 					DefaultListModel <String> aListModel = new DefaultListModel <String>();
 					ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
-					//listOfItemsToBeCollected = new JList<String>();
 					
 					 for (String temp : aArrayList) 
 					 {
@@ -87,30 +88,6 @@ public class ItemsCollectedFrame extends JFrame {
 					
 					 listOfItemsToBeCollected.setModel(aListModel);
 				}
-				
-				
-				
-				/* if (listOfItemsToBeCollected.getModel().getSize() != 0)
-				 {
-					 DefaultListModel <String> aListModel = new DefaultListModel <String>();
-						ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
-						JList<String> listOfItemsToBeCollected = new JList<String>();
-						
-						 for (String temp : aArrayList) 
-						 {
-						        aListModel.addElement(temp);
-						 }
-						
-						 listOfItemsToBeCollected.setModel(aListModel);
-						 GUIManager.getGCC().getPickerCurrentBasket();
-						 aListModel.removeAllElements();
-				 }
-				 
-				 else if (listOfItemsToBeCollected.getModel().getSize() == 0)
-				 {
-					 GUIManager.getGCC().requestItemsForPickerBasket();
-					 listOfItemsToBeCollected.setModel(aListModel);
-				 }*/
 			}
 		});
 		
@@ -132,10 +109,13 @@ public class ItemsCollectedFrame extends JFrame {
 				
 				if(itemIDToBeCollectedField.getText().matches("[0-9]+"))
 				{
+					//Getting item ID from Picker
 				String aText = itemIDToBeCollectedField.getText();
 				int aItemID = Integer.parseInt(aText);
+					//Collecting item with said item ID
 				GUIManager.getGCC().collectItem(aItemID);
 				
+				//Transferring data from an arrayList to a JList using a defaultListodel.
 				DefaultListModel <String> aListModel = new DefaultListModel <String>();
 				ArrayList<String> aArrayList = GUIManager.getGCC().getPickerCurrentBasket();
 				
