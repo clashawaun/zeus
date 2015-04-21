@@ -1,9 +1,6 @@
 import java.awt.EventQueue;
 
-import client.GUICommunicatorController;
 import client.GUIManager;
-import client.ItemsCollectedFrame;
-import client.LogInFrame;
 
 public class EmmyTest {
 

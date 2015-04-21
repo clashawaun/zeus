@@ -1,12 +1,6 @@
 import java.text.ParseException;
-import java.util.ArrayList;
 
-
-
-
-import coreClasses.User;
 import client.GUICommunicatorController;
-import database.Database;
 
 
 public class playground {
@@ -16,11 +10,18 @@ public class playground {
 	{
 	
 		GUICommunicatorController GCC = new GUICommunicatorController();
-		GCC.LoginUser("stocker", "1234");
-		GCC.setCurrentSectorLocation(2);
-		System.out.println(GCC.getSectorsIDs());
+		GCC.loginUser("picker", "1234");
+		GCC.setCurrentSectorLocation(1);
+	
+		
+		//System.out.println(GCC.getSectorsIDs());
+//		GCC.getStockerCurrentBasket();
+//		GCC.registorItem(2, "2013-12-12", "2013-12-12");
+//		GCC.getStockerCurrentBasket();
+//		GCC.putItemInCubby(17);
 		//System.out.println(GCC.getStockerCurrentBasket());
 
+//		GCC.requestItemsForPickerBasket();
 		
 //		Database db = new Database();
 //		

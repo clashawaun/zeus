@@ -48,10 +48,7 @@ public class GUICommunicatorController
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		
 		if(credentials.get("isValid").getAsBoolean())
-		{
 			user.addProperty("type", credentials.get("type").getAsInt());
-			System.out.println(user);
-		} 
 		else 
 			user = null;
 		
@@ -106,7 +103,6 @@ public class GUICommunicatorController
 		items.add("items", gson.toJsonTree(new int[] {itemID}).getAsJsonArray());
 		serverResult = communicator.sendServerMessage(new ServerMessage("MarkItemAsPicked", items.toString() ,user.toString() ));
 		
-		System.out.println(serverResult);
 	}
 	
 	public boolean requestItemsForPickerBasket()
@@ -213,7 +209,6 @@ public class GUICommunicatorController
 		
 		JsonObject credentials = new JsonParser().parse(serverResult.getData()).getAsJsonObject();
 		JsonArray jsonArray = credentials.get("results").getAsJsonArray();
-		System.out.println(jsonArray);
 		
 		obj = (jsonArray.get(0)).getAsJsonObject();
 		
