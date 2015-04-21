@@ -19,6 +19,10 @@ public class playground {
 //		GCC.registorItem(2, "2013-12-12", "2013-12-12");
 //		GCC.getStockerCurrentBasket();
 //		GCC.putItemInCubby(17);
+		GCC.loginUser("stocker", "1234");
+		GCC.setCurrentSectorLocation(2);
+		System.out.println(GCC.getSectorsIDs());
+
 		//System.out.println(GCC.getStockerCurrentBasket());
 
 //		GCC.requestItemsForPickerBasket();

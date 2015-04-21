@@ -383,9 +383,5 @@ public class Server implements I_Server
 		//We should never encounter this case if a valid user is passed into the function. 
 		return -1;
 	}
-	
-	/*public ServerMessage processServerMessage(ServerMessage msg)
-	{
-		
-	}*/
+
 }

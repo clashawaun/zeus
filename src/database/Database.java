@@ -214,6 +214,8 @@ public class Database implements I_Database {
 		//perhaps use automation ? to use server functions to begin population
 		sectors.get(0).putItemInQueue(items.get(6));
 		sectors.get(0).putItemInQueue(items.get(7));
+		cubbies.get(0).addItem(items.get(4).getID());
+		cubbies.get(0).addItem(items.get(5).getID());
 		cubbies.get(0).addItem(items.get(6).getID());
 		items.get(6).setxPlacementPoint(0);
 		cubbies.get(0).addItem(items.get(7).getID());
