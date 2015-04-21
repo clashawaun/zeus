@@ -55,6 +55,7 @@ public class ServerTools
 		ArrayList<Item> chosenItems = new ArrayList<Item>();
 		for(int productID : newOrder.getProductIds())
 		{
+			//get the product to fulfil the order from the DB
 			Product temp = database.getProduct(productID);
 			if(temp == null)
 				return false;
@@ -62,6 +63,7 @@ public class ServerTools
 		}
 		for(Product product : products)
 		{
+			//Store the best item, as calculated by the priority system
 			Item bestItem = null;
 			int bestItemPriority = -1;
 			ArrayList<Item> items = database.getItems(product.getID());
@@ -69,9 +71,10 @@ public class ServerTools
 				return false;
 			for(Item item : items)
 			{
-				if(item.getCurrentState().equals("AVAILABLE"))
+				//In Order to use an Item in the order fulfilment its must be AVAILABLE and must not have already been used.
+				if(item.getCurrentState().equals("AVAILABLE") && !chosenItems.contains(item))
 				{
-					//Strategy Design Pattern 
+					//Strategy Design Pattern, calls the priority algorithm to calculate the score for the given item
 					int itemPriority = database.getPriority(product.getPriorityID()).calculatePriority(item, product);
 					if(itemPriority > bestItemPriority)
 					{
@@ -82,29 +85,34 @@ public class ServerTools
 			}
 			if(bestItem == null)
 				return false;
-			//This will probably change
+			//A valid item was selected, lets add it to the chosenItems collection
 			chosenItems.add(bestItem);	
 		}
-		//Sanity check
 		ArrayList<Integer> itemIDs = new ArrayList<Integer>();
 		for(Item item : chosenItems)
 		{
+			//For each of the items we have chosen to use to fulfil the order, put them into the correct sector queue for picker
+			//assignment, update the items state and persist changes in the database.
 			queueItemForPickup(item);
 			item.setCurrentState("AWAITING_PICKER");
 			database.updateItem(item);
 			itemIDs.add(item.getID());
 		}
 		newOrder.setProductIds(itemIDs);
+		//Update the order and return true as the order has now completed processing and is awaiting further instructions.
 		database.updateOrder(newOrder);
 		return true;
 	}
 	
 	public void queueItemForPickup(Item item)
 	{
+		//Get the sector this item resides in
 		I_Sector itemSector = database.shelfBelongsToSector(database.cubbyBelongsToShelf(database.itemBelongsToCubby(item.getID()).getID()).getID());
+		//Get the sector tool that directly manages this sector
 		SectorTools tool = getSectorTool(itemSector.getID());
 		if(tool == null)
 			return;
+		//If we found a managing sectorTool, add the item into the Queue for picker assignment.
 		tool.addItemToQueue(item);
 	}
 	
