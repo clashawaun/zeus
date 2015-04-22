@@ -11,6 +11,7 @@ import coreClasses.Picker;
 import coreClasses.Product;
 import coreClasses.Stocker;
 import database.I_Database;
+import coreClasses.ItemState;
 
 public class ServerTools 
 {
@@ -72,7 +73,7 @@ public class ServerTools
 			for(Item item : items)
 			{
 				//In Order to use an Item in the order fulfilment its must be AVAILABLE and must not have already been used.
-				if(item.getCurrentState().equals("AVAILABLE") && !chosenItems.contains(item))
+				if(item.getCurrentState() == ItemState.AVAILABLE && !chosenItems.contains(item))
 				{
 					//Strategy Design Pattern, calls the priority algorithm to calculate the score for the given item
 					int itemPriority = database.getPriority(product.getPriorityID()).calculatePriority(item, product);
@@ -94,7 +95,7 @@ public class ServerTools
 			//For each of the items we have chosen to use to fulfil the order, put them into the correct sector queue for picker
 			//assignment, update the items state and persist changes in the database.
 			queueItemForPickup(item);
-			item.setCurrentState("AWAITING_PICKER");
+			item.setCurrentState(ItemState.AWAITING_PICKER);
 			database.updateItem(item);
 			itemIDs.add(item.getID());
 		}
@@ -132,7 +133,7 @@ public class ServerTools
 	
 	public boolean processNewItem(Stocker stocker, I_Sector sector, Item item, int productID)
 	{
-		if(!item.getCurrentState().equals("AWAITING_STOCKER"))
+		if(!(item.getCurrentState() == ItemState.AWAITING_STOCKER))
 			return false;
 		System.out.println("State is set correctly");
 		//Revise how this works in the database.... this level of code should not be needed in the server as far as Im concerned (To much boilerplate)
@@ -173,7 +174,7 @@ public class ServerTools
 				generateItemSku(item);
 				item.setAssignedUserID(stocker.getID());
 				stocker.addItem(item);
-				item.setCurrentState("PENDING_STOCKING");
+				item.setCurrentState(ItemState.PENDING_STOCKING);
 				System.out.println("item placement: " + item.getxPlacementPoint());
 				database.updateItem(item);
 				return true;
@@ -274,7 +275,7 @@ public class ServerTools
 			{
 				//Again duplication of logic with assigned users needs to be revised
 				pickerItems.remove(i);
-				item.setCurrentState("AWAITING_PACKER");
+				item.setCurrentState(ItemState.AWAITING_PACKER);
 				item.setAssignedUserID(-1);
 				database.updateItem(item);
 				database.updateUser(picker);
@@ -295,7 +296,7 @@ public class ServerTools
 			{
 				//Again duplication of logic with assigned users needs to be revised
 				stockerItems.remove(i);
-				item.setCurrentState("AVAILABLE");
+				item.setCurrentState(ItemState.AVAILABLE);
 				item.setAssignedUserID(-1);
 				database.updateItem(item);
 				database.updateUser(stocker);

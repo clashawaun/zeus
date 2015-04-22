@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import coreClasses.ItemState;
 
 
 public class Item{
@@ -15,7 +16,8 @@ public class Item{
 	private Date expriryDate;
 	
 	private String sku;
-	private String currentState;
+	//private String currentState;
+	private ItemState state;
 	private int assignedUserID;
 	private int xPlacementPoint;
 	private float priority;
@@ -59,8 +61,8 @@ public class Item{
 			throw new Exception("Cannot convert: " + expriryDate + " to valid date format: \"yyyy-mm-dd\"  ");
 		}
 		
-		
-		this.currentState = "AWAITING_STOCKER";
+		this.setCurrentState(ItemState.AWAITING_STOCKER);
+		//this.currentState = "AWAITING_STOCKER";
 
 		this.xPlacementPoint = 0;
 		this.priority = 0;
@@ -78,10 +80,10 @@ public class Item{
 		this.priority = priority;
 	}
 	
-	public String getCurrentState()
+	/*public String getCurrentState()
 	{
 		return currentState;
-	}
+	}/*
 
 	/*
 	 * Options are:
@@ -95,9 +97,9 @@ public class Item{
 	 *	SHIPPED
 	 * 
 	 */
-	public void setCurrentState(String currentState) {
+	/*public void setCurrentState(String currentState) {
 		this.currentState = currentState;
-	}
+	}*/
 
 	public int getAssignedUserID() {
 		return assignedUserID;
@@ -152,6 +154,16 @@ public class Item{
 		if(!sku.matches("[0-9]{8,13}"))
 			throw new Exception("Invalid SKU given. Must satisfy EAN-13, UPC-A, EAN-8 or UPC-E standards");
 		this.sku = sku;
+	}
+
+
+	public ItemState getCurrentState() {
+		return state;
+	}
+
+
+	public void setCurrentState(ItemState state) {
+		this.state = state;
 	}
 	
 	

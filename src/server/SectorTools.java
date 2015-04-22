@@ -7,6 +7,7 @@ import coreClasses.I_Sector;
 import coreClasses.Picker;
 import coreClasses.Sector;
 import coreClasses.Item;
+import coreClasses.ItemState;
 public class SectorTools 
 {
 	private I_Sector sector;
@@ -52,7 +53,7 @@ public class SectorTools
 				break;
 			//TODO: Duplication of logic .... needs to be revised
 			tempItem.setAssignedUserID(picker.getID());
-			tempItem.setCurrentState("AWAITING_CHECK_IN");
+			tempItem.setCurrentState(ItemState.AWAITING_CHECK_IN);
 			picker.addItemToBasket(tempItem);
 			assignedItems.add(tempItem);
 		}

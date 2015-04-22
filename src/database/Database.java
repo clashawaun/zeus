@@ -19,6 +19,7 @@ import coreClasses.User;
 import coreClasses.PriorityFactory;
 import coreClasses.I_Priority;
 import coreClasses.UserFactory;
+import coreClasses.ItemState;
 
 
 public class Database implements I_Database {
@@ -94,37 +95,38 @@ public class Database implements I_Database {
 		
 		itemIndexer = 17;
 		
+	
+		items.get(0).setCurrentState(ItemState.AWAITING_STOCKER);
+		items.get(1).setCurrentState(ItemState.AWAITING_STOCKER);
 		
-		items.get(0).setCurrentState("AWAITING_STOCKER");
-		items.get(1).setCurrentState("AWAITING_STOCKER");
-		
-		items.get(2).setCurrentState("PENDING_STOCKING");
-		items.get(3).setCurrentState("PENDING_STOCKING");
+		items.get(2).setCurrentState(ItemState.PENDING_STOCKING);
+		items.get(3).setCurrentState(ItemState.PENDING_STOCKING);
 		((Stocker)(users.get(7))).addItem(items.get(2));
 		items.get(2).setAssignedUserID(users.get(7).getID());
 		((Stocker)(users.get(7))).addItem(items.get(3));
 		items.get(3).setAssignedUserID(users.get(7).getID());
 		
-		items.get(4).setCurrentState("AVAILABLE");
-		items.get(5).setCurrentState("AVAILABLE");
+		items.get(4).setCurrentState(ItemState.AVAILABLE);
+		items.get(5).setCurrentState(ItemState.AVAILABLE);
 		
-		items.get(6).setCurrentState("AWAITING_PICKER");
-		items.get(7).setCurrentState("AWAITING_PICKER");
+		items.get(6).setCurrentState(ItemState.AWAITING_PICKER);
+		items.get(7).setCurrentState(ItemState.AWAITING_PICKER);
 		
-		items.get(8).setCurrentState("AWAITING_CHECK_IN");
-		items.get(9).setCurrentState("AWAITING_CHECK_IN");
+		items.get(8).setCurrentState(ItemState.AWAITING_CHECK_IN);
+		items.get(9).setCurrentState(ItemState.AWAITING_CHECK_IN);
+		
 		//----Code is out of control here ... there has to be better way
 		items.get(8).setAssignedUserID(users.get(4).getID());
 		((Picker) (users.get(4))).addItemToBasket(items.get(8));
 		items.get(9).setAssignedUserID(users.get(4).getID());
 		((Picker) (users.get(4))).addItemToBasket(items.get(9));
 		
-		items.get(10).setCurrentState("AWAITING_PACKER");
-		items.get(11).setCurrentState("AWAITING_PACKER");
-		items.get(12).setCurrentState("PACKED");
-		items.get(13).setCurrentState("PACKED");
-		items.get(14).setCurrentState("SHIPPED");
-		items.get(15).setCurrentState("SHIPPED");
+		items.get(10).setCurrentState(ItemState.AWAITING_PACKER);
+		items.get(11).setCurrentState(ItemState.AWAITING_PACKER);
+		items.get(12).setCurrentState(ItemState.PACKED);
+		items.get(13).setCurrentState(ItemState.PACKED);
+		items.get(14).setCurrentState(ItemState.SHIPPED);
+		items.get(15).setCurrentState(ItemState.SHIPPED);
 		
 		orders = new ArrayList<Order>();
 		ArrayList<Integer> tempOrderList = new ArrayList<Integer>();
