@@ -185,8 +185,10 @@ public class ServerTools
 		return false;
 	}
 	
-	//Seperate this logic into its own method so we can modify how the algorithm determines if the cubby is a suitable stoarge unit for an item.
-	//It will also add a placement point to the new item if it finds it usuable
+	//Separate this logic into its own method so we can modify how the algorithm determines if the cubby is a suitable storage unit for an item.
+	//It will also add a placement point to the new item if it finds it usable
+	//In an ideal world this function would be created in a similar fashion to that of the priority system, however in the interest of time
+	//it has been implemented as a function.
 	private boolean isCubbyUsable(Product product, I_Cubby cubby, ArrayList<Item> currentItems, Item itemToAdd)
 	{
 		//Check that the cubby satisfies height and depth requirements for this product.
@@ -199,7 +201,7 @@ public class ServerTools
 			if(item == null);
 			else
 			{
-				//Could this go wrong ?
+				//Add the collected XAxis to the list
 				xAxis.add(item.getxPlacementPoint());
 			}
 		}
@@ -263,9 +265,10 @@ public class ServerTools
 		return false;
 	}
 	
-	
+	/** Marks the given item as collected by its assigned picker */
 	public boolean markItemCollected(Item item, Picker picker)
 	{
+		//Ensure that the picker given is the picker the item has been assigned to!
 		if(item.getAssignedUserID() != picker.getID())
 			return false;
 		ArrayList<Item> pickerItems = picker.getItemBasket();
@@ -273,8 +276,9 @@ public class ServerTools
 		{
 			if(pickerItems.get(i).getID() == item.getID())
 			{
-				//Again duplication of logic with assigned users needs to be revised
+				//Update the database with updated items and assignments
 				pickerItems.remove(i);
+				//Set the ItemState enum to AWAITING_PACKER, denoting it is ready for packing
 				item.setCurrentState(ItemState.AWAITING_PACKER);
 				item.setAssignedUserID(-1);
 				database.updateItem(item);
@@ -285,8 +289,10 @@ public class ServerTools
 		return false;
 	}
 	
+	/** Marks the given item as stocked by its assigned stocker*/
 	public boolean markItemStocked(Item item, Stocker stocker)
 	{
+		//Ensure that the stocker given is the stocker that the item was assigned to!
 		if(item.getAssignedUserID() != stocker.getID())
 			return false;
 		ArrayList<Item> stockerItems = stocker.getStockerBasket();
@@ -294,7 +300,6 @@ public class ServerTools
 		{
 			if(stockerItems.get(i).getID() == item.getID())
 			{
-				//Again duplication of logic with assigned users needs to be revised
 				stockerItems.remove(i);
 				item.setCurrentState(ItemState.AVAILABLE);
 				item.setAssignedUserID(-1);
@@ -306,17 +311,20 @@ public class ServerTools
 		return false;
 	}
 	
+	/** Generates a SKU that will be bound to a newly created Item. This SKU will satisfy EAN-13, UPC-A, EAN-8 or UPC-E standards*/
 	private boolean generateItemSku(Item item)
 	{
 		boolean uniqueSku = false;
 		while(!uniqueSku)
 		{
+			//Generate the SKU
 			String sku = String.format("%013d", (int) (Math.random() * 999999999));
-			System.out.println("SKU GENERATED " + sku);
+			//Ensure that the generated SKU is not in use by another item in the warehouse
 			if(database.isItemSkuUnique(sku))
 			{
 				try
 				{
+					//If the SKU is unique, assign it to the item 
 					item.setSku(sku);
 					uniqueSku = true;
 				}
@@ -329,6 +337,7 @@ public class ServerTools
 		return true;
 	}
 	
+	/** Returns the sectorTool responsible for managing the sector with the given ID*/
 	private SectorTools getSectorTool(int ID)
 	{
 		for(SectorTools tool : sectorTools)
@@ -339,6 +348,7 @@ public class ServerTools
 		return null;
 	}
 	
+	/** Add a new Sector tool */
 	public void addSectorTool(SectorTools sectorTool)
 	{
 		sectorTools.add(sectorTool);
