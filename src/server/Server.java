@@ -221,6 +221,7 @@ public class Server implements I_Server
 		
 	}
 	
+	/** Searches the database for the given searchTerm, returning information on products that prove to be a positive match*/
 	private ServerMessage searchProducts(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -236,6 +237,7 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 	
+	/** Get all Sector ID's for the current deployment*/
 	private ServerMessage getSectors(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -249,6 +251,7 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 	
+	/** Get all items currently assigned to a stocker*/
 	private ServerMessage getItemsForStocker(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -265,7 +268,7 @@ public class Server implements I_Server
 	}
 	
 	
-	//Complicated function, may have some bugs that I haven't spotted ... will come back later and debug if needed
+	/** Creates a new Item and assigns it for stocking to the given stocker.*/
 	private ServerMessage assignItemsToStocker(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -362,7 +365,7 @@ public class Server implements I_Server
 	//TODO: This function must not be used in the final version of the software
 	private int getUserTypeAsInt(User user)
 	{
-		//This code is horrendous ....... DO NOT USE IN SUBMISSION
+		//Build a map which will map an Integer with a given user type.
 		Map<Integer, Class<?>> test = new HashMap<Integer, Class<?>>();
 		test.put(1, Picker.class);
 		test.put(2, Packer.class);
