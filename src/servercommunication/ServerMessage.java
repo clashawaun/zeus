@@ -18,7 +18,6 @@ public class ServerMessage implements Serializable
 		userData = "None";
 	}
 	
-	/** This constructor is deprecated, DO NOT USE for any new code. Use the one which takes all 3 parameters.*/
 	public ServerMessage(String message, String data)
 	{
 		this.message = message;
