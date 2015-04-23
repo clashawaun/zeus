@@ -20,7 +20,6 @@ public class Item{
 	private ItemState state;
 	private int assignedUserID;
 	private int xPlacementPoint;
-	private float priority;
 	
 	public Item(int productID, int id, String manufactureDate, String expriryDate) throws Exception
 	{
@@ -65,20 +64,10 @@ public class Item{
 		//this.currentState = "AWAITING_STOCKER";
 
 		this.xPlacementPoint = 0;
-		this.priority = 0;
 		this.sku = "";
 	}
 	
 	
-	public float getPriority() 
-	{
-		return priority;
-	}
-	
-	public void setPriority(float priority)
-	{
-		this.priority = priority;
-	}
 	
 	/*public String getCurrentState()
 	{
