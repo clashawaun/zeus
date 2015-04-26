@@ -1,23 +1,21 @@
 package coreClasses;
 import java.util.ArrayList;
-public abstract class Cubby implements I_Cubby
+public class Cubby implements I_Cubby
 {
 	private int ID;
 	private ArrayList<Integer> items;
 	private final int HEIGHT;
 	private final int WIDTH;
 	private final int DEPTH;
-	private final int TYPE;
 	
 
 	
-	protected Cubby(int id, int height, int width, int depth, int type)
+	protected Cubby(int id, int height, int width, int depth)
 	{
 		this.ID = id;
 		this.HEIGHT = height;
 		this.WIDTH = width;
 		this.DEPTH = depth;
-		this.TYPE = type;
 		this.items = new ArrayList<Integer>();
 	}
 		
@@ -51,10 +49,6 @@ public abstract class Cubby implements I_Cubby
 		return DEPTH;
 	}
 	
-	public int getType()
-	{
-		return TYPE;
-	}
 	
 	public boolean hasItem(int itemID)
 	{
@@ -76,4 +70,6 @@ public abstract class Cubby implements I_Cubby
 	{
 		return (((obj instanceof Cubby)) && ((Cubby) obj) != null && this.ID == ((Cubby) obj).getID());     
 	}
+
+	
 }

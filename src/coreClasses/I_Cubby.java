@@ -12,7 +12,6 @@ public interface I_Cubby
 	public int getHeight();
 	public int getWidth();
 	public int getDepth();
-	public int getType();
 
 	
 	@Override

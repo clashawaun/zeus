@@ -21,11 +21,11 @@ public class CubbyFactory implements I_CubbyFactory
 		switch (type)
 		{
 		case 1:
-			return new CubbySmall(id);
+			return new Cubby(id, 100, 100, 100);
 		case 2:
-			return new CubbyMedium(id);
+			return new Cubby(id, 200, 200 ,100);
 		case 3:
-			return new CubbyLarge(id);	
+			return new Cubby(id, 400, 200, 100);
 		default:
 			return null;
 		}
