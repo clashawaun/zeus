@@ -9,17 +9,13 @@ import database.Database;
 public class IsValidLogInFalse {
 
 	@Test
-	public void test() {
-		try
-		{
-		Database db = new Database();
+	public void test() 
+	{
+		
+		Database db =  Database.getInstance();
 		assertEquals(false, db.isValidLogin("NotAUser", "NotAPassWord"));
 		assertEquals(false, db.isValidLogin("picker", "NotAPassWord"));
 		assertEquals(false, db.isValidLogin("NotAUser", "1234"));
-		}catch(Exception e)
-		{
-			fail("Exception");
-		}
 		
 	}
 

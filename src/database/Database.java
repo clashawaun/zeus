@@ -1,7 +1,6 @@
 package database;
 
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import coreClasses.CubbyFactory;
@@ -50,7 +49,24 @@ public class Database implements I_Database {
 	private SectorFactory sectorFactory;
 	private UserFactory userFactory;
 	
-	public Database() throws ParseException, Exception
+	private static Database databaseInstance = null;
+	
+	public static Database getInstance()
+	{
+		if(databaseInstance==null)
+		{
+			try 
+			{
+				databaseInstance = new Database();
+			} 
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return databaseInstance;
+	}
+	private Database() throws Exception
 	{
 	
 		users = new ArrayList<User>();

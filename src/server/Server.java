@@ -34,7 +34,7 @@ public class Server implements I_Server
 	{
 		messageFunctionMap = new HashMap<String, Command>();
 		buildMessageFunctionMap();
-		database = new Database();
+		database = Database.getInstance();
 		serverTools = new ServerTools(database);
 		gson = new Gson();
 		setUpSectorTools();

@@ -11,9 +11,8 @@ public class CreateUserNagativeUser {
 
 	@Test
 	public void test() {
-		try
-		{
-		Database db = new Database();
+	
+		Database db =  Database.getInstance();
 		
 		User user = db.createUser(-1000, "", "", "", "", "");
 		assertEquals(true, user==null );
@@ -21,10 +20,7 @@ public class CreateUserNagativeUser {
 		user = db.createUser(1000, "", "", "", "", "");
 		assertEquals(true, user==null );
 		
-		}catch(Exception e)
-		{
-			fail("Exception");
-		}
+	
 	}
 
 }

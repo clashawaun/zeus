@@ -9,15 +9,12 @@ import database.Database;
 public class IsValidLogInNULL {
 
 	@Test
-	public void test() {
-		try
-		{
-		Database db = new Database();
+	public void test() 
+	{
+
+		Database db =  Database.getInstance();
 		assertEquals(false, db.isValidLogin(null, null));
-		}catch(Exception e)
-		{
-			fail("Exception");
-		}
+		
 	}
 
 }

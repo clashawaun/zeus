@@ -12,19 +12,14 @@ public class CreateUserFalse {
 
 	@Test
 	public void test() {
-		try
-		{
-		Database db = new Database();
+		
+		Database db = Database.getInstance();
 		UserFactory factory = new UserFactory();
 		User user = factory.makeUser(1 , 10,"" ,"", "", "", "");
-		User user1 = db.createUser(1, "", "", "", "", "");
+		User user1 = db.createUser(10, "", "", "", "", "");
 		
 		assertEquals(false, user.equals(user1) );
-	
-		}catch(Exception e)
-		{
-			fail("Exception");
-		}
+
 	}
 
 }

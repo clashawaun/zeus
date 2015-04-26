@@ -11,15 +11,11 @@ public class IsValidLogInTrue {
 
 	
 	@Test
-	public void test() {
-		try
-		{
-		Database db = new Database();
+	public void test() 
+	{
+
+		Database db =  Database.getInstance();
 		assertEquals(true, db.isValidLogin("picker", "1234"));
-		}catch(Exception e)
-		{
-			fail("Exception");
-		}
 		
 	}
 
