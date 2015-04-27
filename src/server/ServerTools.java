@@ -15,27 +15,27 @@ import coreClasses.ItemState;
 
 public class ServerTools 
 {
-	private ArrayList<SectorTools> sectorTools;
+	private ArrayList<SectorTool> sectorTools;
 	private PackagingTools packagingTools;
-	private ReportTools reportTools;
+	private ReportTool reportTools;
 	private I_Database database;
 	//There must be a better way to distribute the DB. Maybe static ? or something all tools inherit from
 	public ServerTools()
 	{
-		sectorTools = new ArrayList<SectorTools>();
+		sectorTools = new ArrayList<SectorTool>();
 		packagingTools = new PackagingTools();
-		reportTools = new ReportTools();
+		reportTools = new ReportTool();
 	}
 	
 	public ServerTools(I_Database database)
 	{
 		this.database = database;
-		sectorTools = new ArrayList<SectorTools>();
+		sectorTools = new ArrayList<SectorTool>();
 		packagingTools = new PackagingTools();
-		reportTools = new ReportTools();
+		reportTools = new ReportTool();
 	}
 	
-	public ArrayList<SectorTools> getSectorTools() 
+	public ArrayList<SectorTool> getSectorTools() 
 	{
 		return sectorTools;
 	}
@@ -43,7 +43,7 @@ public class ServerTools
 	{
 		return packagingTools;
 	}
-	public ReportTools getReportTools() 
+	public ReportTool getReportTools() 
 	{
 		return reportTools;
 	}
@@ -110,7 +110,7 @@ public class ServerTools
 		//Get the sector this item resides in
 		I_Sector itemSector = database.shelfBelongsToSector(database.cubbyBelongsToShelf(database.itemBelongsToCubby(item.getID()).getID()).getID());
 		//Get the sector tool that directly manages this sector
-		SectorTools tool = getSectorTool(itemSector.getID());
+		SectorTool tool = getSectorTool(itemSector.getID());
 		if(tool == null)
 			return;
 		//If we found a managing sectorTool, add the item into the Queue for picker assignment.
@@ -119,7 +119,7 @@ public class ServerTools
 	
 	public ArrayList<Item> processPickerItemAssignments(Picker picker, I_Sector sector)
 	{
-		SectorTools tool = getSectorTool(sector.getID());
+		SectorTool tool = getSectorTool(sector.getID());
 		if(tool == null)
 			return null;
 		return tool.assignItemsForPicker(picker);
@@ -338,9 +338,9 @@ public class ServerTools
 	}
 	
 	/** Returns the sectorTool responsible for managing the sector with the given ID*/
-	private SectorTools getSectorTool(int ID)
+	private SectorTool getSectorTool(int ID)
 	{
-		for(SectorTools tool : sectorTools)
+		for(SectorTool tool : sectorTools)
 		{
 			if(tool.getSectorId() == ID)
 				return tool;
@@ -349,7 +349,7 @@ public class ServerTools
 	}
 	
 	/** Add a new Sector tool */
-	public void addSectorTool(SectorTools sectorTool)
+	public void addSectorTool(SectorTool sectorTool)
 	{
 		sectorTools.add(sectorTool);
 	}
