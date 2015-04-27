@@ -122,7 +122,7 @@ public class Server implements I_Server
 		ArrayList<I_Sector> sectors = database.getAllSectors();
 		for(I_Sector sector : sectors)
 		{
-			serverTools.addSectorTool(new SectorTool(sector));
+			serverTools.addSectorTool(new SectorTools(sector));
 		}
 	}
 	
