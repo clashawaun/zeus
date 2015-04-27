@@ -1,6 +1,5 @@
+package server;
 import java.io.IOException;
-
-import server.Server;
 
 
 public class RunServer {
@@ -11,7 +10,7 @@ public class RunServer {
 		try {
 			server.runServer();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 	}

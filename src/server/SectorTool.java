@@ -7,15 +7,15 @@ import coreClasses.I_Sector;
 import coreClasses.Picker;
 import coreClasses.Item;
 import coreClasses.ItemState;
-public class SectorTools 
+public class SectorTool 
 {
 	private I_Sector sector;
-	public SectorTools()
+	public SectorTool()
 	{
 		sector = null;
 	}
 	
-	public SectorTools(I_Sector sector)
+	public SectorTool(I_Sector sector)
 	{
 		this.sector = sector;
 	}

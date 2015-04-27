@@ -1,6 +1,5 @@
+package client;
 import java.awt.EventQueue;
-
-import client.GUIManager;
 
 public class LaunchGUI {
 

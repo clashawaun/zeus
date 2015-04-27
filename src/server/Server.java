@@ -25,7 +25,7 @@ import java.util.Map;
 public class Server implements I_Server
 {
 	//Needs more atts, will come up with whats needed during implementation!
-	private ServerTools serverTools;
+	private ServerTool serverTools;
 	private Map<String, Command> messageFunctionMap;
 	private I_Database database;
 	private Gson gson;
@@ -35,7 +35,7 @@ public class Server implements I_Server
 		messageFunctionMap = new HashMap<String, Command>();
 		buildMessageFunctionMap();
 		database = Database.getInstance();
-		serverTools = new ServerTools(database);
+		serverTools = new ServerTool(database);
 		gson = new Gson();
 		setUpSectorTools();
 	}
@@ -122,18 +122,15 @@ public class Server implements I_Server
 		ArrayList<I_Sector> sectors = database.getAllSectors();
 		for(I_Sector sector : sectors)
 		{
-			serverTools.addSectorTool(new SectorTools(sector));
+			serverTools.addSectorTool(new SectorTool(sector));
 		}
 	}
 	
 	private ServerMessage login(ServerMessage message)
 	{
-		//TODO: THIS FUNCTION NOW NEEDS A SERIOUS REFACTOR
 		JsonObject result = new JsonObject();
-		//TODO: And I needed to add this bool to use this style, which sucks
 		boolean isLogin = authenticate(message.getData());
 		result.addProperty("isValid", isLogin);
-		//TODO: THIS CODE NEEDS TO BE REMOVED
 		if(isLogin)
 		{
 			//Convert the userData JSON string in a JsonObject 
@@ -362,7 +359,6 @@ public class Server implements I_Server
 		}
 	}
 	
-	//TODO: This function must not be used in the final version of the software
 	private int getUserTypeAsInt(User user)
 	{
 		//Build a map which will map an Integer with a given user type.
@@ -371,7 +367,6 @@ public class Server implements I_Server
 		test.put(2, Packer.class);
 		test.put(3, Manager.class);
 		test.put(4, Stocker.class);
-		//This code is horrendous and breaks the servers ignorance of underlying framework
 		for(int key : test.keySet())
 		{
 			try
