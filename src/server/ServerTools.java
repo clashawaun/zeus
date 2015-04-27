@@ -13,48 +13,44 @@ import coreClasses.Stocker;
 import database.I_Database;
 import coreClasses.ItemState;
 
-public class ServerTool implements I_ServerTool
+public class ServerTools 
 {
-	private ArrayList<SectorTool> sectorTools;
-	private PackagingTool packagingTools;
-	private ReportTool reportTools;
+	private ArrayList<SectorTools> sectorTools;
+	private PackagingTools packagingTools;
+	private ReportTools reportTools;
 	private I_Database database;
 	//There must be a better way to distribute the DB. Maybe static ? or something all tools inherit from
-	public ServerTool()
+	public ServerTools()
 	{
-		sectorTools = new ArrayList<SectorTool>();
-		packagingTools = new PackagingTool();
-		reportTools = new ReportTool();
+		sectorTools = new ArrayList<SectorTools>();
+		packagingTools = new PackagingTools();
+		reportTools = new ReportTools();
 	}
 	
-	public ServerTool(I_Database database)
+	public ServerTools(I_Database database)
 	{
 		this.database = database;
-		sectorTools = new ArrayList<SectorTool>();
-		packagingTools = new PackagingTool();
-		reportTools = new ReportTool();
+		sectorTools = new ArrayList<SectorTools>();
+		packagingTools = new PackagingTools();
+		reportTools = new ReportTools();
 	}
 	
-	public ArrayList<SectorTool> getSectorTools() 
+	public ArrayList<SectorTools> getSectorTools() 
 	{
 		return sectorTools;
 	}
-	public PackagingTool getPackagingTools() 
+	public PackagingTools getPackagingTools() 
 	{
 		return packagingTools;
 	}
-	public ReportTool getReportTools() 
+	public ReportTools getReportTools() 
 	{
 		return reportTools;
 	}
 	
 	/** This function will find items in the system that will be used to fulfil the provided order*/
-	@Override
 	public boolean processNewOrder(Order newOrder)
 	{
-		//Preconditon check - just to be sure
-		if(newOrder.getShippingAddress() == null || newOrder.getProductIds().size() < 1)
-			return false;
 		//Get the product objects the ID's provided represent
 		ArrayList<Product> products = new ArrayList<Product>();
 		ArrayList<Item> chosenItems = new ArrayList<Item>();
@@ -106,7 +102,6 @@ public class ServerTool implements I_ServerTool
 		newOrder.setProductIds(itemIDs);
 		//Update the order and return true as the order has now completed processing and is awaiting further instructions.
 		database.updateOrder(newOrder);
-		//Order has been satisfied successfully, post condition satisfied
 		return true;
 	}
 	
@@ -115,7 +110,7 @@ public class ServerTool implements I_ServerTool
 		//Get the sector this item resides in
 		I_Sector itemSector = database.shelfBelongsToSector(database.cubbyBelongsToShelf(database.itemBelongsToCubby(item.getID()).getID()).getID());
 		//Get the sector tool that directly manages this sector
-		SectorTool tool = getSectorTool(itemSector.getID());
+		SectorTools tool = getSectorTool(itemSector.getID());
 		if(tool == null)
 			return;
 		//If we found a managing sectorTool, add the item into the Queue for picker assignment.
@@ -124,7 +119,7 @@ public class ServerTool implements I_ServerTool
 	
 	public ArrayList<Item> processPickerItemAssignments(Picker picker, I_Sector sector)
 	{
-		SectorTool tool = getSectorTool(sector.getID());
+		SectorTools tool = getSectorTool(sector.getID());
 		if(tool == null)
 			return null;
 		return tool.assignItemsForPicker(picker);
@@ -343,9 +338,9 @@ public class ServerTool implements I_ServerTool
 	}
 	
 	/** Returns the sectorTool responsible for managing the sector with the given ID*/
-	private SectorTool getSectorTool(int ID)
+	private SectorTools getSectorTool(int ID)
 	{
-		for(SectorTool tool : sectorTools)
+		for(SectorTools tool : sectorTools)
 		{
 			if(tool.getSectorId() == ID)
 				return tool;
@@ -354,7 +349,7 @@ public class ServerTool implements I_ServerTool
 	}
 	
 	/** Add a new Sector tool */
-	public void addSectorTool(SectorTool sectorTool)
+	public void addSectorTool(SectorTools sectorTool)
 	{
 		sectorTools.add(sectorTool);
 	}
