@@ -25,21 +25,24 @@ import java.util.Map;
 public class Server implements I_Server
 {
 	//Needs more atts, will come up with whats needed during implementation!
-	private ServerTools serverTools;
+	private ServerTool serverTools;
 	private Map<String, Command> messageFunctionMap;
 	private I_Database database;
 	private Gson gson;
-	//Refactor exception handling.
 	public Server()throws Exception
 	{
 		messageFunctionMap = new HashMap<String, Command>();
 		buildMessageFunctionMap();
 		database = Database.getInstance();
-		serverTools = new ServerTools(database);
+		serverTools = new ServerTool(database);
 		gson = new Gson();
 		setUpSectorTools();
 	}
-	
+	/** Starts the server, opening up the port for the system to begin to accept client requests*/
+	/*
+	 * Some notes:
+	 * The purpose of segregating the server from the Tool classes
+	 * */
 	public void runServer() throws IOException
 	{
 		ServerSocket listener = new ServerSocket(9090);
@@ -65,7 +68,7 @@ public class Server implements I_Server
                 	}
                 	catch(Exception e)
                 	{
-                		System.out.println("oh oh :( " + e.toString());
+                		System.out.println("Something went wrong : " + e.toString());
                 		e.printStackTrace();
                 	}
                 	finally
@@ -99,22 +102,15 @@ public class Server implements I_Server
 		  to pre-existing architecture.
 		*/
 		messageFunctionMap.put("Login", new Command() {public ServerMessage runCommand(ServerMessage m) {return login(m);}});
-		messageFunctionMap.put("RegisterUser", new Command() {public ServerMessage runCommand(ServerMessage m) {return register(m);}});
 		messageFunctionMap.put("NewOrder", new Command() {public ServerMessage runCommand(ServerMessage m) {return processIncomingOrder(m);}});
-		//----Picker related commands
 		messageFunctionMap.put("AssignItemsToPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignPickerItems(m);}});
 		messageFunctionMap.put("GetItemsForPicker", new Command() {public ServerMessage runCommand(ServerMessage m) {return getItemsForPicker(m);}});
 		messageFunctionMap.put("MarkItemAsPicked", new Command() {public ServerMessage runCommand(ServerMessage m) {return markItemAsPicked(m);}});
-		//----end of picker commands
-		//----Stocker related commands
 		messageFunctionMap.put("StockItems", new Command() {public ServerMessage runCommand(ServerMessage m) {return assignItemsToStocker(m);}});
 		messageFunctionMap.put("GetSectors", new Command() {public ServerMessage runCommand(ServerMessage m) {return getSectors(m);}});
 		messageFunctionMap.put("GetItemsForStocker", new Command() {public ServerMessage runCommand(ServerMessage m) {return getItemsForStocker(m);}});
 		messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return searchProducts(m);}});
 		messageFunctionMap.put("MarkItemAsStocked", new Command() {public ServerMessage runCommand(ServerMessage m) {return markItemAsStocked(m);}});
-		//messageFunctionMap.put("SearchProduct", new Command() {public ServerMessage runCommand(ServerMessage m) {return })
-		//For StockItem example: jsonData should be in format : {"items": [{"productID": 0, "manufactureDate": "some_date", "expiryDate": "some_date"}, .....]}
-		//Stock items: Get item info including product ID -> create the product -> find first available cubby to put it in -> return result.
 	}
 	
 	private void setUpSectorTools()
@@ -122,18 +118,16 @@ public class Server implements I_Server
 		ArrayList<I_Sector> sectors = database.getAllSectors();
 		for(I_Sector sector : sectors)
 		{
-			serverTools.addSectorTool(new SectorTools(sector));
+			serverTools.addSectorTool(new SectorTool(sector));
 		}
 	}
 	
+	/** Attempts to log a user into the system and informs the caller if the result*/
 	private ServerMessage login(ServerMessage message)
 	{
-		//TODO: THIS FUNCTION NOW NEEDS A SERIOUS REFACTOR
 		JsonObject result = new JsonObject();
-		//TODO: And I needed to add this bool to use this style, which sucks
 		boolean isLogin = authenticate(message.getData());
 		result.addProperty("isValid", isLogin);
-		//TODO: THIS CODE NEEDS TO BE REMOVED
 		if(isLogin)
 		{
 			//Convert the userData JSON string in a JsonObject 
@@ -144,15 +138,11 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());		
 	}
 	
-	private ServerMessage register(ServerMessage message)
-	{
-		//This function is faked, in the interest of time
-		return new ServerMessage("Default", "Message");
-	}
-	
+	/** Assigns new Items for the picker to pick*/
 	private ServerMessage assignPickerItems(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
+		//Authenticate the user
 		User user = authenticate(message.getUserData(), Picker.class);
 		if(user == null)
 		{
@@ -160,12 +150,17 @@ public class Server implements I_Server
 			return new ServerMessage(message.getMessage()+"Result", result.toString());
 		}
 		JsonObject messageData = new JsonParser().parse(message.getData()).getAsJsonObject();
+		//Get items that we are assigning to the picker
 		ArrayList<Item> items = serverTools.processPickerItemAssignments((Picker) user, database.getSector(messageData.get("sector").getAsInt()));
+		//Add a boolean to inform the caller the query was successful.
 		result.addProperty("isSuccess", !items.isEmpty());
+		//Add the assigned items to the JSON
 		result.add("items", gson.toJsonTree(items).getAsJsonArray());
+		//return the result to the caller.
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
-	
+
+	/** Process incoming order and add it into the system*/
 	private ServerMessage processIncomingOrder(ServerMessage message)
 	{
 		JsonObject orderData = new JsonParser().parse(message.getData()).getAsJsonObject();
@@ -180,10 +175,10 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());
 	}
 		
+	/** Gets the items the picker currently has assigned to them*/
 	private ServerMessage getItemsForPicker(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
-		//This logic is repeating itself.......
 		User user = authenticate(message.getUserData(), Picker.class);
 		if(user == null)
 		{
@@ -197,6 +192,7 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result", result.toString());	
 	}
 	
+	/** Marks the referenced item as picked and changes the state*/
 	private ServerMessage markItemAsPicked(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -312,6 +308,9 @@ public class Server implements I_Server
 		return new ServerMessage(message.getMessage()+"Result",result.toString());
 	}
 	
+
+	
+	/** Marks the referenced item as stocked and changes the state*/
 	private ServerMessage markItemAsStocked(ServerMessage message)
 	{
 		JsonObject result = new JsonObject();
@@ -338,8 +337,6 @@ public class Server implements I_Server
 	
 	private boolean authenticate(String userData)
 	{
-		//TODO: This function currently has no way of knowing what type of user these credentials should be validated under.
-		//TODO: look into this before submitting this portion of the framework
 		//Convert the userData JSON string in a JsonObject 
 		JsonObject credentials = new JsonParser().parse(userData).getAsJsonObject();
 		//Return the result of isValidLogin where true denotes a valid set of credentials.
@@ -354,6 +351,7 @@ public class Server implements I_Server
 		User testUser = database.getUser(credentials.get("email").getAsString(), credentials.get("password").getAsString());
 		try
 		{
+			//Attempt to cast the user into the specified type
 			return (User) userType.cast(testUser);
 		}
 		catch(ClassCastException e)
@@ -362,7 +360,7 @@ public class Server implements I_Server
 		}
 	}
 	
-	//TODO: This function must not be used in the final version of the software
+	/** Gets the passed in user type as an integer. This function should really not be needed*/
 	private int getUserTypeAsInt(User user)
 	{
 		//Build a map which will map an Integer with a given user type.
@@ -371,7 +369,6 @@ public class Server implements I_Server
 		test.put(2, Packer.class);
 		test.put(3, Manager.class);
 		test.put(4, Stocker.class);
-		//This code is horrendous and breaks the servers ignorance of underlying framework
 		for(int key : test.keySet())
 		{
 			try
