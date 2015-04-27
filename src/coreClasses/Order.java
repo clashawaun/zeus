@@ -7,7 +7,6 @@ public class Order
 	private ArrayList<Integer> productIds;
 	private String shippingAddress;
 	private String status;
-	private float priority;
 
 
 	public Order(int id, ArrayList<Integer> productIDs, String shippingAddress)
@@ -16,17 +15,9 @@ public class Order
 		this.productIds = productIDs;
 		this.shippingAddress = shippingAddress;
 		this.status = "OPEN";
-		this.priority = 0;
 	}
 
-	
-	public float getPriority() {
-		return priority;
-	}
 
-	public void setPriority(float priority) {
-		this.priority = priority;
-	}
 
 	public boolean hasItem(int itemID){
 		
