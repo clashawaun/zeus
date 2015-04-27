@@ -42,7 +42,7 @@ namespace Compcon.zeus_software
                     }
                     catch (Exception)
                     {
-                        //Connection Failed at this point
+                        //Connection Failed at this point. This is handled below
                     }
                     finally
                     {
@@ -69,11 +69,13 @@ namespace Compcon.zeus_software
         {
             //List of all servers running our server and an associated priority.
             //It will try and use servers with higher priority first, falling back
-            //to localhost if all fails. I want to refactor this function more
+            //to localhost if all fails. In an ideal world this function would 
+            //retrive this data from a restfulAPI, Amazon S3 bucket or some other 
+            //datasource and this would not be hardcoded.
             Dictionary<String, Object> test = new Dictionary<String, Object>();
             test.Add("endpoint", "104.236.24.208");
             test.Add("port", 9090);
-            test.Add("server", "LightForDark - New York");
+            test.Add("server", "Zeus Primary - Light For Dark - New York");
             test.Add("priority", 1);
             serverMap.Add("Server1", test);
             test = new Dictionary<String, Object>();
