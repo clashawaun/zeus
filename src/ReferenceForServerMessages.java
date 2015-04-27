@@ -2,7 +2,7 @@
 import servercommunication.*;
 
 
-public class Temp 
+public class ReferenceForServerMessages 
 {
 	public static void main(String [] args)
 	{

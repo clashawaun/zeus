@@ -2,7 +2,7 @@ import java.awt.EventQueue;
 
 import client.GUIManager;
 
-public class EmmyTest {
+public class LaunchGUI {
 
 	public static void main(String[] args) 
 	{

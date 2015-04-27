@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import coreClasses.I_Sector;
 import coreClasses.Picker;
-import coreClasses.Sector;
 import coreClasses.Item;
 import coreClasses.ItemState;
 public class SectorTools 
